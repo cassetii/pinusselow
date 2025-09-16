@@ -214,45 +214,6 @@
             background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
         }
 
-        .quick-login-section {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .quick-login-label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .quick-login-btn {
-            padding: 0.75rem 1rem;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0.25rem;
-            min-width: 70px;
-        }
-
-        .quick-login-btn:hover {
-            background: var(--primary-color);
-            transform: translateY(-1px);
-        }
-
-        .super-admin-quick-btn {
-            background: var(--super-admin-color) !important;
-        }
-
-        .super-admin-quick-btn:hover {
-            background: #b52d37 !important;
-        }
-
         /* Header */
         .mobile-header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -875,18 +836,6 @@
                     </button>
                 </form>
 
-                <div class="quick-login-section">
-                    <div class="quick-login-label">
-                        <strong>Quick Login:</strong>
-                    </div>
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
-                        <button type="button" class="quick-login-btn super-admin-quick-btn" onclick="quickLogin('superadmin', 'admin123')">Super Admin</button>
-                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow1', 'selow1234')">selow1</button>
-                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow2', 'selow1234')">selow2</button>
-                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow3', 'selow1234')">selow3</button>
-                    </div>
-                </div>
-
                 <div id="loginAlert"></div>
             </div>
         </div>
@@ -1247,20 +1196,6 @@
 
         // ========== LOGIN FUNCTIONS ==========
         
-        function quickLogin(username, password) {
-            console.log('Quick login:', username);
-            document.getElementById('username').value = username;
-            document.getElementById('password').value = password;
-            
-            // Visual feedback
-            event.target.style.opacity = '0.7';
-            event.target.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            
-            setTimeout(() => {
-                handleLoginProcess(username, password);
-            }, 500);
-        }
-
         function handleLogin(event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
@@ -1280,7 +1215,7 @@
                 currentUser = user;
                 localStorage.setItem('pinuslo_current_user', JSON.stringify(user));
                 
-                showLoginAlert('✅ Login berhasil! Selamat datang ' + user.fullName, 'success');
+                showLoginAlert('Login berhasil! Selamat datang ' + user.fullName, 'success');
                 
                 setTimeout(() => {
                     if (user.role === 'super-admin') {
@@ -1291,22 +1226,8 @@
                 }, 1000);
             } else {
                 console.log('Login failed');
-                showLoginAlert('❌ Username atau password salah!', 'danger');
-                resetQuickLoginButtons();
+                showLoginAlert('Username atau password salah!', 'danger');
             }
-        }
-
-        function resetQuickLoginButtons() {
-            document.querySelectorAll('.quick-login-btn').forEach(btn => {
-                btn.style.opacity = '1';
-                const onclick = btn.getAttribute('onclick');
-                if (onclick.includes('superadmin')) {
-                    btn.innerHTML = 'Super Admin';
-                } else {
-                    const match = onclick.match(/quickLogin\('(\w+)'/);
-                    if (match) btn.innerHTML = match[1];
-                }
-            });
         }
 
         function showLoginAlert(message, type) {
@@ -1372,11 +1293,10 @@
             if (confirm('Apakah Anda yakin ingin keluar?')) {
                 localStorage.removeItem('pinuslo_current_user');
                 currentUser = null;
-                showAlert('✅ Berhasil logout!', 'success');
+                showAlert('Berhasil logout!', 'success');
                 setTimeout(() => {
                     showLoginPage();
                     document.getElementById('loginForm').reset();
-                    resetQuickLoginButtons();
                 }, 1000);
             }
         }
@@ -1428,7 +1348,7 @@
                 
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
-                showAlert('⚠️ Gagal memuat data dashboard: ' + error.message, 'warning');
+                showAlert('Gagal memuat data dashboard: ' + error.message, 'warning');
             }
         }
 
@@ -1478,10 +1398,10 @@
                 html += `
                     <div style="padding: 0.75rem; border-left: 3px solid var(--secondary-color); margin-bottom: 0.5rem; background: #f8f9fa; border-radius: 0 8px 8px 0;">
                         <div style="font-weight: 600; color: var(--primary-color); font-size: 0.9rem;">
-                            🎫 ${ticket.nomorTiket} - ${ticket.petugasLoket}
+                            ${ticket.nomorTiket} - ${ticket.petugasLoket}
                         </div>
                         <div style="font-size: 0.8rem; color: #666; margin-top: 0.25rem;">
-                            👥 ${ticket.jumlahOrang} orang • 💰 Rp ${(ticket.total || 0).toLocaleString('id-ID')} • 🕒 ${timeAgo}
+                            ${ticket.jumlahOrang} orang • Rp ${(ticket.total || 0).toLocaleString('id-ID')} • ${timeAgo}
                         </div>
                     </div>
                 `;
@@ -1520,7 +1440,7 @@
                 
             } catch (error) {
                 console.error('Error loading monitoring data:', error);
-                showAlert('⚠️ Gagal memuat data monitoring: ' + error.message, 'warning');
+                showAlert('Gagal memuat data monitoring: ' + error.message, 'warning');
             }
         }
 
@@ -1679,7 +1599,7 @@
             }
             
             updateDataTable(filteredData);
-            showAlert(`✅ Filter diterapkan. Menampilkan ${filteredData.length} data dari ${allTicketsData.length} total data.`, 'success');
+            showAlert(`Filter diterapkan. Menampilkan ${filteredData.length} data dari ${allTicketsData.length} total data.`, 'success');
         }
 
         function clearFilters() {
@@ -1687,7 +1607,7 @@
             document.getElementById('filterDateStart').value = '';
             document.getElementById('filterDateEnd').value = '';
             updateDataTable(allTicketsData);
-            showAlert('🔄 Filter telah direset. Menampilkan semua data.', 'info');
+            showAlert('Filter telah direset. Menampilkan semua data.', 'info');
         }
 
         function exportData() {
@@ -1715,7 +1635,7 @@
             a.click();
             URL.revokeObjectURL(url);
             
-            showAlert('📥 Data berhasil diexport sebagai CSV!', 'success');
+            showAlert('Data berhasil diexport sebagai CSV!', 'success');
         }
 
         // ========== USER MANAGEMENT ==========
@@ -1786,7 +1706,7 @@
             // Validate username uniqueness
             const existingUser = allUsersData.find(u => u.username === userData.username && u.id !== editingUserId);
             if (existingUser) {
-                showAlert('❌ Username sudah digunakan!', 'danger');
+                showAlert('Username sudah digunakan!', 'danger');
                 return;
             }
             
@@ -1795,13 +1715,13 @@
                 const userIndex = allUsersData.findIndex(u => u.id === editingUserId);
                 if (userIndex !== -1) {
                     allUsersData[userIndex] = { ...allUsersData[userIndex], ...userData };
-                    showAlert('✅ User berhasil diupdate!', 'success');
+                    showAlert('User berhasil diupdate!', 'success');
                 }
             } else {
                 // Add new user
                 userData.id = Date.now().toString();
                 allUsersData.push(userData);
-                showAlert('✅ User berhasil ditambahkan!', 'success');
+                showAlert('User berhasil ditambahkan!', 'success');
             }
             
             // Save to localStorage
@@ -1835,7 +1755,7 @@
                 allUsersData = allUsersData.filter(u => u.id !== userId);
                 localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
                 updateUsersList();
-                showAlert('✅ User berhasil dihapus!', 'success');
+                showAlert('User berhasil dihapus!', 'success');
             }
         }
 
@@ -1882,7 +1802,7 @@
             const endDate = new Date(document.getElementById('reportEndDate').value);
             
             if (!startDate || !endDate) {
-                showAlert('❌ Pilih tanggal mulai dan selesai!', 'danger');
+                showAlert('Pilih tanggal mulai dan selesai!', 'danger');
                 return;
             }
             
@@ -1896,7 +1816,7 @@
             
             // Generate report HTML
             generateReportHTML(reportData, startDate, endDate, period);
-            showAlert('📊 Laporan berhasil dibuat!', 'success');
+            showAlert('Laporan berhasil dibuat!', 'success');
         }
 
         function generateReportHTML(data, startDate, endDate, period) {
@@ -2056,7 +1976,7 @@
         function downloadReport() {
             const reportContent = document.getElementById('reportResults').innerHTML;
             if (!reportContent || reportContent.includes('Pilih periode')) {
-                showAlert('❌ Generate report terlebih dahulu!', 'danger');
+                showAlert('Generate report terlebih dahulu!', 'danger');
                 return;
             }
             
@@ -2084,7 +2004,7 @@
             printWindow.document.close();
             printWindow.print();
             
-            showAlert('🖨️ Dialog print dibuka. Pilih "Save as PDF" untuk download!', 'info');
+            showAlert('Dialog print dibuka. Pilih "Save as PDF" untuk download!', 'info');
         }
 
         // ========== UTILITIES ==========
