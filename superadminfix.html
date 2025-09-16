@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisata Hutan Pinus Selow Bissoloro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3e7820;
+            --secondary-color: #f9b85a;
+            --accent-color: #ed7755;
+            --light-bg: #f8f9fa;
+            --super-admin-color: #dc3545;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--light-bg) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Pine Tree Background Pattern */
+        .pine-background {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pine-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='80' viewBox='0 0 60 80'%3E%3Cg fill='%233e7820' fill-opacity='0.08'%3E%3Cpath d='M30 0l15 25h-8l8 15h-6l6 12h-5l5 10H40l-10 18-10-18H5l5-10h-5l6-12h-6l8-15h-8L30 0z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            z-index: -1;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='120' viewBox='0 0 100 120'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 10l20 35h-12l12 25h-10l10 20h-8l8 15H60l-10 15-10-15H20l8-15h-8l10-20h-10l12-25H20L50 10z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            z-index: 0;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 420px;
+            animation: slideIn 0.8s ease-out;
+            position: relative;
+            z-index: 1;
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-logo {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2.5rem;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(62, 120, 32, 0.3);
+        }
+
+        .super-admin-logo {
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+        }
+
+        .login-welcome {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .login-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .super-admin-title {
+            color: var(--super-admin-color) !important;
+        }
+
+        .login-subtitle {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .login-form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .login-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .login-input-container {
+            position: relative;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .login-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(249, 184, 90, 0.25);
+            outline: none;
+        }
+
+        .login-input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(62, 120, 32, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(62, 120, 32, 0.4);
+        }
+
+        .super-admin-btn {
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+        }
+
+        .quick-login-section {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .quick-login-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .quick-login-btn {
+            padding: 0.75rem 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+            min-width: 70px;
+        }
+
+        .quick-login-btn:hover {
+            background: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .super-admin-quick-btn {
+            background: var(--super-admin-color) !important;
+        }
+
+        .super-admin-quick-btn:hover {
+            background: #b52d37 !important;
+        }
+
+        /* Header */
+        .mobile-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .super-admin-header {
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+        }
+
+        .mobile-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .mobile-header h1 {
+            font-size: 1.25rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Navigation */
+        .mobile-nav {
+            display: flex;
+            background: white;
+            margin: 0.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .mobile-nav-item {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            background: #f8f9fa;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .mobile-nav-item.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .super-admin-nav-item.active {
+            background: var(--super-admin-color) !important;
+        }
+
+        .mobile-nav-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Cards */
+        .mobile-card {
+            background: white;
+            margin: 0.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(62, 120, 32, 0.15);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-card-header {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .super-admin-card-header {
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid var(--secondary-color);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--super-admin-color);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--accent-color);
+        }
+
+        .stat-card.info {
+            border-left-color: #17a2b8;
+        }
+
+        .stat-card.success {
+            border-left-color: var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .danger .stat-icon { color: var(--super-admin-color); }
+        .warning .stat-icon { color: var(--accent-color); }
+        .info .stat-icon { color: #17a2b8; }
+        .success .stat-icon { color: var(--primary-color); }
+
+        /* Data Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .data-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+
+        .filter-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .filter-input,
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+        }
+
+        .filter-btn.clear {
+            background: #6c757d;
+        }
+
+        .filter-btn.export {
+            background: var(--accent-color);
+        }
+
+        /* Admin Performance Cards */
+        .admin-card {
+            background: white;
+            margin: 0.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .admin-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .admin-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .admin-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .admin-status.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .admin-status.inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-stat {
+            text-align: center;
+        }
+
+        .admin-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .admin-stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* User Management */
+        .user-form {
+            background: white;
+            padding: 1.5rem;
+            margin: 0.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(249, 184, 90, 0.25);
+        }
+
+        .form-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+        }
+
+        .form-btn.primary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .form-btn.danger {
+            background: var(--super-admin-color);
+            color: white;
+        }
+
+        .form-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* User List */
+        .user-list {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            background: white;
+            margin: 0.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .user-item.super-admin {
+            border-left-color: var(--super-admin-color);
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-username {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .user-role {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .user-role.super-admin {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .user-role.petugas {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .user-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-btn.edit {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .user-btn.delete {
+            background: var(--super-admin-color);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .filter-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .login-card {
+                margin: 0.5rem;
+                padding: 2rem;
+            }
+        }
+
+        /* Content sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pine decoration elements */
+        .pine-decoration {
+            position: absolute;
+            opacity: 0.1;
+            color: var(--primary-color);
+            font-size: 2rem;
+            z-index: 0;
+        }
+
+        .pine-decoration.top-left {
+            top: 10%;
+            left: 10%;
+            transform: rotate(-15deg);
+        }
+
+        .pine-decoration.top-right {
+            top: 15%;
+            right: 10%;
+            transform: rotate(15deg);
+        }
+
+        .pine-decoration.bottom-left {
+            bottom: 10%;
+            left: 15%;
+            transform: rotate(-10deg);
+        }
+
+        .pine-decoration.bottom-right {
+            bottom: 15%;
+            right: 15%;
+            transform: rotate(10deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="page-section active">
+        <div class="login-container pine-background">
+            <!-- Pine decorations -->
+            <div class="pine-decoration top-left">🌲</div>
+            <div class="pine-decoration top-right">🌲</div>
+            <div class="pine-decoration bottom-left">🌲</div>
+            <div class="pine-decoration bottom-right">🌲</div>
+            
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-logo" id="loginLogo">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="login-welcome">
+                        Selamat datang di sistem registrasi
+                    </div>
+                    <h2 class="login-title" id="loginTitle">Wisata Hutan Pinus Selow Bissoloro</h2>
+                    <p class="login-subtitle">Silahkan Login</p>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="login-form-group">
+                        <label class="login-label">Username</label>
+                        <div class="login-input-container">
+                            <input type="text" class="login-input" id="username" required>
+                            <div class="login-input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="login-form-group">
+                        <label class="login-label">Password</label>
+                        <div class="login-input-container">
+                            <input type="password" class="login-input" id="password" required>
+                            <div class="login-input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-btn" id="loginButton">
+                        <i class="fas fa-sign-in-alt me-2"></i>Masuk
+                    </button>
+                </form>
+
+                <div class="quick-login-section">
+                    <div class="quick-login-label">
+                        <strong>Quick Login:</strong>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                        <button type="button" class="quick-login-btn super-admin-quick-btn" onclick="quickLogin('superadmin', 'admin123')">Super Admin</button>
+                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow1', 'selow1234')">selow1</button>
+                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow2', 'selow1234')">selow2</button>
+                        <button type="button" class="quick-login-btn" onclick="quickLogin('selow3', 'selow1234')">selow3</button>
+                    </div>
+                </div>
+
+                <div id="loginAlert"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Super Admin App -->
+    <div id="superAdminApp" class="page-section">
+        <!-- Header -->
+        <div class="mobile-header super-admin-header">
+            <div class="mobile-header-content">
+                <h1>
+                    <i class="fas fa-crown me-2"></i>
+                    Super Admin Panel
+                </h1>
+                <div class="user-info">
+                    <span id="currentUser">SuperAdmin</span>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-item super-admin-nav-item active" onclick="showSection('dashboard')">
+                <i class="fas fa-chart-dashboard me-1"></i>Dashboard
+            </div>
+            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('monitoring')">
+                <i class="fas fa-monitor-waveform me-1"></i>Monitoring
+            </div>
+            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('users')">
+                <i class="fas fa-users-cog me-1"></i>Users
+            </div>
+            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('reports')">
+                <i class="fas fa-file-chart me-1"></i>Reports
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboardSection" class="content-section active">
+            <div class="mobile-card">
+                <div class="mobile-card-header super-admin-card-header">
+                    <i class="fas fa-chart-dashboard me-2"></i>Dashboard Overview
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card success">
+                        <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <div class="stat-number" id="totalTickets">0</div>
+                        <div class="stat-label">Total Tiket</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-number" id="totalVisitors">0</div>
+                        <div class="stat-label">Total Pengunjung</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="stat-number" id="totalRevenue">0</div>
+                        <div class="stat-label">Total Pendapatan</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
+                        <div class="stat-number" id="activeAdmins">0</div>
+                        <div class="stat-label">Admin Aktif</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="mobile-card">
+                <div class="mobile-card-header super-admin-card-header">
+                    <i class="fas fa-clock me-2"></i>Aktivitas Terbaru
+                </div>
+                <div id="recentActivity" style="padding: 1rem; max-height: 300px; overflow-y: auto;">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Memuat aktivitas...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring Section -->
+        <div id="monitoringSection" class="content-section">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h6 style="margin-bottom: 1rem; color: var(--primary-color); font-weight: 600;">
+                    <i class="fas fa-filter me-2"></i>Filter Data
+                </h6>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label class="filter-label">Admin/Petugas</label>
+                        <select class="filter-select" id="filterAdmin">
+                            <option value="">Semua Admin</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Tanggal Mulai</label>
+                        <input type="date" class="filter-input" id="filterDateStart">
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Tanggal Selesai</label>
+                        <input type="date" class="filter-input" id="filterDateEnd">
+                    </div>
+                    <div class="filter-group">
+                        <button class="filter-btn" onclick="applyFilters()">
+                            <i class="fas fa-search me-1"></i>Filter
+                        </button>
+                        <button class="filter-btn clear" onclick="clearFilters()">
+                            <i class="fas fa-times me-1"></i>Reset
+                        </button>
+                        <button class="filter-btn export" onclick="exportData()">
+                            <i class="fas fa-download me-1"></i>Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Performance Cards -->
+            <div id="adminPerformanceCards">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Memuat data admin...</p>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="mobile-card">
+                <div class="mobile-card-header super-admin-card-header">
+                    <i class="fas fa-table me-2"></i>Data Tiket Lengkap
+                </div>
+                <div style="padding: 1rem; overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No. Tiket</th>
+                                <th>Petugas</th>
+                                <th>Tanggal</th>
+                                <th>Pengunjung</th>
+                                <th>Paket</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
+                                    <i class="fas fa-spinner fa-spin me-2"></i>Memuat data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Management Section -->
+        <div id="usersSection" class="content-section">
+            <!-- Add User Form -->
+            <div class="user-form">
+                <h6 style="margin-bottom: 1rem; color: var(--primary-color); font-weight: 600;">
+                    <i class="fas fa-user-plus me-2"></i>Tambah/Edit User
+                </h6>
+                <form id="userForm" onsubmit="handleUserForm(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-input" id="userUsername" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-input" id="userPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role</label>
+                            <select class="form-select" id="userRole" required>
+                                <option value="">Pilih Role</option>
+                                <option value="petugas">Petugas</option>
+                                <option value="super-admin">Super Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-input" id="userFullName">
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <button type="submit" class="form-btn primary" id="userSubmitBtn">
+                            <i class="fas fa-save me-1"></i>Simpan User
+                        </button>
+                        <button type="button" class="form-btn secondary" onclick="resetUserForm()">
+                            <i class="fas fa-times me-1"></i>Batal
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- User List -->
+            <div class="mobile-card">
+                <div class="mobile-card-header super-admin-card-header">
+                    <i class="fas fa-users me-2"></i>Daftar Pengguna
+                </div>
+                <div class="user-list" id="userList">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Memuat daftar pengguna...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reportsSection" class="content-section">
+            <div class="mobile-card">
+                <div class="mobile-card-header super-admin-card-header">
+                    <i class="fas fa-file-chart me-2"></i>Laporan & Analytics
+                </div>
+                <div style="padding: 1rem;">
+                    <!-- Date Range Selector -->
+                    <div class="form-grid" style="margin-bottom: 2rem;">
+                        <div class="form-group">
+                            <label class="form-label">Periode Laporan</label>
+                            <select class="form-select" id="reportPeriod" onchange="updateReportDateRange()">
+                                <option value="today">Hari Ini</option>
+                                <option value="week">Minggu Ini</option>
+                                <option value="month">Bulan Ini</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="customDateRange" style="display: none;">
+                            <label class="form-label">Custom Range</label>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <input type="date" class="form-input" id="reportStartDate">
+                                <input type="date" class="form-input" id="reportEndDate">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="form-btn primary" onclick="generateReport()">
+                                <i class="fas fa-chart-bar me-1"></i>Generate Report
+                            </button>
+                            <button class="form-btn export" onclick="downloadReport()">
+                                <i class="fas fa-download me-1"></i>Download PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Report Results -->
+                    <div id="reportResults">
+                        <div style="text-align: center; padding: 3rem; color: #666;">
+                            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <h5>Pilih periode dan klik Generate Report</h5>
+                            <p>Laporan akan menampilkan statistik lengkap untuk periode yang dipilih</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regular Admin App -->
+    <div id="regularAdminApp" class="page-section">
+        <!-- Header -->
+        <div class="mobile-header">
+            <div class="mobile-header-content">
+                <h1>
+                    <i class="fas fa-tree me-2"></i>
+                    Hutan Pinus Selow Bissoloro
+                </h1>
+                <div class="user-info">
+                    <span id="currentRegularUser">User</span>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 3rem; color: #666;">
+            <i class="fas fa-tools" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+            <h5>Area Admin Regular</h5>
+            <p>Masukkan form registrasi dan fitur admin regular disini</p>
+            <small>(Integrasikan dengan kode asli Anda)</small>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, orderBy, query, where } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBGTPNboLMi7zv1m1zSlmZk4or0TR1F6sg",
+            authDomain: "registrasipinusselowbissoloro.firebaseapp.com",
+            projectId: "registrasipinusselowbissoloro",
+            storageBucket: "registrasipinusselowbissoloro.firebasestorage.app",
+            messagingSenderId: "185801761825",
+            appId: "1:185801761825:web:bc262bb3b2769e964fef60",
+            measurementId: "G-1LVJ83FFP6"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make functions globally available
+        window.db = db;
+        window.addDoc = addDoc;
+        window.collection = collection;
+        window.getDocs = getDocs;
+        window.deleteDoc = deleteDoc;
+        window.doc = doc;
+        window.updateDoc = updateDoc;
+        window.orderBy = orderBy;
+        window.query = query;
+        window.where = where;
+        
+        console.log('Firebase initialized successfully');
+    </script>
+
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let allTicketsData = [];
+        let allUsersData = [];
+        let editingUserId = null;
+
+        // Enhanced Users with Super Admin
+        const systemUsers = [
+            { id: '1', username: 'superadmin', password: 'admin123', role: 'super-admin', fullName: 'Super Administrator', isDefault: true },
+            { id: '2', username: 'selow1', password: 'selow1234', role: 'petugas', fullName: 'Petugas 1', isDefault: true },
+            { id: '3', username: 'selow2', password: 'selow1234', role: 'petugas', fullName: 'Petugas 2', isDefault: true },
+            { id: '4', username: 'selow3', password: 'selow1234', role: 'petugas', fullName: 'Petugas 3', isDefault: true },
+            { id: '5', username: 'selow4', password: 'selow1234', role: 'petugas', fullName: 'Petugas 4', isDefault: true },
+            { id: '6', username: 'selow5', password: 'selow1234', role: 'petugas', fullName: 'Petugas 5', isDefault: true }
+        ];
+
+        // Initialize users in localStorage if not exists
+        if (!localStorage.getItem('pinuslo_users')) {
+            localStorage.setItem('pinuslo_users', JSON.stringify(systemUsers));
+        }
+
+        // ========== PASSWORD TOGGLE ==========
+        
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('passwordToggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // ========== LOGIN FUNCTIONS ==========
+        
+        function quickLogin(username, password) {
+            console.log('Quick login:', username);
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+            
+            // Visual feedback
+            event.target.style.opacity = '0.7';
+            event.target.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            
+            setTimeout(() => {
+                handleLoginProcess(username, password);
+            }, 500);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            handleLoginProcess(username, password);
+        }
+
+        function handleLoginProcess(username, password) {
+            console.log('Processing login for:', username);
+            
+            // Get current users from localStorage
+            const users = JSON.parse(localStorage.getItem('pinuslo_users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                console.log('Login successful', user);
+                currentUser = user;
+                localStorage.setItem('pinuslo_current_user', JSON.stringify(user));
+                
+                showLoginAlert('✅ Login berhasil! Selamat datang ' + user.fullName, 'success');
+                
+                setTimeout(() => {
+                    if (user.role === 'super-admin') {
+                        showSuperAdminApp();
+                    } else {
+                        showRegularAdminApp();
+                    }
+                }, 1000);
+            } else {
+                console.log('Login failed');
+                showLoginAlert('❌ Username atau password salah!', 'danger');
+                resetQuickLoginButtons();
+            }
+        }
+
+        function resetQuickLoginButtons() {
+            document.querySelectorAll('.quick-login-btn').forEach(btn => {
+                btn.style.opacity = '1';
+                const onclick = btn.getAttribute('onclick');
+                if (onclick.includes('superadmin')) {
+                    btn.innerHTML = 'Super Admin';
+                } else {
+                    const match = onclick.match(/quickLogin\('(\w+)'/);
+                    if (match) btn.innerHTML = match[1];
+                }
+            });
+        }
+
+        function showLoginAlert(message, type) {
+            const alertContainer = document.getElementById('loginAlert');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} mt-3" style="border-radius: 12px; border: none;">
+                    ${message}
+                </div>
+            `;
+            setTimeout(() => alertContainer.innerHTML = '', 4000);
+        }
+
+        // ========== PAGE NAVIGATION ==========
+        
+        function showSuperAdminApp() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('superAdminApp').classList.add('active');
+            document.getElementById('regularAdminApp').classList.remove('active');
+            
+            // Update UI for super admin
+            document.getElementById('currentUser').textContent = currentUser.fullName;
+            updateLoginUI(true);
+            
+            // Initialize super admin features
+            initializeSuperAdmin();
+        }
+
+        function showRegularAdminApp() {
+            document.getElementById('loginPage').classList.remove('active');
+            document.getElementById('superAdminApp').classList.remove('active');
+            document.getElementById('regularAdminApp').classList.add('active');
+            
+            document.getElementById('currentRegularUser').textContent = currentUser.fullName;
+            updateLoginUI(false);
+        }
+
+        function showLoginPage() {
+            document.getElementById('superAdminApp').classList.remove('active');
+            document.getElementById('regularAdminApp').classList.remove('active');
+            document.getElementById('loginPage').classList.add('active');
+            updateLoginUI(false);
+        }
+
+        function updateLoginUI(isSuperAdmin) {
+            const logo = document.getElementById('loginLogo');
+            const title = document.getElementById('loginTitle');
+            const button = document.getElementById('loginButton');
+            
+            if (isSuperAdmin) {
+                logo.classList.add('super-admin-logo');
+                title.classList.add('super-admin-title');
+                button.classList.add('super-admin-btn');
+                title.textContent = 'Super Admin Panel';
+            } else {
+                logo.classList.remove('super-admin-logo');
+                title.classList.remove('super-admin-title');
+                button.classList.remove('super-admin-btn');
+                title.textContent = 'Wisata Hutan Pinus Selow Bissoloro';
+            }
+        }
+
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('pinuslo_current_user');
+                currentUser = null;
+                showAlert('✅ Berhasil logout!', 'success');
+                setTimeout(() => {
+                    showLoginPage();
+                    document.getElementById('loginForm').reset();
+                    resetQuickLoginButtons();
+                }, 1000);
+            }
+        }
+
+        function showSection(section) {
+            // Remove active from all sections and nav items
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(section + 'Section').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Load section specific data
+            if (section === 'dashboard') {
+                loadDashboardData();
+            } else if (section === 'monitoring') {
+                loadMonitoringData();
+            } else if (section === 'users') {
+                loadUsersData();
+            } else if (section === 'reports') {
+                // Reports section doesn't need auto-load
+            }
+        }
+
+        // ========== SUPER ADMIN INITIALIZATION ==========
+        
+        function initializeSuperAdmin() {
+            console.log('Initializing Super Admin');
+            loadDashboardData();
+        }
+
+        async function loadDashboardData() {
+            console.log('Loading dashboard data...');
+            
+            try {
+                // Load tickets data
+                const q = window.query(window.collection(window.db, 'registrasi'), window.orderBy('timestamp', 'desc'));
+                const querySnapshot = await window.getDocs(q);
+                
+                allTicketsData = [];
+                querySnapshot.forEach((doc) => {
+                    allTicketsData.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Update dashboard stats
+                updateDashboardStats();
+                updateRecentActivity();
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('⚠️ Gagal memuat data dashboard: ' + error.message, 'warning');
+            }
+        }
+
+        function updateDashboardStats() {
+            const totalTickets = allTicketsData.length;
+            const totalVisitors = allTicketsData.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
+            const totalRevenue = allTicketsData.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
+            
+            // Get unique active admins from last 7 days
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            
+            const activeAdmins = new Set();
+            allTicketsData.forEach(ticket => {
+                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                if (ticketDate >= sevenDaysAgo && ticket.createdBy) {
+                    activeAdmins.add(ticket.createdBy);
+                }
+            });
+
+            // Update UI
+            document.getElementById('totalTickets').textContent = totalTickets.toLocaleString('id-ID');
+            document.getElementById('totalVisitors').textContent = totalVisitors.toLocaleString('id-ID');
+            document.getElementById('totalRevenue').textContent = 'Rp ' + totalRevenue.toLocaleString('id-ID');
+            document.getElementById('activeAdmins').textContent = activeAdmins.size;
+        }
+
+        function updateRecentActivity() {
+            const recentTickets = allTicketsData.slice(0, 10);
+            const activityContainer = document.getElementById('recentActivity');
+            
+            if (recentTickets.length === 0) {
+                activityContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Belum ada aktivitas terbaru</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            recentTickets.forEach(ticket => {
+                const date = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                const timeAgo = getTimeAgo(date);
+                
+                html += `
+                    <div style="padding: 0.75rem; border-left: 3px solid var(--secondary-color); margin-bottom: 0.5rem; background: #f8f9fa; border-radius: 0 8px 8px 0;">
+                        <div style="font-weight: 600; color: var(--primary-color); font-size: 0.9rem;">
+                            🎫 ${ticket.nomorTiket} - ${ticket.petugasLoket}
+                        </div>
+                        <div style="font-size: 0.8rem; color: #666; margin-top: 0.25rem;">
+                            👥 ${ticket.jumlahOrang} orang • 💰 Rp ${(ticket.total || 0).toLocaleString('id-ID')} • 🕒 ${timeAgo}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            activityContainer.innerHTML = html;
+        }
+
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffInSeconds = Math.floor((now - date) / 1000);
+            
+            if (diffInSeconds < 60) return 'Baru saja';
+            if (diffInSeconds < 3600) return Math.floor(diffInSeconds / 60) + ' menit lalu';
+            if (diffInSeconds < 86400) return Math.floor(diffInSeconds / 3600) + ' jam lalu';
+            return Math.floor(diffInSeconds / 86400) + ' hari lalu';
+        }
+
+        // ========== MONITORING FUNCTIONS ==========
+        
+        async function loadMonitoringData() {
+            console.log('Loading monitoring data...');
+            
+            try {
+                // Load fresh data
+                await loadDashboardData();
+                
+                // Update admin filter
+                updateAdminFilter();
+                
+                // Update admin performance cards
+                updateAdminPerformanceCards();
+                
+                // Update data table
+                updateDataTable(allTicketsData);
+                
+            } catch (error) {
+                console.error('Error loading monitoring data:', error);
+                showAlert('⚠️ Gagal memuat data monitoring: ' + error.message, 'warning');
+            }
+        }
+
+        function updateAdminFilter() {
+            const filterAdmin = document.getElementById('filterAdmin');
+            const admins = [...new Set(allTicketsData.map(ticket => ticket.createdBy).filter(Boolean))];
+            
+            filterAdmin.innerHTML = '<option value="">Semua Admin</option>';
+            admins.forEach(admin => {
+                filterAdmin.innerHTML += `<option value="${admin}">${admin}</option>`;
+            });
+        }
+
+        function updateAdminPerformanceCards() {
+            const adminStats = {};
+            
+            // Calculate stats per admin
+            allTicketsData.forEach(ticket => {
+                const admin = ticket.createdBy || 'Unknown';
+                if (!adminStats[admin]) {
+                    adminStats[admin] = {
+                        name: admin,
+                        totalTickets: 0,
+                        totalVisitors: 0,
+                        totalRevenue: 0,
+                        lastActivity: null
+                    };
+                }
+                
+                adminStats[admin].totalTickets++;
+                adminStats[admin].totalVisitors += ticket.jumlahOrang || 0;
+                adminStats[admin].totalRevenue += ticket.total || 0;
+                
+                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                if (!adminStats[admin].lastActivity || ticketDate > adminStats[admin].lastActivity) {
+                    adminStats[admin].lastActivity = ticketDate;
+                }
+            });
+
+            // Generate HTML for admin cards
+            const container = document.getElementById('adminPerformanceCards');
+            if (Object.keys(adminStats).length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Belum ada data aktivitas admin</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            Object.values(adminStats).forEach(admin => {
+                const isActive = admin.lastActivity && (new Date() - admin.lastActivity) < 24 * 60 * 60 * 1000; // Active if last activity within 24h
+                const statusClass = isActive ? 'active' : 'inactive';
+                const statusText = isActive ? 'Aktif' : 'Tidak Aktif';
+                
+                html += `
+                    <div class="admin-card">
+                        <div class="admin-card-header">
+                            <div class="admin-name">
+                                <i class="fas fa-user-circle me-2"></i>${admin.name}
+                            </div>
+                            <div class="admin-status ${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="admin-stats">
+                            <div class="admin-stat">
+                                <div class="admin-stat-number">${admin.totalTickets}</div>
+                                <div class="admin-stat-label">Total Tiket</div>
+                            </div>
+                            <div class="admin-stat">
+                                <div class="admin-stat-number">${admin.totalVisitors}</div>
+                                <div class="admin-stat-label">Pengunjung</div>
+                            </div>
+                            <div class="admin-stat">
+                                <div class="admin-stat-number">Rp ${admin.totalRevenue.toLocaleString('id-ID')}</div>
+                                <div class="admin-stat-label">Pendapatan</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; font-size: 0.8rem; color: #666; text-align: center;">
+                            <i class="fas fa-clock me-1"></i>
+                            Terakhir aktif: ${admin.lastActivity ? admin.lastActivity.toLocaleDateString('id-ID') : 'Tidak ada data'}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function updateDataTable(data) {
+            const tbody = document.getElementById('dataTableBody');
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
+                            <i class="fas fa-inbox me-2"></i>Tidak ada data tiket
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            let html = '';
+            data.forEach(ticket => {
+                const date = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                const statusBadge = '<span style="background: #d4edda; color: #155724; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Selesai</span>';
+                
+                html += `
+                    <tr>
+                        <td style="font-family: monospace; font-weight: bold;">${ticket.nomorTiket || '-'}</td>
+                        <td>${ticket.createdBy || ticket.petugasLoket || '-'}</td>
+                        <td>${date.toLocaleDateString('id-ID')}</td>
+                        <td>${ticket.jumlahOrang || 0}</td>
+                        <td style="font-size: 0.85rem;">${ticket.jenisKunjungan || '-'}</td>
+                        <td style="font-weight: bold; color: var(--secondary-color);">Rp ${(ticket.total || 0).toLocaleString('id-ID')}</td>
+                        <td>${statusBadge}</td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+
+        // ========== FILTER FUNCTIONS ==========
+        
+        function applyFilters() {
+            const adminFilter = document.getElementById('filterAdmin').value;
+            const startDate = document.getElementById('filterDateStart').value;
+            const endDate = document.getElementById('filterDateEnd').value;
+            
+            let filteredData = [...allTicketsData];
+            
+            // Filter by admin
+            if (adminFilter) {
+                filteredData = filteredData.filter(ticket => ticket.createdBy === adminFilter);
+            }
+            
+            // Filter by date range
+            if (startDate) {
+                const start = new Date(startDate);
+                filteredData = filteredData.filter(ticket => {
+                    const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                    return ticketDate >= start;
+                });
+            }
+            
+            if (endDate) {
+                const end = new Date(endDate);
+                end.setHours(23, 59, 59, 999); // Include the entire end date
+                filteredData = filteredData.filter(ticket => {
+                    const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                    return ticketDate <= end;
+                });
+            }
+            
+            updateDataTable(filteredData);
+            showAlert(`✅ Filter diterapkan. Menampilkan ${filteredData.length} data dari ${allTicketsData.length} total data.`, 'success');
+        }
+
+        function clearFilters() {
+            document.getElementById('filterAdmin').value = '';
+            document.getElementById('filterDateStart').value = '';
+            document.getElementById('filterDateEnd').value = '';
+            updateDataTable(allTicketsData);
+            showAlert('🔄 Filter telah direset. Menampilkan semua data.', 'info');
+        }
+
+        function exportData() {
+            // Get filtered data from current table
+            const table = document.querySelector('.data-table');
+            let csv = 'No Tiket,Petugas,Tanggal,Pengunjung,Paket,Total,Status\n';
+            
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) { // Skip empty state row
+                    const rowData = Array.from(cells).map(cell => {
+                        return '"' + cell.textContent.trim().replace(/"/g, '""') + '"';
+                    });
+                    csv += rowData.join(',') + '\n';
+                }
+            });
+            
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `pinuslo-data-${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showAlert('📥 Data berhasil diexport sebagai CSV!', 'success');
+        }
+
+        // ========== USER MANAGEMENT ==========
+        
+        function loadUsersData() {
+            console.log('Loading users data...');
+            allUsersData = JSON.parse(localStorage.getItem('pinuslo_users') || '[]');
+            updateUsersList();
+        }
+
+        function updateUsersList() {
+            const container = document.getElementById('userList');
+            
+            if (allUsersData.length === 0) {
+                container.innerHTML = `
+                    <div class="loading">
+                        <p>Tidak ada pengguna terdaftar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            allUsersData.forEach(user => {
+                const roleClass = user.role === 'super-admin' ? 'super-admin' : 'petugas';
+                const roleText = user.role === 'super-admin' ? 'Super Admin' : 'Petugas';
+                
+                html += `
+                    <div class="user-item ${roleClass}">
+                        <div class="user-header">
+                            <div class="user-username">
+                                <i class="fas fa-user-circle me-2"></i>${user.username}
+                            </div>
+                            <div class="user-role ${roleClass}">${roleText}</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                            <strong>Nama Lengkap:</strong> ${user.fullName || 'Tidak diset'}<br>
+                            <strong>Status:</strong> ${user.isDefault ? 'User Default' : 'User Custom'}
+                        </div>
+                        <div class="user-actions">
+                            <button class="user-btn edit" onclick="editUser('${user.id}')">
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                            ${!user.isDefault ? `
+                                <button class="user-btn delete" onclick="deleteUser('${user.id}')">
+                                    <i class="fas fa-trash me-1"></i>Hapus
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function handleUserForm(event) {
+            event.preventDefault();
+            
+            const userData = {
+                username: document.getElementById('userUsername').value,
+                password: document.getElementById('userPassword').value,
+                role: document.getElementById('userRole').value,
+                fullName: document.getElementById('userFullName').value,
+                isDefault: false
+            };
+            
+            // Validate username uniqueness
+            const existingUser = allUsersData.find(u => u.username === userData.username && u.id !== editingUserId);
+            if (existingUser) {
+                showAlert('❌ Username sudah digunakan!', 'danger');
+                return;
+            }
+            
+            if (editingUserId) {
+                // Update existing user
+                const userIndex = allUsersData.findIndex(u => u.id === editingUserId);
+                if (userIndex !== -1) {
+                    allUsersData[userIndex] = { ...allUsersData[userIndex], ...userData };
+                    showAlert('✅ User berhasil diupdate!', 'success');
+                }
+            } else {
+                // Add new user
+                userData.id = Date.now().toString();
+                allUsersData.push(userData);
+                showAlert('✅ User berhasil ditambahkan!', 'success');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
+            
+            // Reset form and update list
+            resetUserForm();
+            updateUsersList();
+        }
+
+        function editUser(userId) {
+            const user = allUsersData.find(u => u.id === userId);
+            if (!user) return;
+            
+            editingUserId = userId;
+            document.getElementById('userUsername').value = user.username;
+            document.getElementById('userPassword').value = user.password;
+            document.getElementById('userRole').value = user.role;
+            document.getElementById('userFullName').value = user.fullName || '';
+            document.getElementById('userSubmitBtn').innerHTML = '<i class="fas fa-save me-1"></i>Update User';
+            
+            // Scroll to form
+            document.querySelector('.user-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteUser(userId) {
+            const user = allUsersData.find(u => u.id === userId);
+            if (!user || user.isDefault) return;
+            
+            if (confirm(`Apakah Anda yakin ingin menghapus user "${user.username}"?`)) {
+                allUsersData = allUsersData.filter(u => u.id !== userId);
+                localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
+                updateUsersList();
+                showAlert('✅ User berhasil dihapus!', 'success');
+            }
+        }
+
+        function resetUserForm() {
+            document.getElementById('userForm').reset();
+            editingUserId = null;
+            document.getElementById('userSubmitBtn').innerHTML = '<i class="fas fa-save me-1"></i>Simpan User';
+        }
+
+        // ========== REPORTS ==========
+        
+        function updateReportDateRange() {
+            const period = document.getElementById('reportPeriod').value;
+            const customRange = document.getElementById('customDateRange');
+            const startInput = document.getElementById('reportStartDate');
+            const endInput = document.getElementById('reportEndDate');
+            
+            if (period === 'custom') {
+                customRange.style.display = 'block';
+            } else {
+                customRange.style.display = 'none';
+                
+                const today = new Date();
+                let startDate, endDate = today;
+                
+                if (period === 'today') {
+                    startDate = today;
+                } else if (period === 'week') {
+                    startDate = new Date();
+                    startDate.setDate(today.getDate() - 7);
+                } else if (period === 'month') {
+                    startDate = new Date();
+                    startDate.setMonth(today.getMonth() - 1);
+                }
+                
+                startInput.valueAsDate = startDate;
+                endInput.valueAsDate = endDate;
+            }
+        }
+
+        function generateReport() {
+            const period = document.getElementById('reportPeriod').value;
+            const startDate = new Date(document.getElementById('reportStartDate').value);
+            const endDate = new Date(document.getElementById('reportEndDate').value);
+            
+            if (!startDate || !endDate) {
+                showAlert('❌ Pilih tanggal mulai dan selesai!', 'danger');
+                return;
+            }
+            
+            endDate.setHours(23, 59, 59, 999); // Include full end date
+            
+            // Filter data by date range
+            const reportData = allTicketsData.filter(ticket => {
+                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
+                return ticketDate >= startDate && ticketDate <= endDate;
+            });
+            
+            // Generate report HTML
+            generateReportHTML(reportData, startDate, endDate, period);
+            showAlert('📊 Laporan berhasil dibuat!', 'success');
+        }
+
+        function generateReportHTML(data, startDate, endDate, period) {
+            const container = document.getElementById('reportResults');
+            
+            // Calculate statistics
+            const totalTickets = data.length;
+            const totalVisitors = data.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
+            const totalRevenue = data.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
+            
+            // Package statistics
+            const packageStats = {};
+            data.forEach(ticket => {
+                const packageName = ticket.jenisKunjungan || 'Unknown';
+                if (!packageStats[packageName]) {
+                    packageStats[packageName] = { count: 0, revenue: 0, visitors: 0 };
+                }
+                packageStats[packageName].count++;
+                packageStats[packageName].revenue += ticket.total || 0;
+                packageStats[packageName].visitors += ticket.jumlahOrang || 0;
+            });
+            
+            // Admin statistics
+            const adminStats = {};
+            data.forEach(ticket => {
+                const admin = ticket.createdBy || 'Unknown';
+                if (!adminStats[admin]) {
+                    adminStats[admin] = { count: 0, revenue: 0, visitors: 0 };
+                }
+                adminStats[admin].count++;
+                adminStats[admin].revenue += ticket.total || 0;
+                adminStats[admin].visitors += ticket.jumlahOrang || 0;
+            });
+
+            const periodText = period === 'custom' ? 'Custom Range' : 
+                              period === 'today' ? 'Hari Ini' :
+                              period === 'week' ? 'Minggu Ini' : 'Bulan Ini';
+
+            let html = `
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="text-align: center; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-chart-bar me-2"></i>Laporan Hutan Pinus Selow Bissoloro
+                        </h4>
+                        <p style="color: #666; margin-bottom: 0.5rem;">
+                            Periode: ${periodText}<br>
+                            ${startDate.toLocaleDateString('id-ID')} - ${endDate.toLocaleDateString('id-ID')}
+                        </p>
+                    </div>
+
+                    <!-- Summary Statistics -->
+                    <div class="stats-grid" style="margin-bottom: 2rem;">
+                        <div class="stat-card success">
+                            <div class="stat-number">${totalTickets}</div>
+                            <div class="stat-label">Total Tiket</div>
+                        </div>
+                        <div class="stat-card info">
+                            <div class="stat-number">${totalVisitors}</div>
+                            <div class="stat-label">Total Pengunjung</div>
+                        </div>
+                        <div class="stat-card warning">
+                            <div class="stat-number">Rp ${totalRevenue.toLocaleString('id-ID')}</div>
+                            <div class="stat-label">Total Pendapatan</div>
+                        </div>
+                        <div class="stat-card danger">
+                            <div class="stat-number">${Object.keys(adminStats).length}</div>
+                            <div class="stat-label">Admin Aktif</div>
+                        </div>
+                    </div>
+
+                    <!-- Package Statistics -->
+                    <div style="margin-bottom: 2rem;">
+                        <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
+                            <i class="fas fa-box me-2"></i>Statistik Per Paket
+                        </h5>
+                        <div class="data-table-container" style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Paket</th>
+                                        <th>Jumlah</th>
+                                        <th>Pengunjung</th>
+                                        <th>Pendapatan</th>
+                                        <th>Rata-rata</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            `;
+            
+            Object.entries(packageStats).forEach(([packageName, stats]) => {
+                const avgRevenue = stats.count > 0 ? Math.round(stats.revenue / stats.count) : 0;
+                html += `
+                    <tr>
+                        <td style="font-weight: 600;">${packageName}</td>
+                        <td>${stats.count}</td>
+                        <td>${stats.visitors}</td>
+                        <td style="font-weight: 600; color: var(--secondary-color);">Rp ${stats.revenue.toLocaleString('id-ID')}</td>
+                        <td>Rp ${avgRevenue.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Admin Performance -->
+                    <div>
+                        <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
+                            <i class="fas fa-users me-2"></i>Performa Admin
+                        </h5>
+                        <div class="data-table-container" style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Admin</th>
+                                        <th>Tiket</th>
+                                        <th>Pengunjung</th>
+                                        <th>Pendapatan</th>
+                                        <th>Kontribusi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+            `;
+            
+            Object.entries(adminStats).forEach(([adminName, stats]) => {
+                const contribution = totalRevenue > 0 ? ((stats.revenue / totalRevenue) * 100).toFixed(1) : 0;
+                html += `
+                    <tr>
+                        <td style="font-weight: 600;">${adminName}</td>
+                        <td>${stats.count}</td>
+                        <td>${stats.visitors}</td>
+                        <td style="font-weight: 600; color: var(--secondary-color);">Rp ${stats.revenue.toLocaleString('id-ID')}</td>
+                        <td>${contribution}%</td>
+                    </tr>
+                `;
+            });
+            
+            html += `
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: center; color: #666; font-size: 0.9rem;">
+                        <i class="fas fa-calendar me-1"></i>
+                        Laporan dibuat pada: ${new Date().toLocaleString('id-ID')}
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function downloadReport() {
+            const reportContent = document.getElementById('reportResults').innerHTML;
+            if (!reportContent || reportContent.includes('Pilih periode')) {
+                showAlert('❌ Generate report terlebih dahulu!', 'danger');
+                return;
+            }
+            
+            // Simple HTML to PDF download (in real implementation, use proper PDF library)
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Laporan Hutan Pinus Selow Bissoloro</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 2rem; }
+                            table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
+                            .stat-card { border: 1px solid #ddd; padding: 1rem; text-align: center; }
+                            @media print { body { margin: 1rem; } }
+                        </style>
+                    </head>
+                    <body>
+                        ${reportContent}
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+            
+            showAlert('🖨️ Dialog print dibuka. Pilih "Save as PDF" untuk download!', 'info');
+        }
+
+        // ========== UTILITIES ==========
+        
+        function showAlert(message, type = 'success') {
+            // Remove existing alerts
+            document.querySelectorAll('.alert').forEach(el => {
+                if (!el.closest('#loginAlert')) el.remove();
+            });
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 80px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1050;
+                min-width: 300px;
+                max-width: 90%;
+                border-radius: 12px;
+                border: none;
+                animation: slideDown 0.5s ease-out;
+            `;
+            
+            let iconClass = 'check-circle';
+            if (type === 'danger') iconClass = 'exclamation-triangle';
+            else if (type === 'warning') iconClass = 'exclamation-circle';
+            else if (type === 'info') iconClass = 'info-circle';
+            
+            alertDiv.innerHTML = `
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <span><i class="fas fa-${iconClass} me-2"></i>${message}</span>
+                    <button type="button" class="btn-close" onclick="this.parentElement.parentElement.remove()"></button>
+                </div>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                if (alertDiv.parentNode) alertDiv.remove();
+            }, 6000);
+        }
+
+        // ========== INITIALIZATION ==========
+        
+        function checkAuth() {
+            const savedUser = localStorage.getItem('pinuslo_current_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                if (currentUser.role === 'super-admin') {
+                    showSuperAdminApp();
+                } else {
+                    showRegularAdminApp();
+                }
+            } else {
+                showLoginPage();
+            }
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            console.log('Wisata Hutan Pinus Selow Bissoloro - Super Admin System loaded');
+            checkAuth();
+            
+            // Set default report dates
+            const today = new Date();
+            document.getElementById('reportStartDate').valueAsDate = today;
+            document.getElementById('reportEndDate').valueAsDate = today;
+        });
+
+        console.log('Super Admin JavaScript loaded successfully');
+    </script>
+</body>
+</html>
