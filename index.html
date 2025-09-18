@@ -683,6 +683,38 @@
             color: white;
         }
 
+        /* Ticket Management */
+        .ticket-item {
+            background: white;
+            margin: 0.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .ticket-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-family: monospace;
+        }
+
+        .ticket-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #d4edda;
+            color: #155724;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .stats-grid {
@@ -1114,18 +1146,169 @@
             </div>
         </div>
 
-        <div style="text-align: center; padding: 3rem; color: #666;">
-            <i class="fas fa-tools" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-            <h5>Area Admin Regular</h5>
-            <p>Masukkan form registrasi dan fitur admin regular disini</p>
-            <small>(Integrasikan dengan kode asli Anda)</small>
+        <!-- Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-item active" onclick="showRegularSection('registration')">
+                <i class="fas fa-plus-circle me-1"></i>Registrasi
+            </div>
+            <div class="mobile-nav-item" onclick="showRegularSection('history')">
+                <i class="fas fa-history me-1"></i>Riwayat
+            </div>
+            <div class="mobile-nav-item" onclick="showRegularSection('stats')">
+                <i class="fas fa-chart-bar me-1"></i>Statistik
+            </div>
+        </div>
+
+        <!-- Registration Section -->
+        <div id="registrationSection" class="content-section active">
+            <div class="mobile-card">
+                <div class="mobile-card-header">
+                    <i class="fas fa-user-plus me-2"></i>Form Registrasi Pengunjung
+                </div>
+                <form id="registrationForm" onsubmit="handleRegistration(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Nama Pengunjung</label>
+                            <input type="text" class="form-input" id="visitorName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">No. Telepon</label>
+                            <input type="tel" class="form-input" id="visitorPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Asal Daerah</label>
+                            <input type="text" class="form-input" id="visitorOrigin" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Jumlah Pengunjung</label>
+                            <input type="number" class="form-input" id="visitorCount" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Jenis Kunjungan</label>
+                            <select class="form-select" id="visitType" required onchange="calculateTotal()">
+                                <option value="">Pilih Paket</option>
+                                <option value="reguler" data-price="15000">Paket Reguler - Rp 15.000</option>
+                                <option value="premium" data-price="25000">Paket Premium - Rp 25.000</option>
+                                <option value="vip" data-price="35000">Paket VIP - Rp 35.000</option>
+                                <option value="group" data-price="12000">Paket Group (min 10 orang) - Rp 12.000</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Kunjungan</label>
+                            <input type="date" class="form-input" id="visitDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Total Pembayaran</label>
+                            <input type="text" class="form-input" id="totalPayment" readonly style="background-color: #f8f9fa; font-weight: bold; color: var(--primary-color);">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Catatan (Opsional)</label>
+                            <textarea class="form-input" id="visitorNotes" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <button type="submit" class="form-btn primary">
+                            <i class="fas fa-save me-1"></i>Daftar Pengunjung
+                        </button>
+                        <button type="button" class="form-btn secondary" onclick="resetRegistrationForm()">
+                            <i class="fas fa-refresh me-1"></i>Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="mobile-card">
+                <div class="mobile-card-header">
+                    <i class="fas fa-bolt me-2"></i>Aksi Cepat
+                </div>
+                <div style="padding: 1rem;">
+                    <div class="form-grid">
+                        <button class="form-btn primary" onclick="printLastTicket()">
+                            <i class="fas fa-print me-1"></i>Print Tiket Terakhir
+                        </button>
+                        <button class="form-btn secondary" onclick="showTodayStats()">
+                            <i class="fas fa-calendar-day me-1"></i>Statistik Hari Ini
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div id="historySection" class="content-section">
+            <div class="mobile-card">
+                <div class="mobile-card-header">
+                    <i class="fas fa-history me-2"></i>Riwayat Registrasi
+                </div>
+                <div style="padding: 1rem;">
+                    <div class="form-grid" style="margin-bottom: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Filter Tanggal</label>
+                            <input type="date" class="form-input" id="regularFilterDate" onchange="filterRegularHistory()">
+                        </div>
+                        <div class="form-group">
+                            <button class="form-btn primary" onclick="refreshRegularHistory()">
+                                <i class="fas fa-refresh me-1"></i>Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="regularHistoryList" style="max-height: 60vh; overflow-y: auto;">
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                        <p>Memuat riwayat...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div id="statsSection" class="content-section">
+            <div class="mobile-card">
+                <div class="mobile-card-header">
+                    <i class="fas fa-chart-bar me-2"></i>Statistik Saya
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="myTodayTickets">0</div>
+                        <div class="stat-label">Tiket Hari Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="myTodayVisitors">0</div>
+                        <div class="stat-label">Pengunjung Hari Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="myTodayRevenue">Rp 0</div>
+                        <div class="stat-label">Pendapatan Hari Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="myMonthTickets">0</div>
+                        <div class="stat-label">Total Bulan Ini</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mobile-card">
+                <div class="mobile-card-header">
+                    <i class="fas fa-trophy me-2"></i>Pencapaian
+                </div>
+                <div style="padding: 1rem;">
+                    <div id="achievements">
+                        <div style="text-align: center; padding: 2rem; color: #666;">
+                            <i class="fas fa-medal" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                            <p>Pencapaian akan muncul berdasarkan kinerja Anda</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, orderBy, query, where } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, orderBy, query, where, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
 
         // Firebase Configuration
         const firebaseConfig = {
@@ -1153,6 +1336,7 @@
         window.orderBy = orderBy;
         window.query = query;
         window.where = where;
+        window.serverTimestamp = serverTimestamp;
         
         console.log('Firebase initialized successfully');
     </script>
@@ -1163,6 +1347,16 @@
         let allTicketsData = [];
         let allUsersData = [];
         let editingUserId = null;
+        let ticketCounter = 1;
+        let myTicketsData = [];
+
+        // Package prices
+        const packagePrices = {
+            'reguler': 15000,
+            'premium': 25000,
+            'vip': 35000,
+            'group': 12000
+        };
 
         // Enhanced Users with Super Admin
         const systemUsers = [
@@ -1262,6 +1456,9 @@
             
             document.getElementById('currentRegularUser').textContent = currentUser.fullName;
             updateLoginUI(false);
+            
+            // Initialize regular admin features
+            initializeRegularAdmin();
         }
 
         function showLoginPage() {
@@ -1319,6 +1516,23 @@
                 loadUsersData();
             } else if (section === 'reports') {
                 // Reports section doesn't need auto-load
+            }
+        }
+
+        function showRegularSection(section) {
+            // Remove active from all sections and nav items
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(section + 'Section').classList.add('active');
+            event.target.classList.add('active');
+            
+            // Load section specific data
+            if (section === 'history') {
+                loadRegularHistory();
+            } else if (section === 'stats') {
+                updateRegularStats();
             }
         }
 
@@ -2007,6 +2221,313 @@
             showAlert('Dialog print dibuka. Pilih "Save as PDF" untuk download!', 'info');
         }
 
+        // ========== REGULAR ADMIN FUNCTIONS ==========
+        
+        function initializeRegularAdmin() {
+            console.log('Initializing Regular Admin for:', currentUser.username);
+            
+            // Set today's date as default
+            document.getElementById('visitDate').valueAsDate = new Date();
+            document.getElementById('regularFilterDate').valueAsDate = new Date();
+            
+            // Add event listeners
+            document.getElementById('visitorCount').addEventListener('input', calculateTotal);
+            
+            // Load data
+            loadMyTicketsData();
+            updateRegularStats();
+        }
+
+        async function loadMyTicketsData() {
+            try {
+                // Load tickets created by current user
+                const q = window.query(
+                    window.collection(window.db, 'registrasi'),
+                    window.where('createdBy', '==', currentUser.username),
+                    window.orderBy('timestamp', 'desc')
+                );
+                const querySnapshot = await window.getDocs(q);
+                
+                myTicketsData = [];
+                querySnapshot.forEach((doc) => {
+                    myTicketsData.push({ id: doc.id, ...doc.data() });
+                });
+                
+                console.log('Loaded tickets for', currentUser.username, ':', myTicketsData.length);
+                updateRegularStats();
+                
+            } catch (error) {
+                console.error('Error loading my tickets data:', error);
+                // Fallback to localStorage for demo
+                const localData = localStorage.getItem('myTickets_' + currentUser.username);
+                if (localData) {
+                    myTicketsData = JSON.parse(localData);
+                }
+            }
+        }
+
+        function calculateTotal() {
+            const visitType = document.getElementById('visitType');
+            const visitorCount = parseInt(document.getElementById('visitorCount').value) || 0;
+            const totalPaymentField = document.getElementById('totalPayment');
+            
+            if (visitType.value && visitorCount > 0) {
+                const price = parseInt(visitType.selectedOptions[0].dataset.price) || 0;
+                const total = price * visitorCount;
+                totalPaymentField.value = 'Rp ' + total.toLocaleString('id-ID');
+            } else {
+                totalPaymentField.value = '';
+            }
+        }
+
+        function generateTicketNumber() {
+            const today = new Date();
+            const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
+            const timeStr = today.toTimeString().slice(0, 8).replace(/:/g, '');
+            return `PINUS-${dateStr}-${timeStr}-${String(ticketCounter++).padStart(3, '0')}`;
+        }
+
+        function calculateTotalAmount() {
+            const visitType = document.getElementById('visitType').value;
+            const visitorCount = parseInt(document.getElementById('visitorCount').value) || 0;
+            const price = packagePrices[visitType] || 0;
+            return price * visitorCount;
+        }
+
+        async function handleRegistration(event) {
+            event.preventDefault();
+            
+            const formData = {
+                nomorTiket: generateTicketNumber(),
+                namaVisitor: document.getElementById('visitorName').value,
+                noTelepon: document.getElementById('visitorPhone').value,
+                asalDaerah: document.getElementById('visitorOrigin').value,
+                jumlahOrang: parseInt(document.getElementById('visitorCount').value),
+                jenisKunjungan: document.getElementById('visitType').value,
+                tanggalKunjungan: document.getElementById('visitDate').value,
+                catatan: document.getElementById('visitorNotes').value,
+                petugasLoket: currentUser.fullName,
+                createdBy: currentUser.username,
+                timestamp: window.serverTimestamp(),
+                total: calculateTotalAmount()
+            };
+
+            try {
+                // Save to Firebase
+                await window.addDoc(window.collection(window.db, 'registrasi'), formData);
+                
+                // Add to local array
+                formData.timestamp = new Date(); // For local display
+                myTicketsData.unshift(formData);
+                
+                // Save to localStorage as backup
+                localStorage.setItem('myTickets_' + currentUser.username, JSON.stringify(myTicketsData));
+                
+                showAlert('Registrasi berhasil! Nomor tiket: ' + formData.nomorTiket, 'success');
+                
+                // Reset form
+                resetRegistrationForm();
+                
+                // Update stats
+                updateRegularStats();
+                
+                // Show print option
+                if (confirm('Apakah Anda ingin mencetak tiket sekarang?')) {
+                    printTicket(formData);
+                }
+                
+            } catch (error) {
+                console.error('Error saving ticket:', error);
+                showAlert('Gagal menyimpan data: ' + error.message, 'danger');
+            }
+        }
+
+        function resetRegistrationForm() {
+            document.getElementById('registrationForm').reset();
+            document.getElementById('visitDate').valueAsDate = new Date();
+            document.getElementById('totalPayment').value = '';
+        }
+
+        function printTicket(ticketData) {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Tiket Hutan Pinus Selow Bissoloro</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+                            .ticket { border: 2px solid #3e7820; padding: 20px; max-width: 400px; margin: 0 auto; border-radius: 10px; }
+                            .header { color: #3e7820; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
+                            .info { text-align: left; margin: 10px 0; }
+                            .total { font-size: 18px; font-weight: bold; color: #3e7820; margin-top: 20px; }
+                            .footer { margin-top: 20px; font-size: 12px; color: #666; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="ticket">
+                            <div class="header">🌲 HUTAN PINUS SELOW BISSOLORO 🌲</div>
+                            <div class="info"><strong>No. Tiket:</strong> ${ticketData.nomorTiket}</div>
+                            <div class="info"><strong>Nama:</strong> ${ticketData.namaVisitor}</div>
+                            <div class="info"><strong>Telepon:</strong> ${ticketData.noTelepon}</div>
+                            <div class="info"><strong>Asal:</strong> ${ticketData.asalDaerah}</div>
+                            <div class="info"><strong>Jumlah:</strong> ${ticketData.jumlahOrang} orang</div>
+                            <div class="info"><strong>Paket:</strong> ${ticketData.jenisKunjungan}</div>
+                            <div class="info"><strong>Tanggal:</strong> ${ticketData.tanggalKunjungan}</div>
+                            <div class="info"><strong>Petugas:</strong> ${ticketData.petugasLoket}</div>
+                            <div class="total">Total: Rp ${ticketData.total.toLocaleString('id-ID')}</div>
+                            <div class="footer">
+                                Selamat menikmati keindahan alam Hutan Pinus Selow Bissoloro!<br>
+                                Dicetak pada: ${new Date().toLocaleString('id-ID')}
+                            </div>
+                        </div>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function printLastTicket() {
+            if (myTicketsData.length > 0) {
+                const lastTicket = myTicketsData[0];
+                printTicket(lastTicket);
+            } else {
+                showAlert('Belum ada tiket yang dibuat', 'warning');
+            }
+        }
+
+        function showTodayStats() {
+            const today = new Date().toDateString();
+            const todayTickets = myTicketsData.filter(ticket => {
+                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                return ticketDate.toDateString() === today;
+            });
+            
+            const todayTotal = todayTickets.length;
+            const todayVisitors = todayTickets.reduce((sum, ticket) => sum + ticket.jumlahOrang, 0);
+            const todayRevenue = todayTickets.reduce((sum, ticket) => sum + ticket.total, 0);
+            
+            alert(`Statistik Hari Ini:\n\nTotal Tiket: ${todayTotal}\nTotal Pengunjung: ${todayVisitors}\nTotal Pendapatan: Rp ${todayRevenue.toLocaleString('id-ID')}`);
+        }
+
+        function loadRegularHistory() {
+            const historyList = document.getElementById('regularHistoryList');
+            
+            if (myTicketsData.length === 0) {
+                historyList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Belum ada riwayat registrasi</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            myTicketsData.forEach(ticket => {
+                const date = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                html += `
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div class="ticket-number">${ticket.nomorTiket}</div>
+                            <div class="ticket-status">Selesai</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                            <strong>${ticket.namaVisitor}</strong> • ${ticket.jumlahOrang} orang<br>
+                            ${ticket.jenisKunjungan} • Rp ${ticket.total.toLocaleString('id-ID')}<br>
+                            <small>${date.toLocaleDateString('id-ID')} ${date.toLocaleTimeString('id-ID')}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historyList.innerHTML = html;
+        }
+
+        function updateRegularStats() {
+            const today = new Date().toDateString();
+            const todayTickets = myTicketsData.filter(ticket => {
+                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                return ticketDate.toDateString() === today;
+            });
+            
+            const todayTotal = todayTickets.length;
+            const todayVisitors = todayTickets.reduce((sum, ticket) => sum + ticket.jumlahOrang, 0);
+            const todayRevenue = todayTickets.reduce((sum, ticket) => sum + ticket.total, 0);
+            
+            // Get month stats
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const monthTickets = myTicketsData.filter(ticket => {
+                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                return ticketDate.getMonth() === currentMonth && ticketDate.getFullYear() === currentYear;
+            });
+            
+            const monthTotal = monthTickets.length;
+            
+            // Update UI
+            if (document.getElementById('myTodayTickets')) {
+                document.getElementById('myTodayTickets').textContent = todayTotal;
+                document.getElementById('myTodayVisitors').textContent = todayVisitors;
+                document.getElementById('myTodayRevenue').textContent = 'Rp ' + todayRevenue.toLocaleString('id-ID');
+                document.getElementById('myMonthTickets').textContent = monthTotal;
+            }
+        }
+
+        function refreshRegularHistory() {
+            loadMyTicketsData().then(() => {
+                loadRegularHistory();
+                showAlert('Riwayat berhasil diperbarui', 'success');
+            });
+        }
+
+        function filterRegularHistory() {
+            const filterDate = document.getElementById('regularFilterDate').value;
+            if (!filterDate) {
+                loadRegularHistory();
+                return;
+            }
+            
+            const selectedDate = new Date(filterDate).toDateString();
+            const filteredTickets = myTicketsData.filter(ticket => {
+                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                return ticketDate.toDateString() === selectedDate;
+            });
+            
+            const historyList = document.getElementById('regularHistoryList');
+            
+            if (filteredTickets.length === 0) {
+                historyList.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Tidak ada data untuk tanggal ${new Date(filterDate).toLocaleDateString('id-ID')}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filteredTickets.forEach(ticket => {
+                const date = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
+                html += `
+                    <div class="ticket-item">
+                        <div class="ticket-header">
+                            <div class="ticket-number">${ticket.nomorTiket}</div>
+                            <div class="ticket-status">Selesai</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                            <strong>${ticket.namaVisitor}</strong> • ${ticket.jumlahOrang} orang<br>
+                            ${ticket.jenisKunjungan} • Rp ${ticket.total.toLocaleString('id-ID')}<br>
+                            <small>${date.toLocaleDateString('id-ID')} ${date.toLocaleTimeString('id-ID')}</small>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historyList.innerHTML = html;
+            showAlert(`Menampilkan ${filteredTickets.length} data untuk tanggal ${new Date(filterDate).toLocaleDateString('id-ID')}`, 'info');
+        }
+
         // ========== UTILITIES ==========
         
         function showAlert(message, type = 'success') {
@@ -2028,17 +2549,42 @@
                 border-radius: 12px;
                 border: none;
                 animation: slideDown 0.5s ease-out;
+                padding: 1rem 1.5rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             `;
             
             let iconClass = 'check-circle';
-            if (type === 'danger') iconClass = 'exclamation-triangle';
-            else if (type === 'warning') iconClass = 'exclamation-circle';
-            else if (type === 'info') iconClass = 'info-circle';
+            let bgColor = '#d4edda';
+            let textColor = '#155724';
+            let borderColor = '#c3e6cb';
+            
+            if (type === 'danger') {
+                iconClass = 'exclamation-triangle';
+                bgColor = '#f8d7da';
+                textColor = '#721c24';
+                borderColor = '#f5c6cb';
+            } else if (type === 'warning') {
+                iconClass = 'exclamation-circle';
+                bgColor = '#fff3cd';
+                textColor = '#856404';
+                borderColor = '#ffeaa7';
+            } else if (type === 'info') {
+                iconClass = 'info-circle';
+                bgColor = '#d1ecf1';
+                textColor = '#0c5460';
+                borderColor = '#bee5eb';
+            }
+            
+            alertDiv.style.backgroundColor = bgColor;
+            alertDiv.style.color = textColor;
+            alertDiv.style.border = `1px solid ${borderColor}`;
             
             alertDiv.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                     <span><i class="fas fa-${iconClass} me-2"></i>${message}</span>
-                    <button type="button" class="btn-close" onclick="this.parentElement.parentElement.remove()"></button>
+                    <button type="button" style="background: none; border: none; color: ${textColor}; cursor: pointer; padding: 0; margin-left: 1rem;" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             `;
             
@@ -2049,12 +2595,23 @@
             }, 6000);
         }
 
+        // Add slideDown animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
         // ========== INITIALIZATION ==========
         
         function checkAuth() {
             const savedUser = localStorage.getItem('pinuslo_current_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
+                console.log('Resuming session for:', currentUser.username);
                 if (currentUser.role === 'super-admin') {
                     showSuperAdminApp();
                 } else {
@@ -2067,16 +2624,25 @@
 
         // Initialize when page loads
         window.addEventListener('load', function() {
-            console.log('Wisata Hutan Pinus Selow Bissoloro - Super Admin System loaded');
+            console.log('Wisata Hutan Pinus Selow Bissoloro - Complete Admin System loaded');
             checkAuth();
             
-            // Set default report dates
+            // Set default report dates for super admin
             const today = new Date();
-            document.getElementById('reportStartDate').valueAsDate = today;
-            document.getElementById('reportEndDate').valueAsDate = today;
+            if (document.getElementById('reportStartDate')) {
+                document.getElementById('reportStartDate').valueAsDate = today;
+                document.getElementById('reportEndDate').valueAsDate = today;
+            }
         });
 
-        console.log('Super Admin JavaScript loaded successfully');
+        // Add global error handler
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            showAlert('Terjadi kesalahan sistem. Silakan refresh halaman.', 'danger');
+        });
+
+        console.log('Complete Admin System JavaScript loaded successfully');
+        console.log('Available users:', systemUsers.map(u => u.username + ' (' + u.role + ')'));
     </script>
 </body>
 </html>
