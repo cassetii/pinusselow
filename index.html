@@ -1176,10 +1176,6 @@
                             <input type="tel" class="form-input" id="visitorPhone" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Asal Daerah</label>
-                            <input type="text" class="form-input" id="visitorOrigin" required>
-                        </div>
-                        <div class="form-group">
                             <label class="form-label">Jumlah Pengunjung</label>
                             <input type="number" class="form-input" id="visitorCount" min="1" required>
                         </div>
@@ -1187,10 +1183,9 @@
                             <label class="form-label">Jenis Kunjungan</label>
                             <select class="form-select" id="visitType" required onchange="calculateTotal()">
                                 <option value="">Pilih Paket</option>
-                                <option value="reguler" data-price="15000">Paket Reguler - Rp 15.000</option>
-                                <option value="premium" data-price="25000">Paket Premium - Rp 25.000</option>
-                                <option value="vip" data-price="35000">Paket VIP - Rp 35.000</option>
-                                <option value="group" data-price="12000">Paket Group (min 10 orang) - Rp 12.000</option>
+                                <option value="reguler" data-price="10000">Kunjungan Biasa - Rp 10.000</option>
+                                <option value="premium" data-price="15000">Camp Weekdays - Rp 15.000</option>
+                                <option value="vip" data-price="20000">Camp Weekend - Rp 20.000</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -2301,7 +2296,6 @@
                 nomorTiket: generateTicketNumber(),
                 namaVisitor: document.getElementById('visitorName').value,
                 noTelepon: document.getElementById('visitorPhone').value,
-                asalDaerah: document.getElementById('visitorOrigin').value,
                 jumlahOrang: parseInt(document.getElementById('visitorCount').value),
                 jenisKunjungan: document.getElementById('visitType').value,
                 tanggalKunjungan: document.getElementById('visitDate').value,
@@ -2369,7 +2363,6 @@
                             <div class="info"><strong>No. Tiket:</strong> ${ticketData.nomorTiket}</div>
                             <div class="info"><strong>Nama:</strong> ${ticketData.namaVisitor}</div>
                             <div class="info"><strong>Telepon:</strong> ${ticketData.noTelepon}</div>
-                            <div class="info"><strong>Asal:</strong> ${ticketData.asalDaerah}</div>
                             <div class="info"><strong>Jumlah:</strong> ${ticketData.jumlahOrang} orang</div>
                             <div class="info"><strong>Paket:</strong> ${ticketData.jenisKunjungan}</div>
                             <div class="info"><strong>Tanggal:</strong> ${ticketData.tanggalKunjungan}</div>
@@ -2646,3 +2639,4 @@
     </script>
 </body>
 </html>
+
