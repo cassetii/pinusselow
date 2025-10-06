@@ -1681,13 +1681,13 @@
             </div>
 
             <div class="ticket-actions">
-                <button class="ticket-btn ticket-btn-print" onclick="printTicketModal()">
-                    <i class="fas fa-print me-2"></i>Print / Export PDF
-                </button>
-                <button class="ticket-btn ticket-btn-close" onclick="closeTicketModal()">
-                    <i class="fas fa-times me-2"></i>Tutup
-                </button>
-            </div>
+    <button class="ticket-btn ticket-btn-print" onclick="downloadTicketAsJPG()">
+        <i class="fas fa-download me-2"></i>Download JPG
+    </button>
+    <button class="ticket-btn ticket-btn-close" onclick="closeTicketModal()">
+        <i class="fas fa-times me-2"></i>Tutup
+    </button>
+</div>
         </div>
     </div>
 
@@ -1760,83 +1760,153 @@
 
         // ========== TICKET MODAL FUNCTIONS ==========
 
-        function generateBarcode(text) {
-            if (!text) text = '0000000000';
-            const patterns = [];
-            for (let i = 0; i < text.length; i++) {
-                const charCode = text.charCodeAt(i);
-                patterns.push(charCode % 2);
-                patterns.push((charCode + 1) % 2);
-            }
-            while (patterns.length < 20) {
-                patterns.push(patterns.length % 2);
-            }
-            return patterns.slice(0, 20);
+        // ========== TICKET MODAL FUNCTIONS ==========
+
+function generateBarcode(text) {
+    if (!text) text = '0000000000';
+    const patterns = [];
+    for (let i = 0; i < text.length; i++) {
+        const charCode = text.charCodeAt(i);
+        patterns.push(charCode % 2);
+        patterns.push((charCode + 1) % 2);
+    }
+    while (patterns.length < 20) {
+        patterns.push(patterns.length % 2);
+    }
+    return patterns.slice(0, 20);
+}
+
+function updateTicketModal(ticketData) {
+    document.getElementById('ticketNumber').textContent = ticketData.nomorTiket || '................';
+    document.getElementById('ticketPeople').textContent = ticketData.jumlahOrang || '..........';
+    
+    const categoryMap = {
+        'reguler': 'Kunjungan Biasa',
+        'premium': 'Camp Weekdays',
+        'vip': 'Camp Weekend'
+    };
+    document.getElementById('ticketCategory').textContent = categoryMap[ticketData.jenisKunjungan] || ticketData.jenisKunjungan || '..........';
+    
+    document.getElementById('ticketPrice').textContent = 'Rp. ' + (ticketData.total ? ticketData.total.toLocaleString('id-ID') : '...............');
+    
+    if (ticketData.tanggalKunjungan) {
+        const date = new Date(ticketData.tanggalKunjungan);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        document.getElementById('ticketDate').textContent = `${day}/${month}/${year}`;
+    } else {
+        document.getElementById('ticketDate').textContent = 'DD/MM/YYYY';
+    }
+    
+    const barcodeData = generateBarcode(ticketData.nomorTiket || '0000000000');
+    const barcodeSvg = document.getElementById('ticketBarcode');
+    let barcodeHTML = '';
+    barcodeData.forEach((bar, index) => {
+        const width = bar ? "8" : "4";
+        const fill = bar ? "#1a1a1a" : "#e0e0e0";
+        barcodeHTML += `<rect x="${index * 10}" y="0" width="${width}" height="60" fill="${fill}"/>`;
+    });
+    barcodeSvg.innerHTML = barcodeHTML;
+}
+
+function openTicketModal(ticketData) {
+    updateTicketModal(ticketData);
+    document.getElementById('ticketModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTicketModal() {
+    document.getElementById('ticketModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// FUNGSI BARU: Download sebagai JPG
+async function downloadTicketAsJPG() {
+    const ticketPreview = document.getElementById('ticketPreview');
+    const ticketNumber = document.getElementById('ticketNumber').textContent;
+    
+    // Tampilkan loading
+    const originalHTML = document.querySelector('.ticket-actions').innerHTML;
+    document.querySelector('.ticket-actions').innerHTML = `
+        <div style="text-align: center; padding: 1rem;">
+            <div class="spinner" style="margin: 0 auto 0.5rem;"></div>
+            <p style="color: var(--primary-color); font-weight: 600;">Membuat gambar tiket...</p>
+        </div>
+    `;
+
+    try {
+        // Load html2canvas dari CDN jika belum ada
+        if (typeof html2canvas === 'undefined') {
+            await loadHtml2Canvas();
         }
 
-        function updateTicketModal(ticketData) {
-            // Update ticket number
-            document.getElementById('ticketNumber').textContent = ticketData.nomorTiket || '................';
-            
-            // Update people count
-            document.getElementById('ticketPeople').textContent = ticketData.jumlahOrang || '..........';
-            
-            // Update category
-            const categoryMap = {
-                'reguler': 'Kunjungan Biasa',
-                'premium': 'Camp Weekdays',
-                'vip': 'Camp Weekend'
-            };
-            document.getElementById('ticketCategory').textContent = categoryMap[ticketData.jenisKunjungan] || ticketData.jenisKunjungan || '..........';
-            
-            // Update price
-            document.getElementById('ticketPrice').textContent = 'Rp. ' + (ticketData.total ? ticketData.total.toLocaleString('id-ID') : '...............');
-            
-            // Update date
-            if (ticketData.tanggalKunjungan) {
-                const date = new Date(ticketData.tanggalKunjungan);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = String(date.getFullYear()).slice(-2);
-                document.getElementById('ticketDate').textContent = `${day}/${month}/${year}`;
-            } else {
-                document.getElementById('ticketDate').textContent = 'xx/xx/xx';
-            }
-            
-            // Generate barcode
-            const barcodeData = generateBarcode(ticketData.nomorTiket || '0000000000');
-            const barcodeSvg = document.getElementById('ticketBarcode');
-            let barcodeHTML = '';
-            barcodeData.forEach((bar, index) => {
-                const width = bar ? "8" : "4";
-                const fill = bar ? "#1a1a1a" : "#e0e0e0";
-                barcodeHTML += `<rect x="${index * 10}" y="0" width="${width}" height="60" fill="${fill}"/>`;
-            });
-            barcodeSvg.innerHTML = barcodeHTML;
-        }
+        // Capture tiket sebagai canvas dengan kualitas tinggi
+        const canvas = await html2canvas(ticketPreview, {
+            scale: 3, // Kualitas tinggi (3x resolusi)
+            backgroundColor: null,
+            logging: false,
+            useCORS: true,
+            allowTaint: true
+        });
 
-        function openTicketModal(ticketData) {
-            updateTicketModal(ticketData);
-            document.getElementById('ticketModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+        // Konversi canvas ke JPG
+        canvas.toBlob(function(blob) {
+            // Buat URL untuk download
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            
+            // Set nama file dengan nomor tiket dan timestamp
+            const fileName = `Tiket_${ticketNumber}_${new Date().getTime()}.jpg`;
+            link.href = url;
+            link.download = fileName;
+            
+            // Trigger download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Cleanup
+            URL.revokeObjectURL(url);
+            
+            // Restore tombol
+            document.querySelector('.ticket-actions').innerHTML = originalHTML;
+            
+            // Tampilkan notifikasi sukses
+            showAlert('Tiket berhasil diunduh sebagai JPG!', 'success');
+            
+        }, 'image/jpeg', 0.95); // JPG dengan kualitas 95%
 
-        function closeTicketModal() {
-            document.getElementById('ticketModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
+    } catch (error) {
+        console.error('Error generating JPG:', error);
+        document.querySelector('.ticket-actions').innerHTML = originalHTML;
+        showAlert('Gagal membuat gambar tiket. Coba lagi!', 'danger');
+    }
+}
 
-        function printTicketModal() {
-            window.print();
-        }
+// Fungsi untuk load html2canvas library
+function loadHtml2Canvas() {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+    });
+}
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('ticketModal');
-            if (event.target == modal) {
-                closeTicketModal();
-            }
-        }
+// Ganti fungsi printTicketModal dengan downloadTicketAsJPG
+function printTicketModal() {
+    downloadTicketAsJPG();
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    const modal = document.getElementById('ticketModal');
+    if (event.target == modal) {
+        closeTicketModal();
+    }
+}
 
         // ========== PASSWORD TOGGLE ==========
         
@@ -3012,3 +3082,4 @@
     </script>
 </body>
 </html>
+
