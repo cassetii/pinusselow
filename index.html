@@ -715,6 +715,256 @@
             color: #155724;
         }
 
+        /* Ticket Modal Styles */
+        .ticket-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            overflow: auto;
+        }
+
+        .ticket-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ticket-modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 90%;
+            position: relative;
+        }
+
+        .ticket-close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .ticket-close:hover {
+            color: #000;
+        }
+
+        .ticket-preview {
+            position: relative;
+            background: linear-gradient(to right, #5eead4 0%, #93c5fd 50%, #93c5fd 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 280px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .ticket-decorations {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .ticket-decorations svg {
+            width: 100px;
+            height: 100px;
+        }
+
+        .ticket-content {
+            display: flex;
+            height: 100%;
+        }
+
+        .ticket-left {
+            flex: 1;
+            padding: 24px;
+            position: relative;
+        }
+
+        .ticket-logo {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, #fb923c 0%, #fbbf24 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #dc2626;
+            box-shadow: 0 8px 25px rgba(251, 146, 60, 0.4);
+        }
+
+        .ticket-logo-inner {
+            text-align: center;
+            color: white;
+        }
+
+        .ticket-logo-text-top {
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .ticket-logo-text-main {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fde047;
+            margin: 4px 0;
+        }
+
+        .ticket-logo-text-bottom {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .ticket-header-info {
+            margin-left: 130px;
+            margin-top: 8px;
+        }
+
+        .ticket-header-row {
+            display: flex;
+            gap: 32px;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .ticket-title {
+            margin-left: 130px;
+            margin-top: 12px;
+        }
+
+        .ticket-title h1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #115e59;
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        .ticket-title-sub {
+            color: #0f766e;
+        }
+
+        .ticket-bottom-info {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 130px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .ticket-category {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .ticket-price {
+            background: #0f766e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 9999px;
+            display: inline-block;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .ticket-info-section {
+            margin-left: auto;
+        }
+
+        .ticket-info-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .ticket-info-list {
+            font-size: 12px;
+            color: #1f2937;
+        }
+
+        .ticket-info-list > div {
+            margin-bottom: 4px;
+        }
+
+        .ticket-date-badge {
+            position: absolute;
+            top: 24px;
+            right: 130px;
+            background: #0f766e;
+            color: white;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .ticket-right {
+            width: 128px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 2px dashed #d1d5db;
+        }
+
+        .ticket-barcode {
+            transform: rotate(90deg);
+        }
+
+        .ticket-barcode rect {
+            transition: none;
+        }
+
+        .ticket-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .ticket-btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .ticket-btn-print {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .ticket-btn-close {
+            background: #6c757d;
+            color: white;
+        }
+
+        .ticket-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .stats-grid {
@@ -736,6 +986,36 @@
             .login-card {
                 margin: 0.5rem;
                 padding: 2rem;
+            }
+
+            .ticket-preview {
+                height: auto;
+                min-height: 400px;
+            }
+
+            .ticket-content {
+                flex-direction: column;
+            }
+
+            .ticket-right {
+                width: 100%;
+                height: 100px;
+                border-left: none;
+                border-top: 2px dashed #d1d5db;
+            }
+
+            .ticket-barcode {
+                transform: rotate(0deg);
+            }
+
+            .ticket-date-badge {
+                right: 24px;
+            }
+
+            .ticket-bottom-info {
+                flex-direction: column;
+                align-items: flex-start;
+                right: 24px;
             }
         }
 
@@ -814,6 +1094,31 @@
             bottom: 15%;
             right: 15%;
             transform: rotate(10deg);
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .ticket-modal, .ticket-modal * {
+                visibility: visible;
+            }
+            .ticket-modal {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: white;
+            }
+            .ticket-actions, .ticket-close {
+                display: none !important;
+            }
+            .ticket-modal-content {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -1206,6 +1511,7 @@
                             <i class="fas fa-save me-1"></i>Simpan Data
                         </button>
                         <button type="button" class="form-btn secondary" onclick="resetRegistrationForm()">
+                            <i class="fas fa-times me-1"></i>Reset
                         </button>
                     </div>
                 </form>
@@ -1296,6 +1602,95 @@
         </div>
     </div>
 
+    <!-- Ticket Modal -->
+    <div id="ticketModal" class="ticket-modal">
+        <div class="ticket-modal-content">
+            <span class="ticket-close" onclick="closeTicketModal()">&times;</span>
+            
+            <div class="ticket-preview" id="ticketPreview">
+                <!-- Decorations -->
+                <div class="ticket-decorations">
+                    <svg viewBox="0 0 100 100">
+                        <path d="M50,10 L60,40 L90,40 L65,60 L75,90 L50,70 L25,90 L35,60 L10,40 L40,40 Z" fill="white" opacity="0.5"/>
+                    </svg>
+                </div>
+                <div style="position: absolute; top: 40px; left: 80px; width: 32px; height: 32px; background: white; border-radius: 50%; opacity: 0.2;"></div>
+                <div style="position: absolute; bottom: 80px; left: 160px; width: 48px; height: 48px; background: white; border-radius: 50%; opacity: 0.15;"></div>
+                <div style="position: absolute; top: 50%; left: 40px; color: white; opacity: 0.2; font-size: 32px;">★</div>
+                <div style="position: absolute; top: 80px; left: 128px; color: white; opacity: 0.25; font-size: 48px;">✦</div>
+
+                <div class="ticket-content">
+                    <!-- Left Section -->
+                    <div class="ticket-left">
+                        <!-- Logo -->
+                        <div class="ticket-logo">
+                            <div class="ticket-logo-inner">
+                                <div class="ticket-logo-text-top">WISATA HUTAN/PINUS</div>
+                                <div class="ticket-logo-text-main">SELOW</div>
+                                <div class="ticket-logo-text-bottom">BISSOLORO</div>
+                            </div>
+                        </div>
+
+                        <!-- Header Info -->
+                        <div class="ticket-header-info">
+                            <div class="ticket-header-row">
+                                <div>Number : <span id="ticketNumber" style="font-weight: 600;">................</span></div>
+                                <div>Berlaku Untuk : <span id="ticketPeople" style="font-weight: 600;">..........</span> orang</div>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="ticket-title">
+                            <h1>
+                                Tiket Wisata<br>
+                                <span class="ticket-title-sub">Pinus Selow Bissoloro</span>
+                            </h1>
+                        </div>
+
+                        <!-- Bottom Info -->
+                        <div class="ticket-bottom-info">
+                            <div>
+                                <div class="ticket-category">
+                                    Kategori Kunjungan : <span id="ticketCategory" style="font-weight: 600;">..........</span>
+                                </div>
+                                <div class="ticket-price" id="ticketPrice">
+                                    Rp. ...............
+                                </div>
+                            </div>
+                            <div class="ticket-info-section">
+                                <div class="ticket-info-title">Info Lebih Lanjut :</div>
+                                <div class="ticket-info-list">
+                                    <div>🌐 www.pinuslobissoloro.com</div>
+                                    <div>📱 0816 4342 890, 0887 5941 607</div>
+                                    <div>📷 pinusselowbissoloro.id2, @pinusloglamping</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Date Badge -->
+                        <div class="ticket-date-badge" id="ticketDate">xx/xx/xx</div>
+                    </div>
+
+                    <!-- Right Section - Barcode -->
+                    <div class="ticket-right">
+                        <svg class="ticket-barcode" width="200" height="60" id="ticketBarcode">
+                            <!-- Barcode will be generated here -->
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ticket-actions">
+                <button class="ticket-btn ticket-btn-print" onclick="printTicketModal()">
+                    <i class="fas fa-print me-2"></i>Print / Export PDF
+                </button>
+                <button class="ticket-btn ticket-btn-close" onclick="closeTicketModal()">
+                    <i class="fas fa-times me-2"></i>Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
@@ -1343,10 +1738,9 @@
 
         // Package prices
         const packagePrices = {
-            'reguler': 15000,
-            'premium': 25000,
-            'vip': 35000,
-            'group': 12000
+            'reguler': 10000,
+            'premium': 15000,
+            'vip': 20000
         };
 
         // Enhanced Users with Super Admin
@@ -1362,6 +1756,86 @@
         // Initialize users in localStorage if not exists
         if (!localStorage.getItem('pinuslo_users')) {
             localStorage.setItem('pinuslo_users', JSON.stringify(systemUsers));
+        }
+
+        // ========== TICKET MODAL FUNCTIONS ==========
+
+        function generateBarcode(text) {
+            if (!text) text = '0000000000';
+            const patterns = [];
+            for (let i = 0; i < text.length; i++) {
+                const charCode = text.charCodeAt(i);
+                patterns.push(charCode % 2);
+                patterns.push((charCode + 1) % 2);
+            }
+            while (patterns.length < 20) {
+                patterns.push(patterns.length % 2);
+            }
+            return patterns.slice(0, 20);
+        }
+
+        function updateTicketModal(ticketData) {
+            // Update ticket number
+            document.getElementById('ticketNumber').textContent = ticketData.nomorTiket || '................';
+            
+            // Update people count
+            document.getElementById('ticketPeople').textContent = ticketData.jumlahOrang || '..........';
+            
+            // Update category
+            const categoryMap = {
+                'reguler': 'Kunjungan Biasa',
+                'premium': 'Camp Weekdays',
+                'vip': 'Camp Weekend'
+            };
+            document.getElementById('ticketCategory').textContent = categoryMap[ticketData.jenisKunjungan] || ticketData.jenisKunjungan || '..........';
+            
+            // Update price
+            document.getElementById('ticketPrice').textContent = 'Rp. ' + (ticketData.total ? ticketData.total.toLocaleString('id-ID') : '...............');
+            
+            // Update date
+            if (ticketData.tanggalKunjungan) {
+                const date = new Date(ticketData.tanggalKunjungan);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = String(date.getFullYear()).slice(-2);
+                document.getElementById('ticketDate').textContent = `${day}/${month}/${year}`;
+            } else {
+                document.getElementById('ticketDate').textContent = 'xx/xx/xx';
+            }
+            
+            // Generate barcode
+            const barcodeData = generateBarcode(ticketData.nomorTiket || '0000000000');
+            const barcodeSvg = document.getElementById('ticketBarcode');
+            let barcodeHTML = '';
+            barcodeData.forEach((bar, index) => {
+                const width = bar ? "8" : "4";
+                const fill = bar ? "#1a1a1a" : "#e0e0e0";
+                barcodeHTML += `<rect x="${index * 10}" y="0" width="${width}" height="60" fill="${fill}"/>`;
+            });
+            barcodeSvg.innerHTML = barcodeHTML;
+        }
+
+        function openTicketModal(ticketData) {
+            updateTicketModal(ticketData);
+            document.getElementById('ticketModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticketModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function printTicketModal() {
+            window.print();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('ticketModal');
+            if (event.target == modal) {
+                closeTicketModal();
+            }
         }
 
         // ========== PASSWORD TOGGLE ==========
@@ -1391,7 +1865,6 @@
         function handleLoginProcess(username, password) {
             console.log('Processing login for:', username);
             
-            // Get current users from localStorage
             const users = JSON.parse(localStorage.getItem('pinuslo_users') || '[]');
             const user = users.find(u => u.username === username && u.password === password);
             
@@ -1432,11 +1905,9 @@
             document.getElementById('superAdminApp').classList.add('active');
             document.getElementById('regularAdminApp').classList.remove('active');
             
-            // Update UI for super admin
             document.getElementById('currentUser').textContent = currentUser.fullName;
             updateLoginUI(true);
             
-            // Initialize super admin features
             initializeSuperAdmin();
         }
 
@@ -1448,7 +1919,6 @@
             document.getElementById('currentRegularUser').textContent = currentUser.fullName;
             updateLoginUI(false);
             
-            // Initialize regular admin features
             initializeRegularAdmin();
         }
 
@@ -1490,36 +1960,28 @@
         }
 
         function showSection(section) {
-            // Remove active from all sections and nav items
             document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
             
-            // Show selected section
             document.getElementById(section + 'Section').classList.add('active');
             event.target.classList.add('active');
             
-            // Load section specific data
             if (section === 'dashboard') {
                 loadDashboardData();
             } else if (section === 'monitoring') {
                 loadMonitoringData();
             } else if (section === 'users') {
                 loadUsersData();
-            } else if (section === 'reports') {
-                // Reports section doesn't need auto-load
             }
         }
 
         function showRegularSection(section) {
-            // Remove active from all sections and nav items
             document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
             
-            // Show selected section
             document.getElementById(section + 'Section').classList.add('active');
             event.target.classList.add('active');
             
-            // Load section specific data
             if (section === 'history') {
                 loadRegularHistory();
             } else if (section === 'stats') {
@@ -1538,7 +2000,6 @@
             console.log('Loading dashboard data...');
             
             try {
-                // Load tickets data
                 const q = window.query(window.collection(window.db, 'registrasi'), window.orderBy('timestamp', 'desc'));
                 const querySnapshot = await window.getDocs(q);
                 
@@ -1547,7 +2008,6 @@
                     allTicketsData.push({ id: doc.id, ...doc.data() });
                 });
                 
-                // Update dashboard stats
                 updateDashboardStats();
                 updateRecentActivity();
                 
@@ -1562,7 +2022,6 @@
             const totalVisitors = allTicketsData.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
             const totalRevenue = allTicketsData.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
             
-            // Get unique active admins from last 7 days
             const sevenDaysAgo = new Date();
             sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
             
@@ -1574,7 +2033,6 @@
                 }
             });
 
-            // Update UI
             document.getElementById('totalTickets').textContent = totalTickets.toLocaleString('id-ID');
             document.getElementById('totalVisitors').textContent = totalVisitors.toLocaleString('id-ID');
             document.getElementById('totalRevenue').textContent = 'Rp ' + totalRevenue.toLocaleString('id-ID');
@@ -1631,16 +2089,9 @@
             console.log('Loading monitoring data...');
             
             try {
-                // Load fresh data
                 await loadDashboardData();
-                
-                // Update admin filter
                 updateAdminFilter();
-                
-                // Update admin performance cards
                 updateAdminPerformanceCards();
-                
-                // Update data table
                 updateDataTable(allTicketsData);
                 
             } catch (error) {
@@ -1662,7 +2113,6 @@
         function updateAdminPerformanceCards() {
             const adminStats = {};
             
-            // Calculate stats per admin
             allTicketsData.forEach(ticket => {
                 const admin = ticket.createdBy || 'Unknown';
                 if (!adminStats[admin]) {
@@ -1685,7 +2135,6 @@
                 }
             });
 
-            // Generate HTML for admin cards
             const container = document.getElementById('adminPerformanceCards');
             if (Object.keys(adminStats).length === 0) {
                 container.innerHTML = `
@@ -1699,7 +2148,7 @@
 
             let html = '';
             Object.values(adminStats).forEach(admin => {
-                const isActive = admin.lastActivity && (new Date() - admin.lastActivity) < 24 * 60 * 60 * 1000; // Active if last activity within 24h
+                const isActive = admin.lastActivity && (new Date() - admin.lastActivity) < 24 * 60 * 60 * 1000;
                 const statusClass = isActive ? 'active' : 'inactive';
                 const statusText = isActive ? 'Aktif' : 'Tidak Aktif';
                 
@@ -1780,12 +2229,10 @@
             
             let filteredData = [...allTicketsData];
             
-            // Filter by admin
             if (adminFilter) {
                 filteredData = filteredData.filter(ticket => ticket.createdBy === adminFilter);
             }
             
-            // Filter by date range
             if (startDate) {
                 const start = new Date(startDate);
                 filteredData = filteredData.filter(ticket => {
@@ -1796,7 +2243,7 @@
             
             if (endDate) {
                 const end = new Date(endDate);
-                end.setHours(23, 59, 59, 999); // Include the entire end date
+                end.setHours(23, 59, 59, 999);
                 filteredData = filteredData.filter(ticket => {
                     const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
                     return ticketDate <= end;
@@ -1816,14 +2263,13 @@
         }
 
         function exportData() {
-            // Get filtered data from current table
             const table = document.querySelector('.data-table');
             let csv = 'No Tiket,Petugas,Tanggal,Pengunjung,Paket,Total,Status\n';
             
             const rows = table.querySelectorAll('tbody tr');
             rows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                if (cells.length > 1) { // Skip empty state row
+                if (cells.length > 1) {
                     const rowData = Array.from(cells).map(cell => {
                         return '"' + cell.textContent.trim().replace(/"/g, '""') + '"';
                     });
@@ -1831,7 +2277,6 @@
                 }
             });
             
-            // Download CSV
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -1908,7 +2353,6 @@
                 isDefault: false
             };
             
-            // Validate username uniqueness
             const existingUser = allUsersData.find(u => u.username === userData.username && u.id !== editingUserId);
             if (existingUser) {
                 showAlert('Username sudah digunakan!', 'danger');
@@ -1916,23 +2360,19 @@
             }
             
             if (editingUserId) {
-                // Update existing user
                 const userIndex = allUsersData.findIndex(u => u.id === editingUserId);
                 if (userIndex !== -1) {
                     allUsersData[userIndex] = { ...allUsersData[userIndex], ...userData };
                     showAlert('User berhasil diupdate!', 'success');
                 }
             } else {
-                // Add new user
                 userData.id = Date.now().toString();
                 allUsersData.push(userData);
                 showAlert('User berhasil ditambahkan!', 'success');
             }
             
-            // Save to localStorage
             localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
             
-            // Reset form and update list
             resetUserForm();
             updateUsersList();
         }
@@ -1948,7 +2388,6 @@
             document.getElementById('userFullName').value = user.fullName || '';
             document.getElementById('userSubmitBtn').innerHTML = '<i class="fas fa-save me-1"></i>Update User';
             
-            // Scroll to form
             document.querySelector('.user-form').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -2011,15 +2450,13 @@
                 return;
             }
             
-            endDate.setHours(23, 59, 59, 999); // Include full end date
+            endDate.setHours(23, 59, 59, 999);
             
-            // Filter data by date range
             const reportData = allTicketsData.filter(ticket => {
                 const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
                 return ticketDate >= startDate && ticketDate <= endDate;
             });
             
-            // Generate report HTML
             generateReportHTML(reportData, startDate, endDate, period);
             showAlert('Laporan berhasil dibuat!', 'success');
         }
@@ -2027,12 +2464,10 @@
         function generateReportHTML(data, startDate, endDate, period) {
             const container = document.getElementById('reportResults');
             
-            // Calculate statistics
             const totalTickets = data.length;
             const totalVisitors = data.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
             const totalRevenue = data.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
             
-            // Package statistics
             const packageStats = {};
             data.forEach(ticket => {
                 const packageName = ticket.jenisKunjungan || 'Unknown';
@@ -2044,7 +2479,6 @@
                 packageStats[packageName].visitors += ticket.jumlahOrang || 0;
             });
             
-            // Admin statistics
             const adminStats = {};
             data.forEach(ticket => {
                 const admin = ticket.createdBy || 'Unknown';
@@ -2072,7 +2506,6 @@
                         </p>
                     </div>
 
-                    <!-- Summary Statistics -->
                     <div class="stats-grid" style="margin-bottom: 2rem;">
                         <div class="stat-card success">
                             <div class="stat-number">${totalTickets}</div>
@@ -2092,12 +2525,11 @@
                         </div>
                     </div>
 
-                    <!-- Package Statistics -->
                     <div style="margin-bottom: 2rem;">
                         <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
                             <i class="fas fa-box me-2"></i>Statistik Per Paket
                         </h5>
-                        <div class="data-table-container" style="overflow-x: auto;">
+                        <div style="overflow-x: auto;">
                             <table class="data-table">
                                 <thead>
                                     <tr>
@@ -2130,12 +2562,11 @@
                         </div>
                     </div>
 
-                    <!-- Admin Performance -->
                     <div>
                         <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
                             <i class="fas fa-users me-2"></i>Performa Admin
                         </h5>
-                        <div class="data-table-container" style="overflow-x: auto;">
+                        <div style="overflow-x: auto;">
                             <table class="data-table">
                                 <thead>
                                     <tr>
@@ -2185,7 +2616,6 @@
                 return;
             }
             
-            // Simple HTML to PDF download (in real implementation, use proper PDF library)
             const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <html>
@@ -2217,21 +2647,17 @@
         function initializeRegularAdmin() {
             console.log('Initializing Regular Admin for:', currentUser.username);
             
-            // Set today's date as default
             document.getElementById('visitDate').valueAsDate = new Date();
             document.getElementById('regularFilterDate').valueAsDate = new Date();
             
-            // Add event listeners
             document.getElementById('visitorCount').addEventListener('input', calculateTotal);
             
-            // Load data
             loadMyTicketsData();
             updateRegularStats();
         }
 
         async function loadMyTicketsData() {
             try {
-                // Load tickets created by current user
                 const q = window.query(
                     window.collection(window.db, 'registrasi'),
                     window.where('createdBy', '==', currentUser.username),
@@ -2249,7 +2675,6 @@
                 
             } catch (error) {
                 console.error('Error loading my tickets data:', error);
-                // Fallback to localStorage for demo
                 const localData = localStorage.getItem('myTickets_' + currentUser.username);
                 if (localData) {
                     myTicketsData = JSON.parse(localData);
@@ -2303,27 +2728,20 @@
             };
 
             try {
-                // Save to Firebase
                 await window.addDoc(window.collection(window.db, 'registrasi'), formData);
                 
-                // Add to local array
-                formData.timestamp = new Date(); // For local display
+                formData.timestamp = new Date();
                 myTicketsData.unshift(formData);
                 
-                // Save to localStorage as backup
                 localStorage.setItem('myTickets_' + currentUser.username, JSON.stringify(myTicketsData));
                 
                 showAlert('Registrasi berhasil! Nomor tiket: ' + formData.nomorTiket, 'success');
                 
-                // Reset form
                 resetRegistrationForm();
-                
-                // Update stats
                 updateRegularStats();
                 
-                // Show print option
                 if (confirm('Apakah Anda ingin mencetak tiket sekarang?')) {
-                    printTicket(formData);
+                    openTicketModal(formData);
                 }
                 
             } catch (error) {
@@ -2339,47 +2757,13 @@
         }
 
         function printTicket(ticketData) {
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                    <head>
-                        <title>Tiket Hutan Pinus Selow Bissoloro</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-                            .ticket { border: 2px solid #3e7820; padding: 20px; max-width: 400px; margin: 0 auto; border-radius: 10px; }
-                            .header { color: #3e7820; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
-                            .info { text-align: left; margin: 10px 0; }
-                            .total { font-size: 18px; font-weight: bold; color: #3e7820; margin-top: 20px; }
-                            .footer { margin-top: 20px; font-size: 12px; color: #666; }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="ticket">
-                            <div class="header">🌲 HUTAN PINUS SELOW BISSOLORO 🌲</div>
-                            <div class="info"><strong>No. Tiket:</strong> ${ticketData.nomorTiket}</div>
-                            <div class="info"><strong>Nama:</strong> ${ticketData.namaVisitor}</div>
-                            <div class="info"><strong>Telepon:</strong> ${ticketData.noTelepon}</div>
-                            <div class="info"><strong>Jumlah:</strong> ${ticketData.jumlahOrang} orang</div>
-                            <div class="info"><strong>Paket:</strong> ${ticketData.jenisKunjungan}</div>
-                            <div class="info"><strong>Tanggal:</strong> ${ticketData.tanggalKunjungan}</div>
-                            <div class="info"><strong>Petugas:</strong> ${ticketData.petugasLoket}</div>
-                            <div class="total">Total: Rp ${ticketData.total.toLocaleString('id-ID')}</div>
-                            <div class="footer">
-                                Selamat menikmati keindahan alam Hutan Pinus Selow Bissoloro!<br>
-                                Dicetak pada: ${new Date().toLocaleString('id-ID')}
-                            </div>
-                        </div>
-                    </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
+            openTicketModal(ticketData);
         }
 
         function printLastTicket() {
             if (myTicketsData.length > 0) {
                 const lastTicket = myTicketsData[0];
-                printTicket(lastTicket);
+                openTicketModal(lastTicket);
             } else {
                 showAlert('Belum ada tiket yang dibuat', 'warning');
             }
@@ -2444,7 +2828,6 @@
             const todayVisitors = todayTickets.reduce((sum, ticket) => sum + ticket.jumlahOrang, 0);
             const todayRevenue = todayTickets.reduce((sum, ticket) => sum + ticket.total, 0);
             
-            // Get month stats
             const currentMonth = new Date().getMonth();
             const currentYear = new Date().getFullYear();
             const monthTickets = myTicketsData.filter(ticket => {
@@ -2454,7 +2837,6 @@
             
             const monthTotal = monthTickets.length;
             
-            // Update UI
             if (document.getElementById('myTodayTickets')) {
                 document.getElementById('myTodayTickets').textContent = todayTotal;
                 document.getElementById('myTodayVisitors').textContent = todayVisitors;
@@ -2520,7 +2902,6 @@
         // ========== UTILITIES ==========
         
         function showAlert(message, type = 'success') {
-            // Remove existing alerts
             document.querySelectorAll('.alert').forEach(el => {
                 if (!el.closest('#loginAlert')) el.remove();
             });
@@ -2584,7 +2965,6 @@
             }, 6000);
         }
 
-        // Add slideDown animation
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideDown {
@@ -2611,12 +2991,10 @@
             }
         }
 
-        // Initialize when page loads
         window.addEventListener('load', function() {
             console.log('Wisata Hutan Pinus Selow Bissoloro - Complete Admin System loaded');
             checkAuth();
             
-            // Set default report dates for super admin
             const today = new Date();
             if (document.getElementById('reportStartDate')) {
                 document.getElementById('reportStartDate').valueAsDate = today;
@@ -2624,7 +3002,6 @@
             }
         });
 
-        // Add global error handler
         window.addEventListener('error', function(e) {
             console.error('Global error:', e.error);
             showAlert('Terjadi kesalahan sistem. Silakan refresh halaman.', 'danger');
@@ -2635,4 +3012,3 @@
     </script>
 </body>
 </html>
-
