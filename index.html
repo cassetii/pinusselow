@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#3C6E71">
+    <meta name="theme-color" content="#0A400C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233C6E71;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2370AE6E;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23grad1)'/%3E%3Cpath d='M50 20 L60 40 L55 40 L62 55 L57 55 L63 68 L55 68 L50 80 L45 68 L37 68 L43 55 L38 55 L45 40 L40 40 Z' fill='%23BEEE62'/%3E%3C/svg%3E">
@@ -13,12 +13,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3C6E71;
-            --secondary-color: #70AE6E;
-            --accent-color: #F4743B;
-            --highlight-color: #BEEE62;
+            --primary-color: #0A400C;
+            --secondary-color: #819067;
+            --accent-color: #B1AB86;
+            --highlight-color: #FEFAE0;
             --light-bg: #f8f9fa;
-            --super-admin-color: #dc3545;
+            --super-admin-color: #0A400C;
         }
 
         * {
@@ -26,7 +26,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #BEEE62 0%, var(--light-bg) 100%);
+            background: linear-gradient(135deg, #FEFAE0 0%, #B1AB86 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
@@ -101,9 +101,9 @@
 
         /* Header */
         .mobile-header {
-            background: linear-gradient(135deg, #3C6E71 0%, #70AE6E 100%);
+            background: linear-gradient(135deg, #0A400C 0%, #819067 100%);
             color: white;
-            padding: 1rem 0;
+            padding: 1rem 1rem 1rem 65px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -111,7 +111,7 @@
         }
 
         .super-admin-header {
-            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #819067 100%) !important;
         }
 
         .mobile-header-content {
@@ -200,7 +200,7 @@
         }
 
         .mobile-card-header {
-            background: linear-gradient(135deg, #70AE6E 0%, #3C6E71 100%);
+            background: linear-gradient(135deg, #819067 0%, #0A400C 100%);
             color: white;
             padding: 1rem;
             font-weight: 600;
@@ -208,7 +208,7 @@
         }
 
         .super-admin-card-header {
-            background: linear-gradient(135deg, var(--super-admin-color) 0%, #ff6b6b 100%) !important;
+            background: linear-gradient(135deg, var(--super-admin-color) 0%, #819067 100%) !important;
         }
 
         /* Stats Cards */
@@ -238,7 +238,7 @@
         }
 
         .stat-card.info {
-            border-left-color: #3C6E71;
+            border-left-color: #0A400C;
         }
 
         .stat-card.success {
@@ -266,7 +266,7 @@
 
         .danger .stat-icon { color: var(--super-admin-color); }
         .warning .stat-icon { color: var(--accent-color); }
-        .info .stat-icon { color: #3C6E71; }
+        .info .stat-icon { color: #0A400C; }
         .success .stat-icon { color: var(--secondary-color); }
 
         /* Data Tables */
@@ -656,7 +656,7 @@
         /* MOBILE PORTRAIT LAYOUT (Default) */
         .ticket-preview {
             position: relative;
-            background: linear-gradient(to bottom, #70AE6E 0%, #3C6E71 100%);
+            background: linear-gradient(to bottom, #819067 0%, #0A400C 100%);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
@@ -694,12 +694,12 @@
         .ticket-logo {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #F4743B 0%, #BEEE62 100%);
+            background: linear-gradient(135deg, #B1AB86 0%, #FEFAE0 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 4px solid #3C6E71;
+            border: 4px solid #0A400C;
             box-shadow: 0 8px 25px rgba(244, 116, 59, 0.4);
             margin: 0 auto 20px;
         }
@@ -718,7 +718,7 @@
         .ticket-logo-text-main {
             font-size: 20px;
             font-weight: bold;
-            color: #BEEE62;
+            color: #FEFAE0;
             margin: 2px 0;
         }
 
@@ -748,13 +748,13 @@
         .ticket-title h1 {
             font-size: 24px;
             font-weight: bold;
-            color: #3C6E71;
+            color: #0A400C;
             line-height: 1.2;
             margin: 0;
         }
 
         .ticket-title-sub {
-            color: #70AE6E;
+            color: #819067;
         }
 
         .ticket-bottom-info {
@@ -769,7 +769,7 @@
         }
 
         .ticket-price {
-            background: #3C6E71;
+            background: #0A400C;
             color: white;
             padding: 12px 24px;
             border-radius: 9999px;
@@ -801,7 +801,7 @@
         }
 
         .ticket-date-badge {
-            background: #3C6E71;
+            background: #0A400C;
             color: white;
             padding: 8px 20px;
             border-radius: 9999px;
@@ -979,7 +979,7 @@
         }
 
         .ticket-btn-print {
-            background: linear-gradient(135deg, #3C6E71 0%, #70AE6E 100%);
+            background: linear-gradient(135deg, #0A400C 0%, #819067 100%);
             color: white;
         }
 
@@ -1091,6 +1091,11 @@
     </style>
 </head>
 <body>
+    <!-- Menu Toggle (Top Left) -->
+    <div class="menu-toggle" onclick="window.location.href='https://pinusloapps.netlify.app/'" style="position: fixed; top: 12px; left: 12px; z-index: 2000; width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(10, 64, 12, 0.2); transition: all 0.3s; border: 2px solid #0A400C;">
+        <i class="fas fa-bars" style="font-size: 1.4rem; color: #0A400C;"></i>
+    </div>
+
     <!-- Login Page -->
 
     <!-- Super Admin App -->
