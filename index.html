@@ -2,19 +2,32 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0A400C">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1B4D3E">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Gate Scanner - Hutan Pinus Selow Bissoloro</title>
+    <title>Gate Scanner - Pinus Selow Bissoloro</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231B4D3E'/%3E%3Cpath d='M50 20 L60 40 L55 40 L62 55 L57 55 L63 68 L55 68 L50 80 L45 68 L37 68 L43 55 L38 55 L45 40 L40 40 Z' fill='%23A7C4A0'/%3E%3C/svg%3E">
     <style>
+        /* ========== COLOR PALETTE ========== */
         :root {
-            --primary: #0A400C;
-            --secondary: #819067;
-            --accent: #28a745;
-            --light: #FEFAE0;
-            --danger: #dc3545;
+            --forest-dark: #1B4D3E;
+            --forest-main: #2D6A4F;
+            --forest-light: #40916C;
+            --sage: #52B788;
+            --mint: #74C69D;
+            --pale-mint: #95D5B2;
+            --cream: #D8F3DC;
+            --white: #FFFFFF;
+            --gold: #FFB703;
+            --gold-dark: #FB8500;
+            --danger: #E63946;
+            --gray-100: #F8F9FA;
+            --gray-200: #E9ECEF;
+            --gray-500: #6C757D;
+            --gray-800: #343A40;
+            --shadow: 0 10px 40px rgba(27, 77, 62, 0.2);
+            --shadow-lg: 0 20px 60px rgba(27, 77, 62, 0.3);
         }
 
         * {
@@ -24,221 +37,315 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0A400C 0%, #1a5c1f 50%, #819067 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(180deg, var(--forest-dark) 0%, var(--forest-main) 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--gray-800);
+            padding-bottom: 80px;
         }
 
+        /* ========== HEADER ========== */
         .header {
-            background: rgba(0,0,0,0.3);
-            color: white;
-            padding: 1rem;
+            background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest-main) 100%);
+            padding: 1.25rem 1rem;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
         }
 
-        .header h1 {
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .header p {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
-        .main-container {
-            flex: 1;
+        .header-content {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--sage) 0%, var(--mint) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .header-text h1 {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .header-text p {
+            color: var(--pale-mint);
+            font-size: 0.75rem;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
             padding: 1rem;
+        }
+
+        /* ========== TAB CONTENT ========== */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--forest-main) 0%, var(--sage) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--forest-dark);
+            font-size: 1rem;
+        }
+
+        .card-subtitle {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* ========== STATS GRID ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
 
-        /* Stats Card */
-        .stats-card {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: space-around;
+        .stat-box {
+            background: linear-gradient(135deg, var(--cream) 0%, var(--pale-mint) 100%);
+            border-radius: 16px;
+            padding: 1.25rem;
             text-align: center;
         }
 
-        .stat-item {
-            flex: 1;
+        .stat-box.highlight {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
         }
 
-        .stat-number {
+        .stat-box.highlight .stat-value,
+        .stat-box.highlight .stat-label {
+            color: var(--white);
+        }
+
+        .stat-value {
             font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-weight: 800;
+            color: var(--forest-dark);
             line-height: 1;
         }
 
-        .stat-number.pulse {
-            animation: pulse 0.3s ease;
+        .stat-value.animate {
+            animation: pop 0.4s ease;
         }
 
-        @keyframes pulse {
+        @keyframes pop {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); color: var(--accent); }
+            50% { transform: scale(1.15); }
         }
 
         .stat-label {
             font-size: 0.8rem;
-            color: #666;
-            margin-top: 0.25rem;
+            color: var(--forest-main);
+            margin-top: 0.5rem;
+            font-weight: 600;
         }
 
+        /* ========== DATE BADGE ========== */
         .date-badge {
-            text-align: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-            font-size: 0.85rem;
-            color: var(--secondary);
-        }
-
-        /* Scan Button */
-        .scan-section {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .scan-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--accent) 0%, #20c997 100%);
-            border: none;
-            border-radius: 20px;
-            padding: 2rem;
-            color: white;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            background: var(--cream);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--forest-dark);
+            margin-top: 1rem;
         }
 
-        .scan-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.5);
-        }
-
-        .scan-btn:active {
-            transform: scale(0.98);
-        }
-
-        .scan-btn i {
-            font-size: 3rem;
-        }
-
-        /* Scanner Container */
-        .scanner-container {
-            display: none;
-            width: 100%;
-            max-width: 400px;
-            background: white;
+        /* ========== SCANNER ========== */
+        .scanner-card {
+            background: linear-gradient(135deg, var(--sage) 0%, var(--forest-light) 100%);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .scanner-container.active {
-            display: block;
-        }
-
-        .scanner-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .scanner-header h3 {
-            font-size: 1rem;
-        }
-
-        .close-scanner {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-lg);
         }
 
         #reader {
-            width: 100%;
+            display: none;
+            background: #000;
+        }
+
+        #reader.active {
+            display: block;
         }
 
         #reader video {
             width: 100% !important;
         }
 
-        .scanner-footer {
-            padding: 1rem;
-            text-align: center;
-            background: #f8f9fa;
-        }
-
-        .scanner-footer p {
-            font-size: 0.85rem;
-            color: #666;
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: flex;
-            gap: 0.75rem;
+        .scan-btn {
             width: 100%;
-            max-width: 400px;
+            padding: 2rem;
+            background: transparent;
+            border: none;
+            color: var(--white);
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .quick-btn {
-            flex: 1;
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 12px;
-            padding: 1rem;
-            color: white;
+        .scan-btn i {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        .scan-btn small {
+            font-weight: 400;
+            opacity: 0.9;
             font-size: 0.85rem;
-            font-weight: 600;
+        }
+
+        .stop-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--danger);
+            border: none;
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: none;
+        }
+
+        .stop-btn.active {
+            display: block;
+        }
+
+        /* ========== MANUAL INPUT ========== */
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--sage);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(82, 183, 136, 0.2);
+        }
+
+        .input-btn {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--sage) 0%, var(--forest-light) 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--white);
+            font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .quick-btn:hover {
-            background: rgba(255,255,255,0.25);
+        .input-btn:hover {
+            transform: scale(1.05);
         }
 
-        /* Last Scan Info */
+        /* ========== QUICK BUTTONS ========== */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .quick-btn {
+            padding: 0.75rem;
+            background: var(--gray-100);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--forest-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-btn:active {
+            background: var(--sage);
+            border-color: var(--sage);
+            color: var(--white);
+            transform: scale(0.95);
+        }
+
+        /* ========== LAST SCAN ========== */
         .last-scan {
-            background: rgba(255,255,255,0.15);
+            background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-dark) 100%);
             border-radius: 16px;
-            padding: 1rem 1.5rem;
-            width: 100%;
-            max-width: 400px;
-            color: white;
+            padding: 1rem;
+            color: var(--white);
+            display: none;
+        }
+
+        .last-scan.show {
+            display: block;
         }
 
         .last-scan-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
             font-size: 0.8rem;
             opacity: 0.8;
             margin-bottom: 0.5rem;
@@ -250,574 +357,1088 @@
             align-items: center;
         }
 
+        .last-scan-code {
+            font-family: 'SF Mono', Monaco, monospace;
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
         .last-scan-time {
+            font-weight: 700;
             font-size: 1.1rem;
+        }
+
+        /* ========== BOTTOM NAV ========== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            display: flex;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+        }
+
+        .nav-item.active {
+            color: var(--forest-main);
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-item span {
+            font-size: 0.75rem;
             font-weight: 600;
         }
 
-        .last-scan-status {
-            background: var(--accent);
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        /* Success Overlay */
-        .success-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
             bottom: 0;
-            background: rgba(40, 167, 69, 0.95);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: white;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--sage);
+            border-radius: 3px 3px 0 0;
         }
 
-        .success-overlay.active {
-            display: flex;
-            animation: fadeIn 0.3s ease;
+        .nav-item {
+            position: relative;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .success-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            animation: bounceIn 0.5s ease;
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .success-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .success-detail {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* History Modal */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
+        /* ========== REPORT TAB ========== */
+        .filter-section {
+            background: var(--gray-100);
+            border-radius: 16px;
             padding: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .modal-overlay.active {
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .filter-group {
             display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 500px;
-            max-height: 80vh;
+        .filter-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-500);
+        }
+
+        .filter-input {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: var(--white);
+        }
+
+        .filter-input:focus {
+            border-color: var(--sage);
+            outline: none;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.primary {
+            background: linear-gradient(135deg, var(--sage) 0%, var(--forest-light) 100%);
+            color: var(--white);
+        }
+
+        .filter-btn.secondary {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .filter-btn.export {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+        }
+
+        /* ========== REPORT STATS ========== */
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-stat {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .report-stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--forest-dark);
+        }
+
+        .report-stat-label {
+            font-size: 0.7rem;
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+
+        /* ========== DATA TABLE ========== */
+        .data-table-container {
+            background: var(--white);
+            border-radius: 16px;
             overflow: hidden;
+            box-shadow: var(--shadow);
         }
 
-        .modal-header {
-            background: var(--primary);
-            color: white;
-            padding: 1.25rem;
+        .data-table-header {
+            background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-dark) 100%);
+            color: var(--white);
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .modal-header h2 {
-            font-size: 1.1rem;
+        .data-table-title {
+            font-weight: 700;
         }
 
-        .modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
+        .data-table-count {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
         }
 
-        .modal-body {
-            padding: 1rem;
-            max-height: 60vh;
+        .data-list {
+            max-height: 400px;
             overflow-y: auto;
         }
 
-        .history-item {
+        .data-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.75rem 1rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
+            transition: background 0.2s ease;
         }
 
-        .history-info {
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-item:hover {
+            background: var(--gray-100);
+        }
+
+        .data-item-left {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
         }
 
-        .history-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
+        .data-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--pale-mint) 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 700;
+            color: var(--forest-dark);
+            font-size: 0.85rem;
         }
 
-        .history-time {
+        .data-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-code {
+            font-family: 'SF Mono', Monaco, monospace;
             font-weight: 600;
-            color: var(--primary);
+            color: var(--forest-dark);
+            font-size: 0.9rem;
         }
 
-        .history-qr {
+        .data-meta {
             font-size: 0.75rem;
-            color: #666;
-            font-family: monospace;
+            color: var(--gray-500);
         }
 
-        .history-badge {
-            background: var(--accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+        .data-time {
+            text-align: right;
         }
 
+        .data-time-value {
+            font-weight: 700;
+            color: var(--forest-dark);
+        }
+
+        .data-time-day {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+        }
+
+        /* ========== EMPTY STATE ========== */
         .empty-state {
             text-align: center;
-            padding: 2rem;
-            color: #666;
+            padding: 3rem 1rem;
+            color: var(--gray-500);
         }
 
         .empty-state i {
-            font-size: 3rem;
-            opacity: 0.3;
+            font-size: 4rem;
             margin-bottom: 1rem;
-            display: block;
+            opacity: 0.3;
         }
 
-        /* Toast */
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        /* ========== TOAST ========== */
         .toast {
             position: fixed;
-            bottom: 20px;
+            top: 80px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #333;
-            color: white;
-            padding: 1rem 2rem;
+            transform: translateX(-50%) translateY(-150px);
+            padding: 1rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            z-index: 1001;
-            transition: transform 0.3s ease;
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-lg);
         }
 
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
 
+        .toast.success {
+            background: linear-gradient(135deg, var(--sage) 0%, var(--forest-light) 100%);
+            color: var(--white);
+        }
+
         .toast.error {
-            background: var(--danger);
+            background: linear-gradient(135deg, var(--danger) 0%, #C1121F 100%);
+            color: var(--white);
+        }
+
+        /* ========== LOADING ========== */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-200);
+            border-top-color: var(--sage);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========== HTTPS WARNING ========== */
+        .https-warning {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .https-warning.show {
+            display: block;
+        }
+
+        .https-warning strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ========== CHART ========== */
+        .chart-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-title {
+            font-weight: 700;
+            color: var(--forest-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hour-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 100px;
+            padding: 0.5rem 0;
+        }
+
+        .hour-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--sage) 0%, var(--mint) 100%);
+            border-radius: 4px 4px 0 0;
+            min-height: 4px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .hour-bar:hover {
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+        }
+
+        .hour-bar::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--forest-dark);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .hour-bar:hover::after {
+            opacity: 1;
+        }
+
+        .hour-labels {
+            display: flex;
+            gap: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .hour-label {
+            flex: 1;
+            text-align: center;
+            font-size: 0.6rem;
+            color: var(--gray-500);
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
-        <h1><i class="fas fa-tree"></i> Hutan Pinus Selow Bissoloro</h1>
-        <p>Gate Scanner - Pencatatan Pengunjung Masuk</p>
-    </div>
-
-    <div class="main-container">
-        <!-- Stats Card -->
-        <div class="stats-card">
-            <div class="stats-row">
-                <div class="stat-item">
-                    <div class="stat-number" id="todayCount">0</div>
-                    <div class="stat-label">Scan Hari Ini</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalVisitors">0</div>
-                    <div class="stat-label">Total Pengunjung</div>
-                </div>
-            </div>
-            <div class="date-badge">
-                <i class="fas fa-calendar-alt"></i>
-                <span id="currentDate">Loading...</span>
+        <div class="header-content">
+            <div class="logo">🌲</div>
+            <div class="header-text">
+                <h1>Pinus Selow Bissoloro</h1>
+                <p>Gate Scanner System</p>
             </div>
         </div>
+    </div>
 
-        <!-- Scanner Container (hidden by default) -->
-        <div class="scanner-container" id="scannerContainer">
-            <div class="scanner-header">
-                <h3><i class="fas fa-qrcode"></i> Scan QR Code Tiket</h3>
-                <button class="close-scanner" onclick="stopScanner()">
-                    <i class="fas fa-times"></i>
+    <!-- ========== TAB: SCAN ========== -->
+    <div class="tab-content active" id="tabScan">
+        <div class="container">
+            <!-- HTTPS Warning -->
+            <div class="https-warning" id="httpsWarning">
+                <strong><i class="fas fa-exclamation-triangle"></i> Kamera Tidak Tersedia</strong>
+                Gunakan HTTPS atau input manual di bawah.
+            </div>
+
+            <!-- Stats -->
+            <div class="card">
+                <div class="stats-grid">
+                    <div class="stat-box highlight">
+                        <div class="stat-value" id="todayCount">0</div>
+                        <div class="stat-label">Hari Ini</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="totalCount">0</div>
+                        <div class="stat-label">Total Scan</div>
+                    </div>
+                </div>
+                <center>
+                    <div class="date-badge">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="todayDate">-</span>
+                    </div>
+                </center>
+            </div>
+
+            <!-- Scanner -->
+            <div class="scanner-card">
+                <div id="reader"></div>
+                <button class="scan-btn" id="scanBtn" onclick="startScanner()">
+                    <i class="fas fa-qrcode"></i>
+                    <span>SCAN QR CODE</span>
+                    <small>Tap untuk memulai scanner</small>
+                </button>
+                <button class="stop-btn" id="stopBtn" onclick="stopScanner()">
+                    <i class="fas fa-stop-circle"></i> STOP SCANNER
                 </button>
             </div>
-            <div id="reader"></div>
-            <div class="scanner-footer">
-                <p><i class="fas fa-info-circle"></i> Arahkan kamera ke QR Code pada tiket</p>
+
+            <!-- Manual Input -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-keyboard"></i></div>
+                    <div>
+                        <div class="card-title">Input Manual</div>
+                        <div class="card-subtitle">Ketik kode tiket jika kamera bermasalah</div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" class="input-field" id="manualInput" placeholder="Ketik kode tiket..."
+                        onkeypress="if(event.key==='Enter') submitManual()">
+                    <button class="input-btn" onclick="submitManual()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="quick-grid">
+                    <button class="quick-btn" onclick="quickAdd('TIKET-001')">001</button>
+                    <button class="quick-btn" onclick="quickAdd('TIKET-002')">002</button>
+                    <button class="quick-btn" onclick="quickAdd('TIKET-003')">003</button>
+                    <button class="quick-btn" onclick="quickAdd('MASUK')">MASUK</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Scan Button -->
-        <div class="scan-section" id="scanSection">
-            <button class="scan-btn" id="scanBtn" onclick="startScanner()">
-                <i class="fas fa-qrcode"></i>
-                <span>SCAN QR CODE</span>
-                <small style="font-weight: normal; font-size: 0.85rem;">Tap untuk scan tiket pengunjung</small>
-            </button>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-            <button class="quick-btn" onclick="showHistory()">
-                <i class="fas fa-history"></i> Riwayat
-            </button>
-            <button class="quick-btn" onclick="manualEntry()">
-                <i class="fas fa-keyboard"></i> Manual
-            </button>
-            <button class="quick-btn" onclick="refreshData()">
-                <i class="fas fa-sync-alt"></i> Refresh
-            </button>
-        </div>
-
-        <!-- Last Scan -->
-        <div class="last-scan">
-            <div class="last-scan-header">
-                <i class="fas fa-clock"></i> Scan Terakhir
-            </div>
-            <div class="last-scan-content">
-                <div class="last-scan-time" id="lastScanTime">-</div>
-                <div class="last-scan-status" id="lastScanStatus">Menunggu</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Overlay -->
-    <div class="success-overlay" id="successOverlay">
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="success-text">BERHASIL MASUK!</div>
-        <div class="success-detail" id="successDetail">1 Pengunjung Tercatat</div>
-    </div>
-
-    <!-- History Modal -->
-    <div class="modal-overlay" id="historyModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-history"></i> Riwayat Scan Hari Ini</h2>
-                <button class="modal-close" onclick="closeHistory()">&times;</button>
-            </div>
-            <div class="modal-body" id="historyList">
-                <div class="empty-state">
-                    <i class="fas fa-qrcode"></i>
-                    <p>Memuat data...</p>
+            <!-- Last Scan -->
+            <div class="last-scan" id="lastScan">
+                <div class="last-scan-header">
+                    <i class="fas fa-check-circle"></i> Scan Terakhir Berhasil
+                </div>
+                <div class="last-scan-content">
+                    <div class="last-scan-code" id="lastCode">-</div>
+                    <div class="last-scan-time" id="lastTime">-</div>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- ========== TAB: REPORT ========== -->
+    <div class="tab-content" id="tabReport">
+        <div class="container">
+            <!-- Filter -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-filter"></i></div>
+                    <div>
+                        <div class="card-title">Filter Data</div>
+                        <div class="card-subtitle">Pilih rentang tanggal dan filter</div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">Tanggal Mulai</label>
+                            <input type="date" class="filter-input" id="filterStart">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Tanggal Akhir</label>
+                            <input type="date" class="filter-input" id="filterEnd">
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">Hari</label>
+                            <select class="filter-input" id="filterDay">
+                                <option value="">Semua Hari</option>
+                                <option value="Senin">Senin</option>
+                                <option value="Selasa">Selasa</option>
+                                <option value="Rabu">Rabu</option>
+                                <option value="Kamis">Kamis</option>
+                                <option value="Jumat">Jumat</option>
+                                <option value="Sabtu">Sabtu</option>
+                                <option value="Minggu">Minggu</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Jam</label>
+                            <select class="filter-input" id="filterHour">
+                                <option value="">Semua Jam</option>
+                                <option value="6">06:00 - 06:59</option>
+                                <option value="7">07:00 - 07:59</option>
+                                <option value="8">08:00 - 08:59</option>
+                                <option value="9">09:00 - 09:59</option>
+                                <option value="10">10:00 - 10:59</option>
+                                <option value="11">11:00 - 11:59</option>
+                                <option value="12">12:00 - 12:59</option>
+                                <option value="13">13:00 - 13:59</option>
+                                <option value="14">14:00 - 14:59</option>
+                                <option value="15">15:00 - 15:59</option>
+                                <option value="16">16:00 - 16:59</option>
+                                <option value="17">17:00 - 17:59</option>
+                                <option value="18">18:00 - 18:59</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="filter-btn primary" onclick="applyFilter()">
+                            <i class="fas fa-search"></i> Filter
+                        </button>
+                        <button class="filter-btn secondary" onclick="resetFilter()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="filter-btn export" onclick="exportPDF()">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Report Stats -->
+            <div class="report-stats">
+                <div class="report-stat">
+                    <div class="report-stat-value" id="reportTotal">0</div>
+                    <div class="report-stat-label">Total Scan</div>
+                </div>
+                <div class="report-stat">
+                    <div class="report-stat-value" id="reportDays">0</div>
+                    <div class="report-stat-label">Jumlah Hari</div>
+                </div>
+                <div class="report-stat">
+                    <div class="report-stat-value" id="reportAvg">0</div>
+                    <div class="report-stat-label">Rata-rata/Hari</div>
+                </div>
+            </div>
+
+            <!-- Hour Chart -->
+            <div class="chart-container" id="chartContainer" style="display:none;">
+                <div class="chart-title"><i class="fas fa-chart-bar"></i> Distribusi Per Jam</div>
+                <div class="hour-chart" id="hourChart"></div>
+                <div class="hour-labels" id="hourLabels"></div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="data-table-container">
+                <div class="data-table-header">
+                    <span class="data-table-title"><i class="fas fa-list"></i> Data Scan</span>
+                    <span class="data-table-count" id="dataCount">0 data</span>
+                </div>
+                <div class="data-list" id="dataList">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Memuat data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('scan')">
+            <i class="fas fa-qrcode"></i>
+            <span>Scan</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('report')">
+            <i class="fas fa-chart-pie"></i>
+            <span>Report</span>
+        </button>
     </div>
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
 
-    <!-- QR Scanner Library -->
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-    
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
+    <!-- QR Scanner -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+
     <script>
-        // Firebase Configuration
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBGTPNboLMi7zv1m1zSlmZk4or0TR1F6sg",
             authDomain: "registrasipinusselowbissoloro.firebaseapp.com",
             projectId: "registrasipinusselowbissoloro",
             storageBucket: "registrasipinusselowbissoloro.firebasestorage.app",
             messagingSenderId: "185801761825",
-            appId: "1:185801761825:web:bc262bb3b2769e964fef60",
-            measurementId: "G-1LVJ83FFP6"
+            appId: "1:185801761825:web:bc262bb3b2769e964fef60"
         };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Global Variables
+        // Variables
         let html5QrCode = null;
         let isScanning = false;
         let todayDate = '';
-        let scanCount = 0;
-        let lastScannedCode = '';
         let lastScanTime = 0;
+        let allData = [];
+        let filteredData = [];
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            updateDateDisplay();
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            setTodayDate();
             loadTodayStats();
+            checkHTTPS();
+            setDefaultFilterDates();
         });
 
-        // Update Date Display
-        function updateDateDisplay() {
-            const now = new Date();
-            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-            
-            document.getElementById('currentDate').textContent = 
-                `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
-            
-            todayDate = now.toISOString().split('T')[0];
-        }
-
-        // Load Today Stats
-        async function loadTodayStats() {
-            try {
-                const querySnapshot = await db.collection('gate_scans')
-                    .where('date', '==', todayDate)
-                    .get();
-                
-                scanCount = querySnapshot.size;
-                let totalVisitors = 0;
-
-                querySnapshot.forEach((doc) => {
-                    totalVisitors += doc.data().visitorCount || 1;
-                });
-
-                document.getElementById('todayCount').textContent = scanCount;
-                document.getElementById('totalVisitors').textContent = totalVisitors;
-
-            } catch (error) {
-                console.error('Error loading stats:', error);
+        // Check HTTPS
+        function checkHTTPS() {
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                document.getElementById('httpsWarning').classList.add('show');
             }
         }
 
-        // Start QR Scanner
+        // Set Today Date
+        function setTodayDate() {
+            const now = new Date();
+            const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            
+            todayDate = now.toISOString().split('T')[0];
+            document.getElementById('todayDate').textContent = 
+                `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+        }
+
+        // Set Default Filter Dates
+        function setDefaultFilterDates() {
+            const today = new Date();
+            const weekAgo = new Date(today);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            
+            document.getElementById('filterStart').value = weekAgo.toISOString().split('T')[0];
+            document.getElementById('filterEnd').value = today.toISOString().split('T')[0];
+        }
+
+        // ========== TAB SWITCH ==========
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            if (tab === 'report') {
+                loadReportData();
+            }
+        }
+
+        // ========== SCAN TAB ==========
+        async function loadTodayStats() {
+            try {
+                const snap = await db.collection('gate_scans')
+                    .where('date', '==', todayDate)
+                    .get();
+                
+                document.getElementById('todayCount').textContent = snap.size;
+                
+                // Get total all time
+                const allSnap = await db.collection('gate_scans').get();
+                document.getElementById('totalCount').textContent = allSnap.size;
+                
+            } catch (e) {
+                console.error('Error loading stats:', e);
+            }
+        }
+
+        // Start Scanner
         async function startScanner() {
             if (isScanning) return;
-
-            const scanSection = document.getElementById('scanSection');
-            const scannerContainer = document.getElementById('scannerContainer');
 
             try {
                 html5QrCode = new Html5Qrcode("reader");
                 
-                scanSection.style.display = 'none';
-                scannerContainer.classList.add('active');
+                document.getElementById('reader').classList.add('active');
+                document.getElementById('scanBtn').style.display = 'none';
+                document.getElementById('stopBtn').classList.add('active');
 
                 await html5QrCode.start(
                     { facingMode: "environment" },
                     { fps: 10, qrbox: { width: 250, height: 250 } },
                     onScanSuccess,
-                    () => {} // ignore failures
+                    () => {}
                 );
 
                 isScanning = true;
 
             } catch (err) {
-                console.error('Error starting scanner:', err);
-                showToast('Gagal akses kamera!', true);
+                console.error(err);
+                document.getElementById('httpsWarning').classList.add('show');
+                showToast('Kamera error! Gunakan input manual.', 'error');
                 stopScanner();
             }
         }
 
         // Stop Scanner
         async function stopScanner() {
-            const scanSection = document.getElementById('scanSection');
-            const scannerContainer = document.getElementById('scannerContainer');
-
             if (html5QrCode && isScanning) {
-                try {
-                    await html5QrCode.stop();
-                } catch (err) {
-                    console.error('Error stopping:', err);
-                }
+                try { await html5QrCode.stop(); } catch(e) {}
             }
 
             isScanning = false;
-            scannerContainer.classList.remove('active');
-            scanSection.style.display = 'block';
+            document.getElementById('reader').classList.remove('active');
+            document.getElementById('scanBtn').style.display = 'flex';
+            document.getElementById('stopBtn').classList.remove('active');
         }
 
         // On Scan Success
-        async function onScanSuccess(decodedText) {
-            // Prevent duplicate scans (within 3 seconds)
-            const now = Date.now();
-            if (decodedText === lastScannedCode && (now - lastScanTime) < 3000) {
-                return;
-            }
+        function onScanSuccess(text) {
+            if (Date.now() - lastScanTime < 3000) return;
+            lastScanTime = Date.now();
 
-            lastScannedCode = decodedText;
-            lastScanTime = now;
-
-            await stopScanner();
-            await recordEntry(decodedText);
+            if (navigator.vibrate) navigator.vibrate(200);
+            saveScan(text);
         }
 
-        // Record Entry to Firebase
-        async function recordEntry(qrData, visitorCount = 1) {
+        // Save Scan
+        async function saveScan(code) {
             const now = new Date();
-            
-            const entryData = {
+            const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            const time = now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+            const data = {
                 date: todayDate,
-                qrCode: qrData,
-                visitorCount: visitorCount,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                time: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
-                dayName: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][now.getDay()],
+                code: code,
+                time: time,
+                day: days[now.getDay()],
                 hour: now.getHours(),
-                minute: now.getMinutes()
+                minute: now.getMinutes(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
 
             try {
-                await db.collection('gate_scans').add(entryData);
+                await db.collection('gate_scans').add(data);
 
-                // Update counters
-                scanCount++;
-                document.getElementById('todayCount').textContent = scanCount;
-                document.getElementById('todayCount').classList.add('pulse');
-                setTimeout(() => document.getElementById('todayCount').classList.remove('pulse'), 300);
+                // Animate counter
+                const countEl = document.getElementById('todayCount');
+                const totalEl = document.getElementById('totalCount');
+                countEl.textContent = parseInt(countEl.textContent) + 1;
+                totalEl.textContent = parseInt(totalEl.textContent) + 1;
+                countEl.classList.add('animate');
+                setTimeout(() => countEl.classList.remove('animate'), 400);
 
-                const totalEl = document.getElementById('totalVisitors');
-                totalEl.textContent = parseInt(totalEl.textContent) + visitorCount;
-                totalEl.classList.add('pulse');
-                setTimeout(() => totalEl.classList.remove('pulse'), 300);
+                // Show last scan
+                document.getElementById('lastScan').classList.add('show');
+                document.getElementById('lastCode').textContent = code;
+                document.getElementById('lastTime').textContent = time;
 
-                // Update last scan
-                document.getElementById('lastScanTime').textContent = entryData.time;
-                document.getElementById('lastScanStatus').textContent = 'Sukses';
-                document.getElementById('lastScanStatus').style.background = '#28a745';
+                showToast('✓ Scan berhasil!', 'success');
 
-                // Show success
-                showSuccessOverlay(visitorCount);
-
-            } catch (error) {
-                console.error('Error:', error);
-                showToast('Gagal menyimpan!', true);
+            } catch (e) {
+                console.error(e);
+                showToast('Gagal menyimpan!', 'error');
             }
         }
 
-        // Show Success Overlay
-        function showSuccessOverlay(count) {
-            const overlay = document.getElementById('successOverlay');
-            document.getElementById('successDetail').textContent = `${count} Pengunjung Tercatat`;
-            overlay.classList.add('active');
-
-            setTimeout(() => {
-                overlay.classList.remove('active');
-            }, 1500);
-        }
-
-        // Manual Entry
-        function manualEntry() {
-            const count = prompt('Masukkan jumlah pengunjung:');
-            if (count && !isNaN(count) && parseInt(count) > 0) {
-                recordEntry('MANUAL-' + Date.now(), parseInt(count));
+        // Manual Submit
+        function submitManual() {
+            const input = document.getElementById('manualInput');
+            const code = input.value.trim();
+            if (!code) {
+                showToast('Masukkan kode tiket!', 'error');
+                return;
             }
+            saveScan(code);
+            input.value = '';
         }
 
-        // Show History
-        async function showHistory() {
-            document.getElementById('historyModal').classList.add('active');
-            const listEl = document.getElementById('historyList');
-            
-            listEl.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Memuat...</p></div>';
+        // Quick Add
+        function quickAdd(code) {
+            saveScan(code);
+        }
+
+        // ========== REPORT TAB ==========
+        async function loadReportData() {
+            const dataList = document.getElementById('dataList');
+            dataList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Memuat data...</p></div>';
 
             try {
-                const querySnapshot = await db.collection('gate_scans')
-                    .where('date', '==', todayDate)
-                    .get();
+                const startDate = document.getElementById('filterStart').value;
+                const endDate = document.getElementById('filterEnd').value;
+                const filterDay = document.getElementById('filterDay').value;
+                const filterHour = document.getElementById('filterHour').value;
 
-                if (querySnapshot.empty) {
-                    listEl.innerHTML = '<div class="empty-state"><i class="fas fa-qrcode"></i><p>Belum ada scan hari ini</p></div>';
-                    return;
+                let query = db.collection('gate_scans');
+                
+                if (startDate) {
+                    query = query.where('date', '>=', startDate);
+                }
+                if (endDate) {
+                    query = query.where('date', '<=', endDate);
                 }
 
-                let entries = [];
-                querySnapshot.forEach((doc) => entries.push(doc.data()));
-                entries.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
-
-                let html = '';
-                entries.forEach((data) => {
-                    const isManual = data.qrCode?.startsWith('MANUAL-');
-                    html += `
-                        <div class="history-item">
-                            <div class="history-info">
-                                <div class="history-icon">
-                                    <i class="fas fa-${isManual ? 'keyboard' : 'qrcode'}"></i>
-                                </div>
-                                <div>
-                                    <div class="history-time">${data.time || '-'}</div>
-                                    <div class="history-qr">${isManual ? 'Manual Entry' : (data.qrCode?.substring(0, 25) + '...')}</div>
-                                </div>
-                            </div>
-                            <div class="history-badge">${data.visitorCount || 1} org</div>
-                        </div>
-                    `;
+                const snap = await query.orderBy('date', 'desc').get();
+                
+                allData = [];
+                snap.forEach(doc => {
+                    allData.push({ id: doc.id, ...doc.data() });
                 });
 
-                listEl.innerHTML = html;
+                // Apply additional filters
+                filteredData = allData.filter(item => {
+                    if (filterDay && item.day !== filterDay) return false;
+                    if (filterHour && item.hour !== parseInt(filterHour)) return false;
+                    return true;
+                });
 
-            } catch (error) {
-                console.error('Error:', error);
-                listEl.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation"></i><p>Gagal memuat</p></div>';
+                // Sort by timestamp desc
+                filteredData.sort((a, b) => {
+                    if (a.date !== b.date) return b.date.localeCompare(a.date);
+                    return (b.time || '').localeCompare(a.time || '');
+                });
+
+                updateReportStats();
+                renderDataList();
+                renderHourChart();
+
+            } catch (e) {
+                console.error('Error loading report:', e);
+                dataList.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Gagal memuat data</p></div>';
             }
         }
 
-        // Close History
-        function closeHistory() {
-            document.getElementById('historyModal').classList.remove('active');
+        function updateReportStats() {
+            const total = filteredData.length;
+            const uniqueDays = [...new Set(filteredData.map(d => d.date))].length;
+            const avg = uniqueDays > 0 ? Math.round(total / uniqueDays) : 0;
+
+            document.getElementById('reportTotal').textContent = total;
+            document.getElementById('reportDays').textContent = uniqueDays;
+            document.getElementById('reportAvg').textContent = avg;
+            document.getElementById('dataCount').textContent = total + ' data';
         }
 
-        // Refresh
-        function refreshData() {
-            loadTodayStats();
-            showToast('Data diperbarui!');
+        function renderDataList() {
+            const dataList = document.getElementById('dataList');
+            
+            if (filteredData.length === 0) {
+                dataList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada data</p></div>';
+                return;
+            }
+
+            let html = '';
+            filteredData.forEach((item, idx) => {
+                html += `
+                    <div class="data-item">
+                        <div class="data-item-left">
+                            <div class="data-number">${idx + 1}</div>
+                            <div class="data-info">
+                                <div class="data-code">${item.code || '-'}</div>
+                                <div class="data-meta">${item.date || '-'}</div>
+                            </div>
+                        </div>
+                        <div class="data-time">
+                            <div class="data-time-value">${item.time || '-'}</div>
+                            <div class="data-time-day">${item.day || '-'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            dataList.innerHTML = html;
         }
 
-        // Toast
-        function showToast(message, isError = false) {
+        function renderHourChart() {
+            const container = document.getElementById('chartContainer');
+            const chart = document.getElementById('hourChart');
+            const labels = document.getElementById('hourLabels');
+
+            if (filteredData.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+
+            // Count per hour (6 AM to 6 PM)
+            const hourCounts = {};
+            for (let h = 6; h <= 18; h++) {
+                hourCounts[h] = 0;
+            }
+
+            filteredData.forEach(item => {
+                const hour = item.hour;
+                if (hour >= 6 && hour <= 18) {
+                    hourCounts[hour]++;
+                }
+            });
+
+            const maxCount = Math.max(...Object.values(hourCounts), 1);
+
+            let barsHtml = '';
+            let labelsHtml = '';
+
+            for (let h = 6; h <= 18; h++) {
+                const count = hourCounts[h];
+                const height = (count / maxCount) * 100;
+                barsHtml += `<div class="hour-bar" style="height: ${Math.max(height, 4)}%;" data-count="${count}"></div>`;
+                labelsHtml += `<div class="hour-label">${h}</div>`;
+            }
+
+            chart.innerHTML = barsHtml;
+            labels.innerHTML = labelsHtml;
+        }
+
+        // Apply Filter
+        function applyFilter() {
+            loadReportData();
+            showToast('Filter diterapkan', 'success');
+        }
+
+        // Reset Filter
+        function resetFilter() {
+            setDefaultFilterDates();
+            document.getElementById('filterDay').value = '';
+            document.getElementById('filterHour').value = '';
+            loadReportData();
+            showToast('Filter direset', 'success');
+        }
+
+        // ========== EXPORT PDF ==========
+        function exportPDF() {
+            if (filteredData.length === 0) {
+                showToast('Tidak ada data untuk diexport', 'error');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Title
+            doc.setFontSize(18);
+            doc.setTextColor(27, 77, 62);
+            doc.text('Laporan Gate Scanner', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.setTextColor(100);
+            doc.text('Hutan Pinus Selow Bissoloro', 105, 28, { align: 'center' });
+
+            // Date range
+            const startDate = document.getElementById('filterStart').value || '-';
+            const endDate = document.getElementById('filterEnd').value || '-';
+            doc.setFontSize(10);
+            doc.text(`Periode: ${startDate} s/d ${endDate}`, 105, 36, { align: 'center' });
+
+            // Stats
+            doc.setFontSize(11);
+            doc.setTextColor(40);
+            const total = filteredData.length;
+            const uniqueDays = [...new Set(filteredData.map(d => d.date))].length;
+            const avg = uniqueDays > 0 ? Math.round(total / uniqueDays) : 0;
+            
+            doc.text(`Total Scan: ${total}  |  Jumlah Hari: ${uniqueDays}  |  Rata-rata/Hari: ${avg}`, 105, 46, { align: 'center' });
+
+            // Table
+            const tableData = filteredData.map((item, idx) => [
+                idx + 1,
+                item.date || '-',
+                item.day || '-',
+                item.time || '-',
+                item.code || '-'
+            ]);
+
+            doc.autoTable({
+                head: [['No', 'Tanggal', 'Hari', 'Jam', 'Kode Tiket']],
+                body: tableData,
+                startY: 55,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [27, 77, 62],
+                    textColor: 255,
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [240, 248, 245]
+                },
+                styles: {
+                    fontSize: 9,
+                    cellPadding: 3
+                }
+            });
+
+            // Footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(150);
+                doc.text(
+                    `Dicetak: ${new Date().toLocaleString('id-ID')} | Halaman ${i} dari ${pageCount}`,
+                    105,
+                    doc.internal.pageSize.height - 10,
+                    { align: 'center' }
+                );
+            }
+
+            // Download
+            const fileName = `Laporan_Gate_${startDate}_${endDate}.pdf`;
+            doc.save(fileName);
+            
+            showToast('PDF berhasil diunduh!', 'success');
+        }
+
+        // ========== UTILITIES ==========
+        function showToast(msg, type) {
             const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = 'toast' + (isError ? ' error' : '');
-            toast.classList.add('show');
+            toast.textContent = msg;
+            toast.className = 'toast ' + type + ' show';
             setTimeout(() => toast.classList.remove('show'), 2500);
         }
-
-        // Close modal on outside click
-        document.getElementById('historyModal').addEventListener('click', function(e) {
-            if (e.target === this) closeHistory();
-        });
     </script>
 </body>
 </html>
