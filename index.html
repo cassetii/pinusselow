@@ -9,7 +9,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%231B4D3E'/%3E%3Cpath d='M50 20 L60 40 L55 40 L62 55 L57 55 L63 68 L55 68 L50 80 L45 68 L37 68 L43 55 L38 55 L45 40 L40 40 Z' fill='%23A7C4A0'/%3E%3C/svg%3E">
     <style>
-        /* ========== COLOR PALETTE ========== */
         :root {
             --forest-dark: #1B4D3E;
             --forest-main: #2D6A4F;
@@ -22,6 +21,10 @@
             --gold: #FFB703;
             --gold-dark: #FB8500;
             --danger: #E63946;
+            --purple: #7B2CBF;
+            --purple-light: #9D4EDD;
+            --blue: #0077B6;
+            --blue-light: #00B4D8;
             --gray-100: #F8F9FA;
             --gray-200: #E9ECEF;
             --gray-500: #6C757D;
@@ -144,18 +147,33 @@
             color: var(--gray-500);
         }
 
-        /* ========== STATS GRID ========== */
+        /* ========== STATS GRID - 2x2 ========== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .stat-box {
             background: linear-gradient(135deg, var(--cream) 0%, var(--pale-mint) 100%);
             border-radius: 16px;
-            padding: 1.25rem;
+            padding: 1rem;
             text-align: center;
+        }
+
+        .stat-box.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .stat-box.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
+        .stat-box.harian .stat-value,
+        .stat-box.harian .stat-label,
+        .stat-box.nginap .stat-value,
+        .stat-box.nginap .stat-label {
+            color: var(--white);
         }
 
         .stat-box.highlight {
@@ -168,7 +186,7 @@
         }
 
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             color: var(--forest-dark);
             line-height: 1;
@@ -184,10 +202,15 @@
         }
 
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--forest-main);
-            margin-top: 0.5rem;
+            margin-top: 0.35rem;
             font-weight: 600;
+        }
+
+        .stat-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
         }
 
         /* ========== DATE BADGE ========== */
@@ -267,7 +290,7 @@
             display: block;
         }
 
-        /* ========== SCAN STATUS INDICATOR ========== */
+        /* ========== SCAN STATUS ========== */
         .scan-status {
             padding: 0.75rem 1rem;
             text-align: center;
@@ -293,6 +316,118 @@
         .scan-status.locked {
             background: rgba(230, 57, 70, 0.9);
             color: #fff;
+        }
+
+        /* ========== POPUP OVERLAY ========== */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 1rem;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 320px;
+            width: 100%;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popupIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes popupIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2.5rem;
+            color: var(--white);
+        }
+
+        .popup-icon.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .popup-icon.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .popup-title.harian {
+            color: var(--blue);
+        }
+
+        .popup-title.nginap {
+            color: var(--purple);
+        }
+
+        .popup-subtitle {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .popup-code {
+            background: var(--gray-100);
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+        }
+
+        .popup-time {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+        }
+
+        .popup-close {
+            margin-top: 1.5rem;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        .popup-close.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .popup-close.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
         }
 
         /* ========== MANUAL INPUT ========== */
@@ -327,39 +462,52 @@
             transition: all 0.3s ease;
         }
 
-        .input-btn:hover {
-            transform: scale(1.05);
-        }
-
         /* ========== QUICK BUTTONS ========== */
         .quick-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 0.5rem;
             margin-top: 1rem;
         }
 
         .quick-btn {
-            padding: 0.75rem;
-            background: var(--gray-100);
-            border: 2px solid var(--gray-200);
-            border-radius: 10px;
-            font-weight: 600;
-            color: var(--forest-dark);
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .quick-btn.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            color: var(--white);
+        }
+
+        .quick-btn.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+            color: var(--white);
+        }
+
+        .quick-btn i {
+            font-size: 1.5rem;
+        }
+
+        .quick-btn span {
+            font-size: 0.75rem;
+            opacity: 0.9;
         }
 
         .quick-btn:active {
-            background: var(--sage);
-            border-color: var(--sage);
-            color: var(--white);
             transform: scale(0.95);
         }
 
         /* ========== LAST SCAN ========== */
         .last-scan {
-            background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-dark) 100%);
             border-radius: 16px;
             padding: 1rem;
             color: var(--white);
@@ -370,12 +518,20 @@
             display: block;
         }
 
+        .last-scan.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .last-scan.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
         .last-scan-header {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.8rem;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-bottom: 0.5rem;
         }
 
@@ -387,7 +543,7 @@
 
         .last-scan-code {
             font-family: 'SF Mono', Monaco, monospace;
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             padding: 0.5rem 1rem;
             border-radius: 8px;
             font-size: 0.9rem;
@@ -419,6 +575,7 @@
             transition: all 0.3s ease;
             border: none;
             background: none;
+            position: relative;
         }
 
         .nav-item.active {
@@ -448,11 +605,44 @@
             border-radius: 3px 3px 0 0;
         }
 
-        .nav-item {
-            position: relative;
+        /* ========== REPORT TAB ========== */
+        .report-type-toggle {
+            display: flex;
+            background: var(--gray-100);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 1rem;
         }
 
-        /* ========== REPORT TAB ========== */
+        .toggle-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+            color: var(--gray-500);
+        }
+
+        .toggle-btn.active {
+            color: var(--white);
+        }
+
+        .toggle-btn.harian.active {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .toggle-btn.nginap.active {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
+        .toggle-btn.semua.active {
+            background: linear-gradient(135deg, var(--forest-main) 0%, var(--sage) 100%);
+        }
+
         .filter-section {
             background: var(--gray-100);
             border-radius: 16px;
@@ -559,12 +749,23 @@
         }
 
         .data-table-header {
-            background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-dark) 100%);
-            color: var(--white);
             padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--white);
+        }
+
+        .data-table-header.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .data-table-header.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
+        .data-table-header.semua {
+            background: linear-gradient(135deg, var(--forest-main) 0%, var(--forest-dark) 100%);
         }
 
         .data-table-title {
@@ -589,15 +790,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.2s ease;
         }
 
         .data-item:last-child {
             border-bottom: none;
-        }
-
-        .data-item:hover {
-            background: var(--gray-100);
         }
 
         .data-item-left {
@@ -609,14 +805,21 @@
         .data-number {
             width: 36px;
             height: 36px;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--pale-mint) 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            color: var(--forest-dark);
+            color: var(--white);
             font-size: 0.85rem;
+        }
+
+        .data-number.harian {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .data-number.nginap {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
         }
 
         .data-info {
@@ -634,6 +837,22 @@
         .data-meta {
             font-size: 0.75rem;
             color: var(--gray-500);
+        }
+
+        .data-type-badge {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 50px;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .data-type-badge.harian {
+            background: var(--blue);
+        }
+
+        .data-type-badge.nginap {
+            background: var(--purple);
         }
 
         .data-time {
@@ -663,10 +882,6 @@
             opacity: 0.3;
         }
 
-        .empty-state p {
-            font-size: 0.9rem;
-        }
-
         /* ========== TOAST ========== */
         .toast {
             position: fixed;
@@ -676,7 +891,7 @@
             padding: 1rem 1.5rem;
             border-radius: 50px;
             font-weight: 600;
-            z-index: 9999;
+            z-index: 9998;
             transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             display: flex;
             align-items: center;
@@ -733,11 +948,6 @@
             display: block;
         }
 
-        .https-warning strong {
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
         /* ========== CHART ========== */
         .chart-container {
             background: var(--white);
@@ -766,15 +976,22 @@
 
         .hour-bar {
             flex: 1;
-            background: linear-gradient(180deg, var(--sage) 0%, var(--mint) 100%);
             border-radius: 4px 4px 0 0;
             min-height: 4px;
             position: relative;
             transition: all 0.3s ease;
         }
 
-        .hour-bar:hover {
-            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+        .hour-bar.harian {
+            background: linear-gradient(180deg, var(--blue) 0%, var(--blue-light) 100%);
+        }
+
+        .hour-bar.nginap {
+            background: linear-gradient(180deg, var(--purple) 0%, var(--purple-light) 100%);
+        }
+
+        .hour-bar.semua {
+            background: linear-gradient(180deg, var(--sage) 0%, var(--mint) 100%);
         }
 
         .hour-bar::after {
@@ -820,6 +1037,20 @@
         </div>
     </div>
 
+    <!-- ========== POPUP ========== -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup(event)">
+        <div class="popup-card" onclick="event.stopPropagation()">
+            <div class="popup-icon" id="popupIcon">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="popup-title" id="popupTitle">Kunjungan Harian</div>
+            <div class="popup-subtitle" id="popupSubtitle">Tiket berhasil di-scan</div>
+            <div class="popup-code" id="popupCode">MASUK-001</div>
+            <div class="popup-time" id="popupTime">08:30:45</div>
+            <button class="popup-close" id="popupClose" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
     <!-- ========== TAB: SCAN ========== -->
     <div class="tab-content active" id="tabScan">
         <div class="container">
@@ -832,13 +1063,25 @@
             <!-- Stats -->
             <div class="card">
                 <div class="stats-grid">
-                    <div class="stat-box highlight">
-                        <div class="stat-value" id="todayCount">0</div>
-                        <div class="stat-label">Hari Ini</div>
+                    <div class="stat-box harian">
+                        <div class="stat-icon"><i class="fas fa-sun"></i></div>
+                        <div class="stat-value" id="harianTodayCount">0</div>
+                        <div class="stat-label">Harian Hari Ini</div>
+                    </div>
+                    <div class="stat-box nginap">
+                        <div class="stat-icon"><i class="fas fa-moon"></i></div>
+                        <div class="stat-value" id="nginapTodayCount">0</div>
+                        <div class="stat-label">Nginap Hari Ini</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-value" id="totalCount">0</div>
-                        <div class="stat-label">Total Scan</div>
+                        <div class="stat-icon"><i class="fas fa-sun"></i></div>
+                        <div class="stat-value" id="harianTotalCount">0</div>
+                        <div class="stat-label">Total Harian</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-icon"><i class="fas fa-moon"></i></div>
+                        <div class="stat-value" id="nginapTotalCount">0</div>
+                        <div class="stat-label">Total Nginap</div>
                     </div>
                 </div>
                 <center>
@@ -852,12 +1095,11 @@
             <!-- Scanner -->
             <div class="scanner-card">
                 <div id="reader"></div>
-                <!-- Status Indicator -->
                 <div class="scan-status" id="scanStatus"></div>
                 <button class="scan-btn" id="scanBtn" onclick="startScanner()">
                     <i class="fas fa-qrcode"></i>
                     <span>SCAN QR CODE</span>
-                    <small>Tap untuk memulai scanner</small>
+                    <small>MASUK = Harian | NGINAP = Menginap</small>
                 </button>
                 <button class="stop-btn" id="stopBtn" onclick="stopScanner()">
                     <i class="fas fa-stop-circle"></i> STOP SCANNER
@@ -869,8 +1111,8 @@
                 <div class="card-header">
                     <div class="card-icon"><i class="fas fa-keyboard"></i></div>
                     <div>
-                        <div class="card-title">Input Manual</div>
-                        <div class="card-subtitle">Ketik kode tiket jika kamera bermasalah</div>
+                        <div class="card-title">Input Manual / Quick Add</div>
+                        <div class="card-subtitle">Pilih jenis kunjungan atau ketik kode</div>
                     </div>
                 </div>
                 <div class="input-group">
@@ -881,17 +1123,23 @@
                     </button>
                 </div>
                 <div class="quick-grid">
-                    <button class="quick-btn" onclick="quickAdd('TIKET-001')">001</button>
-                    <button class="quick-btn" onclick="quickAdd('TIKET-002')">002</button>
-                    <button class="quick-btn" onclick="quickAdd('TIKET-003')">003</button>
-                    <button class="quick-btn" onclick="quickAdd('MASUK')">MASUK</button>
+                    <button class="quick-btn harian" onclick="quickAdd('MASUK')">
+                        <i class="fas fa-sun"></i>
+                        <strong>HARIAN</strong>
+                        <span>Kunjungan Harian</span>
+                    </button>
+                    <button class="quick-btn nginap" onclick="quickAdd('NGINAP')">
+                        <i class="fas fa-moon"></i>
+                        <strong>NGINAP</strong>
+                        <span>Kunjungan Menginap</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Last Scan -->
             <div class="last-scan" id="lastScan">
-                <div class="last-scan-header">
-                    <i class="fas fa-check-circle"></i> Scan Terakhir Berhasil
+                <div class="last-scan-header" id="lastScanHeader">
+                    <i class="fas fa-check-circle"></i> <span id="lastScanType">Scan Terakhir</span>
                 </div>
                 <div class="last-scan-content">
                     <div class="last-scan-code" id="lastCode">-</div>
@@ -904,6 +1152,19 @@
     <!-- ========== TAB: REPORT ========== -->
     <div class="tab-content" id="tabReport">
         <div class="container">
+            <!-- Type Toggle -->
+            <div class="report-type-toggle">
+                <button class="toggle-btn semua active" onclick="setReportType('semua')">
+                    <i class="fas fa-list"></i> Semua
+                </button>
+                <button class="toggle-btn harian" onclick="setReportType('harian')">
+                    <i class="fas fa-sun"></i> Harian
+                </button>
+                <button class="toggle-btn nginap" onclick="setReportType('nginap')">
+                    <i class="fas fa-moon"></i> Nginap
+                </button>
+            </div>
+
             <!-- Filter -->
             <div class="card">
                 <div class="card-header">
@@ -997,8 +1258,8 @@
 
             <!-- Data Table -->
             <div class="data-table-container">
-                <div class="data-table-header">
-                    <span class="data-table-title"><i class="fas fa-list"></i> Data Scan</span>
+                <div class="data-table-header semua" id="dataTableHeader">
+                    <span class="data-table-title"><i class="fas fa-list"></i> <span id="dataTableTitle">Semua Data</span></span>
                     <span class="data-table-count" id="dataCount">0 data</span>
                 </div>
                 <div class="data-list" id="dataList">
@@ -1051,24 +1312,25 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // ========== COLLECTION NAMES ==========
+        const COLLECTION_HARIAN = 'kunjungan_harian';
+        const COLLECTION_NGINAP = 'kunjungan_nginap';
+
         // ========== VARIABLES ==========
         let html5QrCode = null;
         let isScanning = false;
         let todayDate = '';
         let allData = [];
         let filteredData = [];
+        let currentReportType = 'semua'; // 'semua', 'harian', 'nginap'
 
-        // ========== QR EXIT DETECTION SYSTEM ==========
-        // Konfigurasi
-        const QR_EXIT_TIMEOUT = 1500;  // QR harus hilang 1.5 detik sebelum bisa scan ulang
-        const DIFFERENT_QR_COOLDOWN = 500; // Cooldown untuk QR berbeda (ms)
-
-        // State tracking
-        let lastScannedCode = null;      // Kode terakhir yang BERHASIL disimpan
-        let lastSeenCode = null;         // Kode terakhir yang TERLIHAT di kamera
-        let lastSeenTime = 0;            // Kapan terakhir kode terlihat
-        let qrExitCheckInterval = null;  // Interval untuk cek apakah QR sudah keluar
-        let isProcessing = false;        // Sedang proses simpan?
+        // ========== QR EXIT DETECTION ==========
+        const QR_EXIT_TIMEOUT = 1500;
+        let lastScannedCode = null;
+        let lastSeenCode = null;
+        let lastSeenTime = 0;
+        let qrExitCheckInterval = null;
+        let isProcessing = false;
 
         // ========== INIT ==========
         document.addEventListener('DOMContentLoaded', () => {
@@ -1078,14 +1340,12 @@
             setDefaultFilterDates();
         });
 
-        // Check HTTPS
         function checkHTTPS() {
             if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
                 document.getElementById('httpsWarning').classList.add('show');
             }
         }
 
-        // Set Today Date
         function setTodayDate() {
             const now = new Date();
             const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
@@ -1096,7 +1356,6 @@
                 `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
         }
 
-        // Set Default Filter Dates
         function setDefaultFilterDates() {
             const today = new Date();
             const weekAgo = new Date(today);
@@ -1104,6 +1363,20 @@
             
             document.getElementById('filterStart').value = weekAgo.toISOString().split('T')[0];
             document.getElementById('filterEnd').value = today.toISOString().split('T')[0];
+        }
+
+        // ========== DETECT VISIT TYPE ==========
+        function detectVisitType(code) {
+            const upperCode = code.toUpperCase();
+            if (upperCode.includes('NGINAP')) {
+                return 'nginap';
+            }
+            // Default to harian (includes MASUK or any other code)
+            return 'harian';
+        }
+
+        function getCollectionName(type) {
+            return type === 'nginap' ? COLLECTION_NGINAP : COLLECTION_HARIAN;
         }
 
         // ========== TAB SWITCH ==========
@@ -1119,22 +1392,71 @@
             }
         }
 
-        // ========== SCAN TAB ==========
+        // ========== LOAD TODAY STATS ==========
         async function loadTodayStats() {
             try {
-                const snap = await db.collection('gate_scans')
-                    .where('date', '==', todayDate)
-                    .get();
-                
-                document.getElementById('todayCount').textContent = snap.size;
-                
-                // Get total all time
-                const allSnap = await db.collection('gate_scans').get();
-                document.getElementById('totalCount').textContent = allSnap.size;
+                // Harian today
+                const harianTodaySnap = await db.collection(COLLECTION_HARIAN)
+                    .where('date', '==', todayDate).get();
+                document.getElementById('harianTodayCount').textContent = harianTodaySnap.size;
+
+                // Nginap today
+                const nginapTodaySnap = await db.collection(COLLECTION_NGINAP)
+                    .where('date', '==', todayDate).get();
+                document.getElementById('nginapTodayCount').textContent = nginapTodaySnap.size;
+
+                // Harian total
+                const harianTotalSnap = await db.collection(COLLECTION_HARIAN).get();
+                document.getElementById('harianTotalCount').textContent = harianTotalSnap.size;
+
+                // Nginap total
+                const nginapTotalSnap = await db.collection(COLLECTION_NGINAP).get();
+                document.getElementById('nginapTotalCount').textContent = nginapTotalSnap.size;
                 
             } catch (e) {
                 console.error('Error loading stats:', e);
             }
+        }
+
+        // ========== POPUP ==========
+        function showPopup(type, code, time) {
+            const overlay = document.getElementById('popupOverlay');
+            const icon = document.getElementById('popupIcon');
+            const title = document.getElementById('popupTitle');
+            const subtitle = document.getElementById('popupSubtitle');
+            const codeEl = document.getElementById('popupCode');
+            const timeEl = document.getElementById('popupTime');
+            const closeBtn = document.getElementById('popupClose');
+
+            // Reset classes
+            icon.className = 'popup-icon ' + type;
+            title.className = 'popup-title ' + type;
+            closeBtn.className = 'popup-close ' + type;
+
+            if (type === 'harian') {
+                icon.innerHTML = '<i class="fas fa-sun"></i>';
+                title.textContent = 'Kunjungan Harian';
+                subtitle.textContent = 'Tiket harian berhasil di-scan!';
+            } else {
+                icon.innerHTML = '<i class="fas fa-moon"></i>';
+                title.textContent = 'Kunjungan Nginap';
+                subtitle.textContent = 'Tiket menginap berhasil di-scan!';
+            }
+
+            codeEl.textContent = code;
+            timeEl.textContent = time;
+
+            overlay.classList.add('show');
+
+            // Auto close after 3 seconds
+            setTimeout(() => {
+                closePopup();
+            }, 3000);
+        }
+
+        function closePopup(event) {
+            if (event && event.target !== document.getElementById('popupOverlay')) return;
+            document.getElementById('popupOverlay').classList.remove('show');
         }
 
         // ========== SCAN STATUS UI ==========
@@ -1159,22 +1481,18 @@
                 document.getElementById('scanBtn').style.display = 'none';
                 document.getElementById('stopBtn').classList.add('active');
 
-                // Reset state
                 resetScanState();
 
                 await html5QrCode.start(
                     { facingMode: "environment" },
                     { fps: 10, qrbox: { width: 250, height: 250 } },
                     onScanSuccess,
-                    onScanError  // Callback ketika TIDAK ada QR terdeteksi
+                    onScanError
                 );
 
                 isScanning = true;
-
-                // Start interval untuk cek apakah QR sudah keluar dari frame
                 startExitDetection();
-
-                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
+                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - MASUK=Harian | NGINAP=Menginap');
 
             } catch (err) {
                 console.error(err);
@@ -1184,16 +1502,12 @@
             }
         }
 
-        // ========== STOP SCANNER ==========
         async function stopScanner() {
             if (html5QrCode && isScanning) {
                 try { await html5QrCode.stop(); } catch(e) {}
             }
 
-            // Stop exit detection
             stopExitDetection();
-
-            // Reset state
             resetScanState();
 
             isScanning = false;
@@ -1203,7 +1517,6 @@
             hideScanStatus();
         }
 
-        // ========== RESET SCAN STATE ==========
         function resetScanState() {
             lastScannedCode = null;
             lastSeenCode = null;
@@ -1211,19 +1524,15 @@
             isProcessing = false;
         }
 
-        // ========== EXIT DETECTION ==========
         function startExitDetection() {
-            // Cek setiap 200ms apakah QR sudah keluar dari frame
             qrExitCheckInterval = setInterval(() => {
                 if (lastSeenCode && lastScannedCode) {
                     const timeSinceLastSeen = Date.now() - lastSeenTime;
-                    
-                    // Jika QR tidak terlihat selama QR_EXIT_TIMEOUT, reset
                     if (timeSinceLastSeen > QR_EXIT_TIMEOUT) {
-                        console.log(`QR "${lastScannedCode}" sudah keluar dari frame (${timeSinceLastSeen}ms)`);
+                        console.log(`QR "${lastScannedCode}" sudah keluar dari frame`);
                         lastScannedCode = null;
                         lastSeenCode = null;
-                        updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
+                        updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - MASUK=Harian | NGINAP=Menginap');
                     }
                 }
             }, 200);
@@ -1236,74 +1545,55 @@
             }
         }
 
-        // ========== ON SCAN SUCCESS (QR Terdeteksi) ==========
         function onScanSuccess(decodedText) {
             const now = Date.now();
-            
-            // Update "last seen" - QR ini sedang terlihat di kamera
             lastSeenCode = decodedText;
             lastSeenTime = now;
 
-            // Jika sedang proses, abaikan
-            if (isProcessing) {
-                return;
-            }
+            if (isProcessing) return;
 
-            // CASE 1: Kode SAMA dengan yang terakhir di-scan
             if (decodedText === lastScannedCode) {
-                // QR masih di frame, ABAIKAN (tidak upload ulang)
                 updateScanStatus('locked', `<i class="fas fa-lock"></i> "${decodedText}" - Angkat QR dari kamera dulu`);
                 return;
             }
 
-            // CASE 2: Kode BERBEDA dari terakhir (atau belum pernah scan)
-            // Boleh langsung scan dengan cooldown singkat
-            if (lastScannedCode !== null) {
-                // Ada kode sebelumnya tapi berbeda
-                console.log(`QR berbeda terdeteksi: "${decodedText}" (sebelumnya: "${lastScannedCode}")`);
-            }
-
-            // Proses scan!
             processScan(decodedText);
         }
 
-        // ========== ON SCAN ERROR (Tidak ada QR terdeteksi) ==========
         function onScanError(errorMessage) {
-            // Callback ini dipanggil ketika TIDAK ADA QR di frame
-            // Kita gunakan untuk deteksi bahwa QR sudah keluar
-            
-            // Tidak perlu update lastSeenTime karena tidak ada QR
-            // Exit detection interval akan handle reset
+            // QR not detected - exit detection will handle reset
         }
 
-        // ========== PROCESS SCAN ==========
         async function processScan(code) {
             isProcessing = true;
             
-            updateScanStatus('waiting', `<i class="fas fa-spinner fa-spin"></i> Menyimpan "${code}"...`);
+            const visitType = detectVisitType(code);
+            const typeLabel = visitType === 'harian' ? 'Harian' : 'Nginap';
+            
+            updateScanStatus('waiting', `<i class="fas fa-spinner fa-spin"></i> Menyimpan ${typeLabel}...`);
 
-            // Vibrate
             if (navigator.vibrate) navigator.vibrate(200);
 
             try {
-                await saveScan(code);
-                
-                // Berhasil! Set sebagai lastScannedCode
+                const time = await saveScan(code, visitType);
                 lastScannedCode = code;
                 
-                updateScanStatus('locked', `<i class="fas fa-check-circle"></i> "${code}" tersimpan! Angkat QR dari kamera`);
+                // Show popup
+                showPopup(visitType, code, time);
+                
+                updateScanStatus('locked', `<i class="fas fa-check-circle"></i> ${typeLabel} tersimpan! Angkat QR`);
                 
             } catch (e) {
                 console.error('Gagal simpan:', e);
                 showToast('Gagal menyimpan!', 'error');
-                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
+                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan');
             }
 
             isProcessing = false;
         }
 
         // ========== SAVE SCAN ==========
-        async function saveScan(code) {
+        async function saveScan(code, visitType) {
             const now = new Date();
             const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
             const time = now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
@@ -1315,25 +1605,36 @@
                 day: days[now.getDay()],
                 hour: now.getHours(),
                 minute: now.getMinutes(),
+                type: visitType,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
 
-            await db.collection('gate_scans').add(data);
+            const collectionName = getCollectionName(visitType);
+            await db.collection(collectionName).add(data);
 
-            // Animate counter
-            const countEl = document.getElementById('todayCount');
-            const totalEl = document.getElementById('totalCount');
+            // Update counter
+            const counterId = visitType === 'harian' ? 'harianTodayCount' : 'nginapTodayCount';
+            const totalId = visitType === 'harian' ? 'harianTotalCount' : 'nginapTotalCount';
+            
+            const countEl = document.getElementById(counterId);
+            const totalEl = document.getElementById(totalId);
+            
             countEl.textContent = parseInt(countEl.textContent) + 1;
             totalEl.textContent = parseInt(totalEl.textContent) + 1;
             countEl.classList.add('animate');
             setTimeout(() => countEl.classList.remove('animate'), 400);
 
-            // Show last scan
-            document.getElementById('lastScan').classList.add('show');
+            // Update last scan
+            const lastScanEl = document.getElementById('lastScan');
+            lastScanEl.className = 'last-scan show ' + visitType;
+            document.getElementById('lastScanType').textContent = 
+                visitType === 'harian' ? 'Kunjungan Harian' : 'Kunjungan Nginap';
             document.getElementById('lastCode').textContent = code;
             document.getElementById('lastTime').textContent = time;
 
             showToast('✓ Scan berhasil!', 'success');
+            
+            return time;
         }
 
         // ========== MANUAL INPUT ==========
@@ -1344,17 +1645,42 @@
                 showToast('Masukkan kode tiket!', 'error');
                 return;
             }
-            // Manual input langsung simpan tanpa cek exit
-            saveScan(code);
+            const visitType = detectVisitType(code);
+            saveScan(code, visitType).then(time => {
+                showPopup(visitType, code, time);
+            });
             input.value = '';
         }
 
-        // Quick Add
         function quickAdd(code) {
-            saveScan(code);
+            const visitType = detectVisitType(code);
+            saveScan(code, visitType).then(time => {
+                showPopup(visitType, code, time);
+            });
         }
 
         // ========== REPORT TAB ==========
+        function setReportType(type) {
+            currentReportType = type;
+            
+            // Update toggle buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.toggle-btn.${type}`).classList.add('active');
+            
+            // Update header
+            const header = document.getElementById('dataTableHeader');
+            header.className = 'data-table-header ' + type;
+            
+            const titles = {
+                'semua': 'Semua Data',
+                'harian': 'Kunjungan Harian',
+                'nginap': 'Kunjungan Nginap'
+            };
+            document.getElementById('dataTableTitle').textContent = titles[type];
+            
+            loadReportData();
+        }
+
         async function loadReportData() {
             const dataList = document.getElementById('dataList');
             dataList.innerHTML = '<div class="loading"><div class="spinner"></div><p>Memuat data...</p></div>';
@@ -1365,21 +1691,34 @@
                 const filterDay = document.getElementById('filterDay').value;
                 const filterHour = document.getElementById('filterHour').value;
 
-                let query = db.collection('gate_scans');
-                
-                if (startDate) {
-                    query = query.where('date', '>=', startDate);
-                }
-                if (endDate) {
-                    query = query.where('date', '<=', endDate);
-                }
-
-                const snap = await query.orderBy('date', 'desc').get();
-                
                 allData = [];
-                snap.forEach(doc => {
-                    allData.push({ id: doc.id, ...doc.data() });
-                });
+
+                // Determine which collections to query
+                const collections = currentReportType === 'semua' 
+                    ? [COLLECTION_HARIAN, COLLECTION_NGINAP]
+                    : [getCollectionName(currentReportType)];
+
+                for (const collName of collections) {
+                    let query = db.collection(collName);
+                    
+                    if (startDate) {
+                        query = query.where('date', '>=', startDate);
+                    }
+                    if (endDate) {
+                        query = query.where('date', '<=', endDate);
+                    }
+
+                    const snap = await query.orderBy('date', 'desc').get();
+                    
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        allData.push({ 
+                            id: doc.id, 
+                            ...data,
+                            type: data.type || (collName === COLLECTION_HARIAN ? 'harian' : 'nginap')
+                        });
+                    });
+                }
 
                 // Apply additional filters
                 filteredData = allData.filter(item => {
@@ -1388,7 +1727,7 @@
                     return true;
                 });
 
-                // Sort by timestamp desc
+                // Sort by date and time desc
                 filteredData.sort((a, b) => {
                     if (a.date !== b.date) return b.date.localeCompare(a.date);
                     return (b.time || '').localeCompare(a.time || '');
@@ -1425,13 +1764,19 @@
 
             let html = '';
             filteredData.forEach((item, idx) => {
+                const typeClass = item.type || 'harian';
+                const typeLabel = typeClass === 'harian' ? 'Harian' : 'Nginap';
+                
                 html += `
                     <div class="data-item">
                         <div class="data-item-left">
-                            <div class="data-number">${idx + 1}</div>
+                            <div class="data-number ${typeClass}">${idx + 1}</div>
                             <div class="data-info">
                                 <div class="data-code">${item.code || '-'}</div>
-                                <div class="data-meta">${item.date || '-'}</div>
+                                <div class="data-meta">
+                                    ${item.date || '-'}
+                                    ${currentReportType === 'semua' ? `<span class="data-type-badge ${typeClass}">${typeLabel}</span>` : ''}
+                                </div>
                             </div>
                         </div>
                         <div class="data-time">
@@ -1457,7 +1802,6 @@
 
             container.style.display = 'block';
 
-            // Count per hour (6 AM to 6 PM)
             const hourCounts = {};
             for (let h = 6; h <= 18; h++) {
                 hourCounts[h] = 0;
@@ -1478,7 +1822,7 @@
             for (let h = 6; h <= 18; h++) {
                 const count = hourCounts[h];
                 const height = (count / maxCount) * 100;
-                barsHtml += `<div class="hour-bar" style="height: ${Math.max(height, 4)}%;" data-count="${count}"></div>`;
+                barsHtml += `<div class="hour-bar ${currentReportType}" style="height: ${Math.max(height, 4)}%;" data-count="${count}"></div>`;
                 labelsHtml += `<div class="hour-label">${h}</div>`;
             }
 
@@ -1486,13 +1830,11 @@
             labels.innerHTML = labelsHtml;
         }
 
-        // Apply Filter
         function applyFilter() {
             loadReportData();
             showToast('Filter diterapkan', 'success');
         }
 
-        // Reset Filter
         function resetFilter() {
             setDefaultFilterDates();
             document.getElementById('filterDay').value = '';
@@ -1520,11 +1862,21 @@
             doc.setTextColor(100);
             doc.text('Hutan Pinus Selow Bissoloro', 105, 28, { align: 'center' });
 
+            // Report type
+            const typeLabels = {
+                'semua': 'Semua Kunjungan',
+                'harian': 'Kunjungan Harian',
+                'nginap': 'Kunjungan Nginap'
+            };
+            doc.setFontSize(11);
+            doc.setTextColor(60);
+            doc.text(`Jenis: ${typeLabels[currentReportType]}`, 105, 36, { align: 'center' });
+
             // Date range
             const startDate = document.getElementById('filterStart').value || '-';
             const endDate = document.getElementById('filterEnd').value || '-';
             doc.setFontSize(10);
-            doc.text(`Periode: ${startDate} s/d ${endDate}`, 105, 36, { align: 'center' });
+            doc.text(`Periode: ${startDate} s/d ${endDate}`, 105, 44, { align: 'center' });
 
             // Stats
             doc.setFontSize(11);
@@ -1533,7 +1885,7 @@
             const uniqueDays = [...new Set(filteredData.map(d => d.date))].length;
             const avg = uniqueDays > 0 ? Math.round(total / uniqueDays) : 0;
             
-            doc.text(`Total Scan: ${total}  |  Jumlah Hari: ${uniqueDays}  |  Rata-rata/Hari: ${avg}`, 105, 46, { align: 'center' });
+            doc.text(`Total: ${total}  |  Hari: ${uniqueDays}  |  Rata-rata: ${avg}/hari`, 105, 52, { align: 'center' });
 
             // Table
             const tableData = filteredData.map((item, idx) => [
@@ -1541,16 +1893,18 @@
                 item.date || '-',
                 item.day || '-',
                 item.time || '-',
-                item.code || '-'
+                item.code || '-',
+                item.type === 'harian' ? 'Harian' : 'Nginap'
             ]);
 
             doc.autoTable({
-                head: [['No', 'Tanggal', 'Hari', 'Jam', 'Kode Tiket']],
+                head: [['No', 'Tanggal', 'Hari', 'Jam', 'Kode', 'Jenis']],
                 body: tableData,
-                startY: 55,
+                startY: 60,
                 theme: 'grid',
                 headStyles: {
-                    fillColor: [27, 77, 62],
+                    fillColor: currentReportType === 'harian' ? [0, 119, 182] : 
+                               currentReportType === 'nginap' ? [123, 44, 191] : [27, 77, 62],
                     textColor: 255,
                     fontStyle: 'bold'
                 },
@@ -1577,8 +1931,7 @@
                 );
             }
 
-            // Download
-            const fileName = `Laporan_Gate_${startDate}_${endDate}.pdf`;
+            const fileName = `Laporan_${currentReportType}_${startDate}_${endDate}.pdf`;
             doc.save(fileName);
             
             showToast('PDF berhasil diunduh!', 'success');
