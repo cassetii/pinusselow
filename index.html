@@ -267,6 +267,34 @@
             display: block;
         }
 
+        /* ========== SCAN STATUS INDICATOR ========== */
+        .scan-status {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        .scan-status.active {
+            display: block;
+        }
+
+        .scan-status.waiting {
+            background: rgba(255, 183, 3, 0.9);
+            color: #000;
+        }
+
+        .scan-status.ready {
+            background: rgba(82, 183, 136, 0.9);
+            color: #fff;
+        }
+
+        .scan-status.locked {
+            background: rgba(230, 57, 70, 0.9);
+            color: #fff;
+        }
+
         /* ========== MANUAL INPUT ========== */
         .input-group {
             display: flex;
@@ -824,6 +852,8 @@
             <!-- Scanner -->
             <div class="scanner-card">
                 <div id="reader"></div>
+                <!-- Status Indicator -->
+                <div class="scan-status" id="scanStatus"></div>
                 <button class="scan-btn" id="scanBtn" onclick="startScanner()">
                     <i class="fas fa-qrcode"></i>
                     <span>SCAN QR CODE</span>
@@ -1021,13 +1051,24 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Variables
+        // ========== VARIABLES ==========
         let html5QrCode = null;
         let isScanning = false;
         let todayDate = '';
-        let lastScanTime = 0;
         let allData = [];
         let filteredData = [];
+
+        // ========== QR EXIT DETECTION SYSTEM ==========
+        // Konfigurasi
+        const QR_EXIT_TIMEOUT = 1500;  // QR harus hilang 1.5 detik sebelum bisa scan ulang
+        const DIFFERENT_QR_COOLDOWN = 500; // Cooldown untuk QR berbeda (ms)
+
+        // State tracking
+        let lastScannedCode = null;      // Kode terakhir yang BERHASIL disimpan
+        let lastSeenCode = null;         // Kode terakhir yang TERLIHAT di kamera
+        let lastSeenTime = 0;            // Kapan terakhir kode terlihat
+        let qrExitCheckInterval = null;  // Interval untuk cek apakah QR sudah keluar
+        let isProcessing = false;        // Sedang proses simpan?
 
         // ========== INIT ==========
         document.addEventListener('DOMContentLoaded', () => {
@@ -1096,7 +1137,18 @@
             }
         }
 
-        // Start Scanner
+        // ========== SCAN STATUS UI ==========
+        function updateScanStatus(status, message) {
+            const statusEl = document.getElementById('scanStatus');
+            statusEl.className = 'scan-status active ' + status;
+            statusEl.innerHTML = message;
+        }
+
+        function hideScanStatus() {
+            document.getElementById('scanStatus').classList.remove('active');
+        }
+
+        // ========== START SCANNER ==========
         async function startScanner() {
             if (isScanning) return;
 
@@ -1107,14 +1159,22 @@
                 document.getElementById('scanBtn').style.display = 'none';
                 document.getElementById('stopBtn').classList.add('active');
 
+                // Reset state
+                resetScanState();
+
                 await html5QrCode.start(
                     { facingMode: "environment" },
                     { fps: 10, qrbox: { width: 250, height: 250 } },
                     onScanSuccess,
-                    () => {}
+                    onScanError  // Callback ketika TIDAK ada QR terdeteksi
                 );
 
                 isScanning = true;
+
+                // Start interval untuk cek apakah QR sudah keluar dari frame
+                startExitDetection();
+
+                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
 
             } catch (err) {
                 console.error(err);
@@ -1124,28 +1184,125 @@
             }
         }
 
-        // Stop Scanner
+        // ========== STOP SCANNER ==========
         async function stopScanner() {
             if (html5QrCode && isScanning) {
                 try { await html5QrCode.stop(); } catch(e) {}
             }
 
+            // Stop exit detection
+            stopExitDetection();
+
+            // Reset state
+            resetScanState();
+
             isScanning = false;
             document.getElementById('reader').classList.remove('active');
             document.getElementById('scanBtn').style.display = 'flex';
             document.getElementById('stopBtn').classList.remove('active');
+            hideScanStatus();
         }
 
-        // On Scan Success
-        function onScanSuccess(text) {
-            if (Date.now() - lastScanTime < 3000) return;
-            lastScanTime = Date.now();
+        // ========== RESET SCAN STATE ==========
+        function resetScanState() {
+            lastScannedCode = null;
+            lastSeenCode = null;
+            lastSeenTime = 0;
+            isProcessing = false;
+        }
 
+        // ========== EXIT DETECTION ==========
+        function startExitDetection() {
+            // Cek setiap 200ms apakah QR sudah keluar dari frame
+            qrExitCheckInterval = setInterval(() => {
+                if (lastSeenCode && lastScannedCode) {
+                    const timeSinceLastSeen = Date.now() - lastSeenTime;
+                    
+                    // Jika QR tidak terlihat selama QR_EXIT_TIMEOUT, reset
+                    if (timeSinceLastSeen > QR_EXIT_TIMEOUT) {
+                        console.log(`QR "${lastScannedCode}" sudah keluar dari frame (${timeSinceLastSeen}ms)`);
+                        lastScannedCode = null;
+                        lastSeenCode = null;
+                        updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
+                    }
+                }
+            }, 200);
+        }
+
+        function stopExitDetection() {
+            if (qrExitCheckInterval) {
+                clearInterval(qrExitCheckInterval);
+                qrExitCheckInterval = null;
+            }
+        }
+
+        // ========== ON SCAN SUCCESS (QR Terdeteksi) ==========
+        function onScanSuccess(decodedText) {
+            const now = Date.now();
+            
+            // Update "last seen" - QR ini sedang terlihat di kamera
+            lastSeenCode = decodedText;
+            lastSeenTime = now;
+
+            // Jika sedang proses, abaikan
+            if (isProcessing) {
+                return;
+            }
+
+            // CASE 1: Kode SAMA dengan yang terakhir di-scan
+            if (decodedText === lastScannedCode) {
+                // QR masih di frame, ABAIKAN (tidak upload ulang)
+                updateScanStatus('locked', `<i class="fas fa-lock"></i> "${decodedText}" - Angkat QR dari kamera dulu`);
+                return;
+            }
+
+            // CASE 2: Kode BERBEDA dari terakhir (atau belum pernah scan)
+            // Boleh langsung scan dengan cooldown singkat
+            if (lastScannedCode !== null) {
+                // Ada kode sebelumnya tapi berbeda
+                console.log(`QR berbeda terdeteksi: "${decodedText}" (sebelumnya: "${lastScannedCode}")`);
+            }
+
+            // Proses scan!
+            processScan(decodedText);
+        }
+
+        // ========== ON SCAN ERROR (Tidak ada QR terdeteksi) ==========
+        function onScanError(errorMessage) {
+            // Callback ini dipanggil ketika TIDAK ADA QR di frame
+            // Kita gunakan untuk deteksi bahwa QR sudah keluar
+            
+            // Tidak perlu update lastSeenTime karena tidak ada QR
+            // Exit detection interval akan handle reset
+        }
+
+        // ========== PROCESS SCAN ==========
+        async function processScan(code) {
+            isProcessing = true;
+            
+            updateScanStatus('waiting', `<i class="fas fa-spinner fa-spin"></i> Menyimpan "${code}"...`);
+
+            // Vibrate
             if (navigator.vibrate) navigator.vibrate(200);
-            saveScan(text);
+
+            try {
+                await saveScan(code);
+                
+                // Berhasil! Set sebagai lastScannedCode
+                lastScannedCode = code;
+                
+                updateScanStatus('locked', `<i class="fas fa-check-circle"></i> "${code}" tersimpan! Angkat QR dari kamera`);
+                
+            } catch (e) {
+                console.error('Gagal simpan:', e);
+                showToast('Gagal menyimpan!', 'error');
+                updateScanStatus('ready', '<i class="fas fa-search"></i> Siap scan - arahkan ke QR Code');
+            }
+
+            isProcessing = false;
         }
 
-        // Save Scan
+        // ========== SAVE SCAN ==========
         async function saveScan(code) {
             const now = new Date();
             const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
@@ -1161,31 +1318,25 @@
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             };
 
-            try {
-                await db.collection('gate_scans').add(data);
+            await db.collection('gate_scans').add(data);
 
-                // Animate counter
-                const countEl = document.getElementById('todayCount');
-                const totalEl = document.getElementById('totalCount');
-                countEl.textContent = parseInt(countEl.textContent) + 1;
-                totalEl.textContent = parseInt(totalEl.textContent) + 1;
-                countEl.classList.add('animate');
-                setTimeout(() => countEl.classList.remove('animate'), 400);
+            // Animate counter
+            const countEl = document.getElementById('todayCount');
+            const totalEl = document.getElementById('totalCount');
+            countEl.textContent = parseInt(countEl.textContent) + 1;
+            totalEl.textContent = parseInt(totalEl.textContent) + 1;
+            countEl.classList.add('animate');
+            setTimeout(() => countEl.classList.remove('animate'), 400);
 
-                // Show last scan
-                document.getElementById('lastScan').classList.add('show');
-                document.getElementById('lastCode').textContent = code;
-                document.getElementById('lastTime').textContent = time;
+            // Show last scan
+            document.getElementById('lastScan').classList.add('show');
+            document.getElementById('lastCode').textContent = code;
+            document.getElementById('lastTime').textContent = time;
 
-                showToast('✓ Scan berhasil!', 'success');
-
-            } catch (e) {
-                console.error(e);
-                showToast('Gagal menyimpan!', 'error');
-            }
+            showToast('✓ Scan berhasil!', 'success');
         }
 
-        // Manual Submit
+        // ========== MANUAL INPUT ==========
         function submitManual() {
             const input = document.getElementById('manualInput');
             const code = input.value.trim();
@@ -1193,6 +1344,7 @@
                 showToast('Masukkan kode tiket!', 'error');
                 return;
             }
+            // Manual input langsung simpan tanpa cek exit
             saveScan(code);
             input.value = '';
         }
