@@ -6,1582 +6,556 @@
     <meta name="theme-color" content="#0A400C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233C6E71;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2370AE6E;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23grad1)'/%3E%3Cpath d='M50 20 L60 40 L55 40 L62 55 L57 55 L63 68 L55 68 L50 80 L45 68 L37 68 L43 55 L38 55 L45 40 L40 40 Z' fill='%23BEEE62'/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%233C6E71;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%2370AE6E;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='48' fill='url(%23grad1)'/%3E%3Cpath d='M50 20 L60 40 L55 40 L62 55 L57 55 L63 68 L55 68 L50 80 L45 68 L37 68 L43 55 L38 55 L45 40 L40 40 Z' fill='%23BEEE62'/%3E%3C/svg%3E">
-    <title>Wisata Hutan Pinus Selow Bissoloro</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gate Scanner - Hutan Pinus Selow Bissoloro</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0A400C;
-            --secondary-color: #819067;
-            --accent-color: #B1AB86;
-            --highlight-color: #FEFAE0;
-            --light-bg: #f8f9fa;
-            --super-admin-color: #0A400C;
+            --primary: #0A400C;
+            --secondary: #819067;
+            --accent: #28a745;
+            --light: #FEFAE0;
+            --danger: #dc3545;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            background: linear-gradient(135deg, #FEFAE0 0%, #B1AB86 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
+            background: linear-gradient(135deg, #0A400C 0%, #1a5c1f 50%, #819067 100%);
             min-height: 100vh;
-            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Pine Tree Background Pattern */
-        .pine-background {
-            position: relative;
+        .header {
+            background: rgba(0,0,0,0.3);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .header p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        /* Stats Card */
+        .stats-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-number.pulse {
+            animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); color: var(--accent); }
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+        .date-badge {
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+
+        /* Scan Button */
+        .scan-section {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .scan-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent) 0%, #20c997 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scan-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(40, 167, 69, 0.5);
+        }
+
+        .scan-btn:active {
+            transform: scale(0.98);
+        }
+
+        .scan-btn i {
+            font-size: 3rem;
+        }
+
+        /* Scanner Container */
+        .scanner-container {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 20px;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
 
-        .pine-background::before {
-            content: '';
-            position: absolute;
+        .scanner-container.active {
+            display: block;
+        }
+
+        .scanner-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .scanner-header h3 {
+            font-size: 1rem;
+        }
+
+        .close-scanner {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        #reader {
+            width: 100%;
+        }
+
+        #reader video {
+            width: 100% !important;
+        }
+
+        .scanner-footer {
+            padding: 1rem;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .scanner-footer p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .quick-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-btn:hover {
+            background: rgba(255,255,255,0.25);
+        }
+
+        /* Last Scan Info */
+        .last-scan {
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            width: 100%;
+            max-width: 400px;
+            color: white;
+        }
+
+        .last-scan-header {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .last-scan-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .last-scan-time {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .last-scan-status {
+            background: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Success Overlay */
+        .success-overlay {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='80' viewBox='0 0 60 80'%3E%3Cg fill='%2370AE6E' fill-opacity='0.08'%3E%3Cpath d='M30 0l15 25h-8l8 15h-6l6 12h-5l5 10H40l-10 18-10-18H5l5-10h-5l6-12h-6l8-15h-8L30 0z'/%3E%3C/g%3E%3C/svg%3E") repeat;
-            z-index: -1;
-        }
-
-        /* Login Page Styles */
-        
-
-        
-
-        
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        /* Header */
-        .mobile-header {
-            background: linear-gradient(135deg, #0A400C 0%, #819067 100%);
-            color: white;
-            padding: 1rem 1rem 1rem 65px;
-            position: sticky;
-            top: 0;
+            background: rgba(40, 167, 69, 0.95);
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .super-admin-header {
-            background: linear-gradient(135deg, var(--super-admin-color) 0%, #819067 100%) !important;
-        }
-
-        .mobile-header-content {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 1rem;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
         }
 
-        .mobile-header h1 {
-            font-size: 1.25rem;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .user-info {
+        .success-overlay.active {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
+            animation: fadeIn 0.3s ease;
         }
 
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* Navigation */
-        .mobile-nav {
-            display: flex;
-            background: white;
-            margin: 0.5rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .mobile-nav-item {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: #f8f9fa;
-            color: var(--primary-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .mobile-nav-item.active {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .super-admin-nav-item.active {
-            background: var(--super-admin-color) !important;
-        }
-
-        .mobile-nav-item:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Cards */
-        .mobile-card {
-            background: white;
-            margin: 0.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(60, 110, 113, 0.15);
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .mobile-card-header {
-            background: linear-gradient(135deg, #819067 0%, #0A400C 100%);
-            color: white;
-            padding: 1rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .super-admin-card-header {
-            background: linear-gradient(135deg, var(--super-admin-color) 0%, #819067 100%) !important;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            border-left: 4px solid var(--highlight-color);
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .stat-card.danger {
-            border-left-color: var(--super-admin-color);
-        }
-
-        .stat-card.warning {
-            border-left-color: var(--accent-color);
-        }
-
-        .stat-card.info {
-            border-left-color: #0A400C;
-        }
-
-        .stat-card.success {
-            border-left-color: var(--secondary-color);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            font-weight: 600;
-        }
-
-        .stat-icon {
-            font-size: 1.5rem;
+        .success-icon {
+            font-size: 5rem;
             margin-bottom: 1rem;
-            color: var(--highlight-color);
+            animation: bounceIn 0.5s ease;
         }
 
-        .danger .stat-icon { color: var(--super-admin-color); }
-        .warning .stat-icon { color: var(--accent-color); }
-        .info .stat-icon { color: #0A400C; }
-        .success .stat-icon { color: var(--secondary-color); }
-
-        /* Data Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
-        .data-table th,
-        .data-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .data-table th {
-            background-color: #f8f9fa;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .data-table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            background: white;
-            padding: 1rem;
-            margin: 0.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .filter-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            align-items: end;
-        }
-
-        .filter-group {
-            margin-bottom: 1rem;
-        }
-
-        .filter-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 0.9rem;
-        }
-
-        .filter-input,
-        .filter-select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .filter-input:focus,
-        .filter-select:focus {
-            border-color: var(--highlight-color);
-            outline: none;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover {
-            background: var(--primary-color);
-        }
-
-        .filter-btn.clear {
-            background: #6c757d;
-        }
-
-        .filter-btn.export {
-            background: var(--accent-color);
-        }
-
-        /* Admin Performance Cards */
-        .admin-card {
-            background: white;
-            margin: 0.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .admin-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .admin-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-        }
-
-        .admin-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .admin-status.active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .admin-status.inactive {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .admin-stat {
-            text-align: center;
-        }
-
-        .admin-stat-number {
+        .success-text {
             font-size: 1.5rem;
             font-weight: bold;
-            color: var(--secondary-color);
-        }
-
-        .admin-stat-label {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        /* User Management */
-        .user-form {
-            background: white;
-            padding: 1.5rem;
-            margin: 0.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
         }
 
-        .form-input,
-        .form-select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+        .success-detail {
             font-size: 1rem;
-            transition: all 0.3s ease;
+            opacity: 0.9;
         }
 
-        .form-input:focus,
-        .form-select:focus {
-            border-color: var(--highlight-color);
-            outline: none;
-            box-shadow: 0 0 0 0.2rem rgba(190, 238, 98, 0.25);
+        /* History Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
 
-        .form-btn {
-            padding: 0.75rem 1.5rem;
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.1rem;
+        }
+
+        .modal-close {
+            background: none;
             border: none;
-            border-radius: 8px;
-            font-weight: 600;
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-right: 0.5rem;
         }
 
-        .form-btn.primary {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .form-btn.danger {
-            background: var(--super-admin-color);
-            color: white;
-        }
-
-        .form-btn.secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .form-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* User List */
-        .user-list {
+        .modal-body {
+            padding: 1rem;
             max-height: 60vh;
             overflow-y: auto;
         }
 
-        .user-item {
-            background: white;
-            margin: 0.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .user-item.super-admin {
-            border-left-color: var(--super-admin-color);
-        }
-
-        .user-header {
+        .history-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0.75rem 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
             margin-bottom: 0.5rem;
         }
 
-        .user-username {
-            font-weight: bold;
-            color: var(--primary-color);
+        .history-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .user-role {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .history-time {
             font-weight: 600;
+            color: var(--primary);
         }
 
-        .user-role.super-admin {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .user-role.petugas {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .user-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .user-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .user-btn.edit {
-            background: var(--secondary-color);
-            color: white;
-        }
-
-        .user-btn.delete {
-            background: var(--super-admin-color);
-            color: white;
-        }
-
-        /* Ticket Management */
-        .ticket-item {
-            background: white;
-            margin: 0.5rem;
-            padding: 1rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .ticket-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .ticket-number {
-            font-weight: bold;
-            color: var(--primary-color);
+        .history-qr {
+            font-size: 0.75rem;
+            color: #666;
             font-family: monospace;
         }
 
-        .ticket-status {
+        .history-badge {
+            background: var(--accent);
+            color: white;
             padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
-            background: #d4edda;
-            color: #155724;
         }
 
-        /* Ticket Modal Styles */
-        .ticket-modal {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            overflow: auto;
-        }
-
-        .ticket-modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .ticket-modal-content {
-            background-color: #fefefe;
-            padding: 20px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 900px;
-            position: relative;
-        }
-
-        .ticket-close {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            color: #666;
-            cursor: pointer;
-            z-index: 10000;
-            background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-
-        .ticket-close:hover {
-            color: #000;
-            background: #f0f0f0;
-        }
-
-        /* MOBILE PORTRAIT LAYOUT (Default) */
-        .ticket-preview {
-            position: relative;
-            background: linear-gradient(to bottom, #819067 0%, #0A400C 100%);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            min-height: 600px;
-        }
-
-        .ticket-decorations {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            opacity: 0.3;
-        }
-
-        .ticket-decorations svg {
-            width: 60px;
-            height: 60px;
-        }
-
-        .ticket-content {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 20px;
-        }
-
-        .ticket-left {
-            flex: 1;
-            padding: 0;
-            position: relative;
-        }
-
-        .ticket-logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #B1AB86 0%, #FEFAE0 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px solid #0A400C;
-            box-shadow: 0 8px 25px rgba(244, 116, 59, 0.4);
-            margin: 0 auto 20px;
-        }
-
-        .ticket-logo-inner {
-            text-align: center;
-            color: white;
-        }
-
-        .ticket-logo-text-top {
-            font-size: 8px;
-            font-weight: bold;
-            line-height: 1.2;
-        }
-
-        .ticket-logo-text-main {
-            font-size: 20px;
-            font-weight: bold;
-            color: #FEFAE0;
-            margin: 2px 0;
-        }
-
-        .ticket-logo-text-bottom {
-            font-size: 8px;
-            font-weight: bold;
-        }
-
-        .ticket-header-info {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .ticket-header-row {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            font-size: 12px;
-            color: #374151;
-        }
-
-        .ticket-title {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .ticket-title h1 {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0A400C;
-            line-height: 1.2;
-            margin: 0;
-        }
-
-        .ticket-title-sub {
-            color: #819067;
-        }
-
-        .ticket-bottom-info {
-            margin-top: 20px;
-        }
-
-        .ticket-category {
-            font-size: 12px;
-            color: #374151;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .ticket-price {
-            background: #0A400C;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 9999px;
-            display: block;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .ticket-info-section {
-            text-align: center;
-        }
-
-        .ticket-info-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .ticket-info-list {
-            font-size: 10px;
-            color: #1f2937;
-        }
-
-        .ticket-info-list > div {
-            margin-bottom: 4px;
-        }
-
-        .ticket-date-badge {
-            background: #0A400C;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 9999px;
-            font-size: 12px;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .ticket-right {
-            width: 100%;
-            height: 120px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-top: 2px dashed #d1d5db;
-            margin-top: 20px;
-        }
-
-        .ticket-barcode {
-            transform: rotate(0deg);
-        }
-
-        .ticket-barcode rect {
-            transition: none;
-        }
-
-        /* DESKTOP LANDSCAPE LAYOUT */
-        @media (min-width: 768px) {
-            .ticket-modal-content {
-                max-width: 900px;
-            }
-
-            .ticket-preview {
-                max-width: 850px;
-                min-height: 280px;
-                height: 280px;
-            }
-
-            .ticket-decorations svg {
-                width: 100px;
-                height: 100px;
-            }
-
-            .ticket-content {
-                flex-direction: row;
-                padding: 24px;
-            }
-
-            .ticket-left {
-                flex: 1;
-                padding: 0;
-            }
-
-            .ticket-logo {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 96px;
-                height: 96px;
-                margin: 0;
-            }
-
-            .ticket-logo-text-top {
-                font-size: 10px;
-            }
-
-            .ticket-logo-text-main {
-                font-size: 24px;
-            }
-
-            .ticket-logo-text-bottom {
-                font-size: 10px;
-            }
-
-            .ticket-header-info {
-                margin-left: 110px;
-                margin-top: 0;
-                margin-bottom: 0;
-                text-align: left;
-            }
-
-            .ticket-header-row {
-                flex-direction: row;
-                gap: 32px;
-                font-size: 14px;
-            }
-
-            .ticket-title {
-                margin-left: 110px;
-                margin-top: 12px;
-                margin-bottom: 0;
-                text-align: left;
-            }
-
-            .ticket-title h1 {
-                font-size: 36px;
-            }
-
-            .ticket-bottom-info {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 130px;
-                display: flex;
-                align-items: center;
-                gap: 32px;
-                margin-top: 0;
-            }
-
-            .ticket-category {
-                font-size: 14px;
-                margin-bottom: 4px;
-                text-align: left;
-            }
-
-            .ticket-price {
-                padding: 12px 24px;
-                font-size: 18px;
-                display: inline-block;
-                margin-bottom: 0;
-            }
-
-            .ticket-info-section {
-                margin-left: auto;
-                text-align: left;
-            }
-
-            .ticket-info-title {
-                font-size: 14px;
-            }
-
-            .ticket-info-list {
-                font-size: 12px;
-            }
-
-            .ticket-date-badge {
-                position: absolute;
-                top: 0;
-                right: 130px;
-                font-size: 14px;
-                margin-bottom: 0;
-            }
-
-            .ticket-right {
-                width: 128px;
-                height: 100%;
-                border-left: 2px dashed #d1d5db;
-                border-top: none;
-                margin-top: 0;
-            }
-
-            .ticket-barcode {
-                transform: rotate(90deg);
-            }
-        }
-
-        .ticket-actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .ticket-btn {
-            padding: 12px 32px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .ticket-btn-print {
-            background: linear-gradient(135deg, #0A400C 0%, #819067 100%);
-            color: white;
-        }
-
-        .ticket-btn-close {
-            background: #6c757d;
-            color: white;
-        }
-
-        .ticket-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        /* Content sections */
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-        }
-
-        /* Loading */
-        .loading {
+        .empty-state {
             text-align: center;
             padding: 2rem;
             color: #666;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--secondary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+        .empty-state i {
+            font-size: 3rem;
+            opacity: 0.3;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #333;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* Pine decoration elements */
-        
-
-        .pine-decoration.top-left {
-            top: 10%;
-            left: 10%;
-            transform: rotate(-15deg);
-        }
-
-        .pine-decoration.top-right {
-            top: 15%;
-            right: 10%;
-            transform: rotate(15deg);
-        }
-
-        .pine-decoration.bottom-left {
-            bottom: 10%;
-            left: 15%;
-            transform: rotate(-10deg);
-        }
-
-        .pine-decoration.bottom-right {
-            bottom: 15%;
-            right: 15%;
-            transform: rotate(10deg);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .admin-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .filter-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            
-
-            .mobile-header h1 {
-                font-size: 1rem;
-            }
+        .toast.error {
+            background: var(--danger);
         }
     </style>
 </head>
 <body>
-    <!-- Menu Toggle (Top Left) -->
-    <div class="menu-toggle" onclick="window.location.href='https://pinusloapps.netlify.app/'" style="position: fixed; top: 12px; left: 12px; z-index: 2000; width: 48px; height: 48px; background: rgba(255, 255, 255, 0.95); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(10, 64, 12, 0.2); transition: all 0.3s; border: 2px solid #0A400C;">
-        <i class="fas fa-bars" style="font-size: 1.4rem; color: #0A400C;"></i>
+    <div class="header">
+        <h1><i class="fas fa-tree"></i> Hutan Pinus Selow Bissoloro</h1>
+        <p>Gate Scanner - Pencatatan Pengunjung Masuk</p>
     </div>
 
-    <!-- Login Page -->
-
-    <!-- Super Admin App -->
-    <div id="superAdminApp" class="page-section">
-        <div class="mobile-header super-admin-header">
-            <div class="mobile-header-content">
-                <h1>
-                    <i class="fas fa-crown me-2"></i>
-                    Super Admin Panel
-                </h1>
-                <div class="user-info">
-                    <span id="currentUser">SuperAdmin</span>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
+    <div class="main-container">
+        <!-- Stats Card -->
+        <div class="stats-card">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number" id="todayCount">0</div>
+                    <div class="stat-label">Scan Hari Ini</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalVisitors">0</div>
+                    <div class="stat-label">Total Pengunjung</div>
+                </div>
+            </div>
+            <div class="date-badge">
+                <i class="fas fa-calendar-alt"></i>
+                <span id="currentDate">Loading...</span>
             </div>
         </div>
 
-        <div class="mobile-nav">
-            <div class="mobile-nav-item super-admin-nav-item active" onclick="showSection('dashboard')">
-                <i class="fas fa-chart-dashboard me-1"></i>Dashboard
-            </div>
-            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('monitoring')">
-                <i class="fas fa-monitor-waveform me-1"></i>Monitoring
-            </div>
-            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('users')">
-                <i class="fas fa-users-cog me-1"></i>Users
-            </div>
-            <div class="mobile-nav-item super-admin-nav-item" onclick="showSection('reports')">
-                <i class="fas fa-file-chart me-1"></i>Reports
-            </div>
-        </div>
-
-        <div id="dashboardSection" class="content-section active">
-            <div class="mobile-card">
-                <div class="mobile-card-header super-admin-card-header">
-                    <i class="fas fa-chart-dashboard me-2"></i>Dashboard Overview
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card success">
-                        <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
-                        <div class="stat-number" id="totalTickets">0</div>
-                        <div class="stat-label">Total Tiket</div>
-                    </div>
-                    <div class="stat-card info">
-                        <div class="stat-icon"><i class="fas fa-users"></i></div>
-                        <div class="stat-number" id="totalVisitors">0</div>
-                        <div class="stat-label">Total Pengunjung</div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
-                        <div class="stat-number" id="totalRevenue">0</div>
-                        <div class="stat-label">Total Pendapatan</div>
-                    </div>
-                    <div class="stat-card danger">
-                        <div class="stat-icon"><i class="fas fa-user-tie"></i></div>
-                        <div class="stat-number" id="activeAdmins">0</div>
-                        <div class="stat-label">Admin Aktif</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mobile-card">
-                <div class="mobile-card-header super-admin-card-header">
-                    <i class="fas fa-clock me-2"></i>Aktivitas Terbaru
-                </div>
-                <div id="recentActivity" style="padding: 1rem; max-height: 300px; overflow-y: auto;">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Memuat aktivitas...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="monitoringSection" class="content-section">
-            <div class="filter-section">
-                <h6 style="margin-bottom: 1rem; color: var(--primary-color); font-weight: 600;">
-                    <i class="fas fa-filter me-2"></i>Filter Data
-                </h6>
-                <div class="filter-row">
-                    <div class="filter-group">
-                        <label class="filter-label">Admin/Petugas</label>
-                        <select class="filter-select" id="filterAdmin">
-                            <option value="">Semua Admin</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Tanggal Mulai</label>
-                        <input type="date" class="filter-input" id="filterDateStart">
-                    </div>
-                    <div class="filter-group">
-                        <label class="filter-label">Tanggal Selesai</label>
-                        <input type="date" class="filter-input" id="filterDateEnd">
-                    </div>
-                    <div class="filter-group">
-                        <button class="filter-btn" onclick="applyFilters()">
-                            <i class="fas fa-search me-1"></i>Filter
-                        </button>
-                        <button class="filter-btn clear" onclick="clearFilters()">
-                            <i class="fas fa-times me-1"></i>Reset
-                        </button>
-                        <button class="filter-btn export" onclick="exportData()">
-                            <i class="fas fa-download me-1"></i>Export
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="adminPerformanceCards">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Memuat data admin...</p>
-                </div>
-            </div>
-
-            <div class="mobile-card">
-                <div class="mobile-card-header super-admin-card-header">
-                    <i class="fas fa-table me-2"></i>Data Tiket Lengkap
-                </div>
-                <div style="padding: 1rem; overflow-x: auto;">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>No. Tiket</th>
-                                <th>Petugas</th>
-                                <th>Tanggal</th>
-                                <th>Pengunjung</th>
-                                <th>Paket</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dataTableBody">
-                            <tr>
-                                <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
-                                    <i class="fas fa-spinner fa-spin me-2"></i>Memuat data...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id="usersSection" class="content-section">
-            <div class="user-form">
-                <h6 style="margin-bottom: 1rem; color: var(--primary-color); font-weight: 600;">
-                    <i class="fas fa-user-plus me-2"></i>Tambah/Edit User
-                </h6>
-                <form id="userForm" onsubmit="handleUserForm(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Username</label>
-                            <input type="text" class="form-input" id="userUsername" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-input" id="userPassword" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Role</label>
-                            <select class="form-select" id="userRole" required>
-                                <option value="">Pilih Role</option>
-                                <option value="petugas">Petugas</option>
-                                <option value="super-admin">Super Admin</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-input" id="userFullName">
-                        </div>
-                    </div>
-                    <div style="margin-top: 1rem;">
-                        <button type="submit" class="form-btn primary" id="userSubmitBtn">
-                            <i class="fas fa-save me-1"></i>Simpan User
-                        </button>
-                        <button type="button" class="form-btn secondary" onclick="resetUserForm()">
-                            <i class="fas fa-times me-1"></i>Batal
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mobile-card">
-                <div class="mobile-card-header super-admin-card-header">
-                    <i class="fas fa-users me-2"></i>Daftar Pengguna
-                </div>
-                <div class="user-list" id="userList">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Memuat daftar pengguna...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="reportsSection" class="content-section">
-            <div class="mobile-card">
-                <div class="mobile-card-header super-admin-card-header">
-                    <i class="fas fa-file-chart me-2"></i>Laporan & Analytics
-                </div>
-                <div style="padding: 1rem;">
-                    <div class="form-grid" style="margin-bottom: 2rem;">
-                        <div class="form-group">
-                            <label class="form-label">Periode Laporan</label>
-                            <select class="form-select" id="reportPeriod" onchange="updateReportDateRange()">
-                                <option value="today">Hari Ini</option>
-                                <option value="week">Minggu Ini</option>
-                                <option value="month">Bulan Ini</option>
-                                <option value="custom">Custom Range</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="customDateRange" style="display: none;">
-                            <label class="form-label">Custom Range</label>
-                            <div style="display: flex; gap: 0.5rem;">
-                                <input type="date" class="form-input" id="reportStartDate">
-                                <input type="date" class="form-input" id="reportEndDate">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button class="form-btn primary" onclick="generateReport()">
-                                <i class="fas fa-chart-bar me-1"></i>Generate Report
-                            </button>
-                            <button class="form-btn export" onclick="downloadReport()">
-                                <i class="fas fa-download me-1"></i>Download PDF
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="reportResults">
-                        <div style="text-align: center; padding: 3rem; color: #666;">
-                            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                            <h5>Pilih periode dan klik Generate Report</h5>
-                            <p>Laporan akan menampilkan statistik lengkap untuk periode yang dipilih</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Regular Admin App -->
-    <div id="regularAdminApp" class="page-section">
-        <div class="mobile-header">
-            <div class="mobile-header-content">
-                <h1>
-                    <i class="fas fa-tree me-2"></i>
-                    Hutan Pinus Selow Bissoloro
-                </h1>
-                <div class="user-info">
-                    <span id="currentRegularUser">User</span>
-                    <button class="logout-btn" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="mobile-nav">
-            <div class="mobile-nav-item active" onclick="showRegularSection('registration')">
-                <i class="fas fa-plus-circle me-1"></i>Registrasi
-            </div>
-            <div class="mobile-nav-item" onclick="showRegularSection('history')">
-                <i class="fas fa-history me-1"></i>Riwayat
-            </div>
-            <div class="mobile-nav-item" onclick="showRegularSection('stats')">
-                <i class="fas fa-chart-bar me-1"></i>Statistik
-            </div>
-        </div>
-
-        <div id="registrationSection" class="content-section active">
-            <div class="mobile-card">
-                <div class="mobile-card-header">
-                    <i class="fas fa-user-plus me-2"></i>Form Registrasi Pengunjung
-                </div>
-                <form id="registrationForm" onsubmit="handleRegistration(event)">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Nama Pengunjung</label>
-                            <input type="text" class="form-input" id="visitorName" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">No. Telepon</label>
-                            <input type="tel" class="form-input" id="visitorPhone" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Jumlah Pengunjung</label>
-                            <input type="number" class="form-input" id="visitorCount" min="1" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Jenis Kunjungan</label>
-                            <select class="form-select" id="visitType" required onchange="calculateTotal()">
-                                <option value="">Pilih Paket</option>
-                                <option value="reguler" data-price="10000">Kunjungan Biasa - Rp 10.000</option>
-                                <option value="premium" data-price="15000">Camp Weekdays - Rp 15.000</option>
-                                <option value="vip" data-price="20000">Camp Weekend - Rp 20.000</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Tanggal Kunjungan</label>
-                            <input type="date" class="form-input" id="visitDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Total Pembayaran</label>
-                            <input type="text" class="form-input" id="totalPayment" readonly style="background-color: #f8f9fa; font-weight: bold; color: var(--primary-color);">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Catatan (Opsional)</label>
-                            <textarea class="form-input" id="visitorNotes" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div style="padding: 1rem;">
-                        <button type="submit" class="form-btn primary">
-                            <i class="fas fa-save me-1"></i>Simpan Data
-                        </button>
-                        <button type="button" class="form-btn secondary" onclick="resetRegistrationForm()">
-                            <i class="fas fa-times me-1"></i>Reset
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="mobile-card">
-                <div style="padding: 1rem;">
-                    <div class="form-grid">
-                        <button class="form-btn primary" onclick="printLastTicket()">
-                            <i class="fas fa-print me-1"></i>Print Tiket Terakhir
-                        </button>
-                        <button class="form-btn secondary" onclick="showTodayStats()">
-                            <i class="fas fa-calendar-day me-1"></i>Statistik Hari Ini
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="historySection" class="content-section">
-            <div class="mobile-card">
-                <div class="mobile-card-header">
-                    <i class="fas fa-history me-2"></i>Riwayat Registrasi
-                </div>
-                <div style="padding: 1rem;">
-                    <div class="form-grid" style="margin-bottom: 1rem;">
-                        <div class="form-group">
-                            <label class="form-label">Filter Tanggal</label>
-                            <input type="date" class="form-input" id="regularFilterDate" onchange="filterRegularHistory()">
-                        </div>
-                        <div class="form-group">
-                            <button class="form-btn primary" onclick="refreshRegularHistory()">
-                                <i class="fas fa-refresh me-1"></i>Refresh
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div id="regularHistoryList" style="max-height: 60vh; overflow-y: auto;">
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <p>Memuat riwayat...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="statsSection" class="content-section">
-            <div class="mobile-card">
-                <div class="mobile-card-header">
-                    <i class="fas fa-chart-bar me-2"></i>Statistik Saya
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="myTodayTickets">0</div>
-                        <div class="stat-label">Tiket Hari Ini</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="myTodayVisitors">0</div>
-                        <div class="stat-label">Pengunjung Hari Ini</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="myTodayRevenue">Rp 0</div>
-                        <div class="stat-label">Pendapatan Hari Ini</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="myMonthTickets">0</div>
-                        <div class="stat-label">Total Bulan Ini</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mobile-card">
-                <div class="mobile-card-header">
-                    <i class="fas fa-trophy me-2"></i>Pencapaian
-                </div>
-                <div style="padding: 1rem;">
-                    <div id="achievements">
-                        <div style="text-align: center; padding: 2rem; color: #666;">
-                            <i class="fas fa-medal" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                            <p>Pencapaian akan muncul berdasarkan kinerja Anda</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Ticket Modal -->
-    <div id="ticketModal" class="ticket-modal">
-        <div class="ticket-modal-content">
-            <span class="ticket-close" onclick="closeTicketModal()">&times;</span>
-            
-            <div class="ticket-preview" id="ticketPreview">
-                <div class="ticket-decorations">
-                    <svg viewBox="0 0 100 100">
-                        <path d="M50,10 L60,40 L90,40 L65,60 L75,90 L50,70 L25,90 L35,60 L10,40 L40,40 Z" fill="white" opacity="0.5"/>
-                    </svg>
-                </div>
-                <div style="position: absolute; top: 40px; left: 80px; width: 32px; height: 32px; background: white; border-radius: 50%; opacity: 0.2;"></div>
-                <div style="position: absolute; bottom: 80px; left: 160px; width: 48px; height: 48px; background: white; border-radius: 50%; opacity: 0.15;"></div>
-                <div style="position: absolute; top: 50%; left: 40px; color: white; opacity: 0.2; font-size: 32px;">★</div>
-                <div style="position: absolute; top: 80px; left: 128px; color: white; opacity: 0.25; font-size: 48px;">✦</div>
-
-                <div class="ticket-content">
-                    <div class="ticket-left">
-                        <div class="ticket-logo">
-                            <div class="ticket-logo-inner">
-                                <div class="ticket-logo-text-top">WISATA HUTAN/PINUS</div>
-                                <div class="ticket-logo-text-main">SELOW</div>
-                                <div class="ticket-logo-text-bottom">BISSOLORO</div>
-                            </div>
-                        </div>
-
-                        <div class="ticket-header-info">
-                            <div class="ticket-header-row">
-                                <div>Number : <span id="ticketNumber" style="font-weight: 600;">................</span></div>
-                                <div>Berlaku Untuk : <span id="ticketPeople" style="font-weight: 600;">..........</span> orang</div>
-                            </div>
-                        </div>
-
-                        <div class="ticket-title">
-                            <h1>
-                                Tiket Wisata<br>
-                                <span class="ticket-title-sub">Pinus Selow Bissoloro</span>
-                            </h1>
-                        </div>
-
-                        <div class="ticket-date-badge" id="ticketDate">DD/MM/YYYY</div>
-
-                        <div class="ticket-bottom-info">
-                            <div>
-                                <div class="ticket-category">
-                                    Kategori Kunjungan : <span id="ticketCategory" style="font-weight: 600;">..........</span>
-                                </div>
-                                <div class="ticket-price" id="ticketPrice">
-                                    Rp. ...............
-                                </div>
-                            </div>
-                            <div class="ticket-info-section">
-                                <div class="ticket-info-title">Info Lebih Lanjut :</div>
-                                <div class="ticket-info-list">
-                                    <div>🌐 www.pinuslobissoloro.com</div>
-                                    <div>📱 0816 4342 890, 0887 5941 607</div>
-                                    <div>📷 pinusselowbissoloro.id2, @pinusloglamping</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ticket-right">
-                        <svg class="ticket-barcode" width="200" height="60" id="ticketBarcode">
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ticket-actions">
-                <button class="ticket-btn ticket-btn-print" onclick="downloadTicketAsJPG()">
-                    <i class="fas fa-download me-2"></i>Download JPG
-                </button>
-                <button class="ticket-btn ticket-btn-close" onclick="closeTicketModal()">
-                    <i class="fas fa-times me-2"></i>Tutup
+        <!-- Scanner Container (hidden by default) -->
+        <div class="scanner-container" id="scannerContainer">
+            <div class="scanner-header">
+                <h3><i class="fas fa-qrcode"></i> Scan QR Code Tiket</h3>
+                <button class="close-scanner" onclick="stopScanner()">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
+            <div id="reader"></div>
+            <div class="scanner-footer">
+                <p><i class="fas fa-info-circle"></i> Arahkan kamera ke QR Code pada tiket</p>
+            </div>
+        </div>
+
+        <!-- Scan Button -->
+        <div class="scan-section" id="scanSection">
+            <button class="scan-btn" id="scanBtn" onclick="startScanner()">
+                <i class="fas fa-qrcode"></i>
+                <span>SCAN QR CODE</span>
+                <small style="font-weight: normal; font-size: 0.85rem;">Tap untuk scan tiket pengunjung</small>
+            </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="showHistory()">
+                <i class="fas fa-history"></i> Riwayat
+            </button>
+            <button class="quick-btn" onclick="manualEntry()">
+                <i class="fas fa-keyboard"></i> Manual
+            </button>
+            <button class="quick-btn" onclick="refreshData()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+
+        <!-- Last Scan -->
+        <div class="last-scan">
+            <div class="last-scan-header">
+                <i class="fas fa-clock"></i> Scan Terakhir
+            </div>
+            <div class="last-scan-content">
+                <div class="last-scan-time" id="lastScanTime">-</div>
+                <div class="last-scan-status" id="lastScanStatus">Menunggu</div>
+            </div>
         </div>
     </div>
 
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-text">BERHASIL MASUK!</div>
+        <div class="success-detail" id="successDetail">1 Pengunjung Tercatat</div>
+    </div>
+
+    <!-- History Modal -->
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> Riwayat Scan Hari Ini</h2>
+                <button class="modal-close" onclick="closeHistory()">&times;</button>
+            </div>
+            <div class="modal-body" id="historyList">
+                <div class="empty-state">
+                    <i class="fas fa-qrcode"></i>
+                    <p>Memuat data...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
@@ -1599,1257 +573,251 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
-        console.log('Firebase initialized successfully');
 
         // Global Variables
-        let currentUser = null;
-        let allTicketsData = [];
-        let allUsersData = [];
-        let editingUserId = null;
-        let ticketCounter = 1;
-        let myTicketsData = [];
+        let html5QrCode = null;
+        let isScanning = false;
+        let todayDate = '';
+        let scanCount = 0;
+        let lastScannedCode = '';
+        let lastScanTime = 0;
 
-        const packagePrices = {
-            'reguler': 10000,
-            'premium': 15000,
-            'vip': 20000
-        };
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateDisplay();
+            loadTodayStats();
+        });
 
-        const systemUsers = [
-            { id: '1', username: 'superadmin', password: 'admin123', role: 'super-admin', fullName: 'Super Administrator', isDefault: true },
-            { id: '2', username: 'selow1', password: 'selow1234', role: 'petugas', fullName: 'Petugas 1', isDefault: true },
-            { id: '3', username: 'selow2', password: 'selow1234', role: 'petugas', fullName: 'Petugas 2', isDefault: true },
-            { id: '4', username: 'selow3', password: 'selow1234', role: 'petugas', fullName: 'Petugas 3', isDefault: true },
-            { id: '5', username: 'selow4', password: 'selow1234', role: 'petugas', fullName: 'Petugas 4', isDefault: true },
-            { id: '6', username: 'selow5', password: 'selow1234', role: 'petugas', fullName: 'Petugas 5', isDefault: true }
-        ];
-
-        if (!localStorage.getItem('pinuslo_users')) {
-            localStorage.setItem('pinuslo_users', JSON.stringify(systemUsers));
-        }
-
-        // ========== TICKET MODAL FUNCTIONS ==========
-
-        function generateBarcode(text) {
-            if (!text) text = '0000000000';
-            const patterns = [];
-            for (let i = 0; i < text.length; i++) {
-                const charCode = text.charCodeAt(i);
-                patterns.push(charCode % 2);
-                patterns.push((charCode + 1) % 2);
-            }
-            while (patterns.length < 20) {
-                patterns.push(patterns.length % 2);
-            }
-            return patterns.slice(0, 20);
-        }
-
-        function updateTicketModal(ticketData) {
-            document.getElementById('ticketNumber').textContent = ticketData.nomorTiket || '................';
-            document.getElementById('ticketPeople').textContent = ticketData.jumlahOrang || '..........';
-            
-            const categoryMap = {
-                'reguler': 'Kunjungan Biasa',
-                'premium': 'Camp Weekdays',
-                'vip': 'Camp Weekend'
-            };
-            document.getElementById('ticketCategory').textContent = categoryMap[ticketData.jenisKunjungan] || ticketData.jenisKunjungan || '..........';
-            
-            document.getElementById('ticketPrice').textContent = 'Rp. ' + (ticketData.total ? ticketData.total.toLocaleString('id-ID') : '...............');
-            
-            if (ticketData.tanggalKunjungan) {
-                const date = new Date(ticketData.tanggalKunjungan);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                document.getElementById('ticketDate').textContent = `${day}/${month}/${year}`;
-            } else {
-                document.getElementById('ticketDate').textContent = 'DD/MM/YYYY';
-            }
-            
-            const barcodeData = generateBarcode(ticketData.nomorTiket || '0000000000');
-            const barcodeSvg = document.getElementById('ticketBarcode');
-            let barcodeHTML = '';
-            barcodeData.forEach((bar, index) => {
-                const width = bar ? "8" : "4";
-                const fill = bar ? "#1a1a1a" : "#e0e0e0";
-                barcodeHTML += `<rect x="${index * 10}" y="0" width="${width}" height="60" fill="${fill}"/>`;
-            });
-            barcodeSvg.innerHTML = barcodeHTML;
-        }
-
-        function openTicketModal(ticketData) {
-            updateTicketModal(ticketData);
-            document.getElementById('ticketModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeTicketModal() {
-            document.getElementById('ticketModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        async function downloadTicketAsJPG() {
-            const ticketPreview = document.getElementById('ticketPreview');
-            const ticketNumber = document.getElementById('ticketNumber').textContent;
-            
-            const originalHTML = document.querySelector('.ticket-actions').innerHTML;
-            document.querySelector('.ticket-actions').innerHTML = `
-                <div style="text-align: center; padding: 1rem;">
-                    <div class="spinner" style="margin: 0 auto 0.5rem;"></div>
-                    <p style="color: var(--primary-color); font-weight: 600;">Membuat gambar tiket...</p>
-                </div>
-            `;
-
-            try {
-                if (typeof html2canvas === 'undefined') {
-                    await loadHtml2Canvas();
-                }
-
-                const canvas = await html2canvas(ticketPreview, {
-                    scale: 3,
-                    backgroundColor: null,
-                    logging: false,
-                    useCORS: true,
-                    allowTaint: true
-                });
-
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    
-                    const fileName = `Tiket_${ticketNumber}_${new Date().getTime()}.jpg`;
-                    link.href = url;
-                    link.download = fileName;
-                    
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    URL.revokeObjectURL(url);
-                    
-                    document.querySelector('.ticket-actions').innerHTML = originalHTML;
-                    
-                    showAlert('Tiket berhasil diunduh sebagai JPG!', 'success');
-                    
-                }, 'image/jpeg', 0.95);
-
-            } catch (error) {
-                console.error('Error generating JPG:', error);
-                document.querySelector('.ticket-actions').innerHTML = originalHTML;
-                showAlert('Gagal membuat gambar tiket. Coba lagi!', 'danger');
-            }
-        }
-
-        function loadHtml2Canvas() {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('ticketModal');
-            if (event.target == modal) {
-                closeTicketModal();
-            }
-        }
-
-        // ========== PASSWORD TOGGLE ==========
-        
-        // function togglePassword() - REMOVED (no login form)
-
-        // ========== LOGIN FUNCTIONS ==========
-        
-        // function handleLogin() - REMOVED (no login required)
-
-        // function handleLoginProcess() - REMOVED (no login required)
-
-        // function showLoginAlert() - REMOVED (no login required)
-
-        // ========== PAGE NAVIGATION ==========
-        
-        function showSuperAdminApp() {
-            // loginPage element removed - no login required
-            document.getElementById('superAdminApp').classList.add('active');
-            document.getElementById('regularAdminApp').classList.remove('active');
-            
-            document.getElementById('currentUser').textContent = currentUser.nama || currentUser.fullName || 'Administrator';
-            
-            initializeSuperAdmin();
-        }
-
-        function showRegularAdminApp() {
-            // loginPage element removed - no login required
-            document.getElementById('superAdminApp').classList.remove('active');
-            document.getElementById('regularAdminApp').classList.add('active');
-            
-            document.getElementById('currentRegularUser').textContent = currentUser.nama || currentUser.fullName || 'User';
-            
-            initializeRegularAdmin();
-        }
-
-        // function showLoginPage() { /* REMOVED */ }
-
-        // function updateLoginUI() - REMOVED (no login UI)
-
-        function logout() {
-            if (confirm('Refresh halaman untuk restart aplikasi?')) {
-                localStorage.removeItem('pinuslo_current_user');
-                showAlert('Halaman akan di-refresh...', 'info');
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-            }
-        }
-
-        function showSection(section) {
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(section + 'Section').classList.add('active');
-            event.target.classList.add('active');
-            
-            if (section === 'dashboard') {
-                loadDashboardData();
-            } else if (section === 'monitoring') {
-                loadMonitoringData();
-            } else if (section === 'users') {
-                loadUsersData();
-            }
-        }
-
-        function showRegularSection(section) {
-            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(section + 'Section').classList.add('active');
-            event.target.classList.add('active');
-            
-            if (section === 'history') {
-                loadRegularHistory();
-            } else if (section === 'stats') {
-                updateRegularStats();
-            }
-        }
-
-        // ========== SUPER ADMIN INITIALIZATION ==========
-        
-        function initializeSuperAdmin() {
-            console.log('Initializing Super Admin');
-            loadDashboardData();
-        }
-
-        async function loadDashboardData() {
-            console.log('Loading dashboard data...');
-            
-            try {
-                const querySnapshot = await db.collection('registrasi').orderBy('timestamp', 'desc').get();
-                
-                allTicketsData = [];
-                querySnapshot.forEach((doc) => {
-                    allTicketsData.push({ id: doc.id, ...doc.data() });
-                });
-                
-                updateDashboardStats();
-                updateRecentActivity();
-                
-            } catch (error) {
-                console.error('Error loading dashboard data:', error);
-                showAlert('Gagal memuat data dashboard: ' + error.message, 'warning');
-            }
-        }
-
-        function updateDashboardStats() {
-            const totalTickets = allTicketsData.length;
-            const totalVisitors = allTicketsData.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
-            const totalRevenue = allTicketsData.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
-            
-            const sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-            
-            const activeAdmins = new Set();
-            allTicketsData.forEach(ticket => {
-                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                if (ticketDate >= sevenDaysAgo && ticket.createdBy) {
-                    activeAdmins.add(ticket.createdBy);
-                }
-            });
-
-            document.getElementById('totalTickets').textContent = totalTickets.toLocaleString('id-ID');
-            document.getElementById('totalVisitors').textContent = totalVisitors.toLocaleString('id-ID');
-            document.getElementById('totalRevenue').textContent = 'Rp ' + totalRevenue.toLocaleString('id-ID');
-            document.getElementById('activeAdmins').textContent = activeAdmins.size;
-        }
-
-        function updateRecentActivity() {
-            const recentTickets = allTicketsData.slice(0, 10);
-            const activityContainer = document.getElementById('recentActivity');
-            
-            if (recentTickets.length === 0) {
-                activityContainer.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>Belum ada aktivitas terbaru</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            recentTickets.forEach(ticket => {
-                const date = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                const timeAgo = getTimeAgo(date);
-                
-                html += `
-                    <div style="padding: 0.75rem; border-left: 3px solid var(--secondary-color); margin-bottom: 0.5rem; background: #f8f9fa; border-radius: 0 8px 8px 0;">
-                        <div style="font-weight: 600; color: var(--primary-color); font-size: 0.9rem;">
-                            ${ticket.nomorTiket} - ${ticket.petugasLoket}
-                        </div>
-                        <div style="font-size: 0.8rem; color: #666; margin-top: 0.25rem;">
-                            ${ticket.jumlahOrang} orang • Rp ${(ticket.total || 0).toLocaleString('id-ID')} • ${timeAgo}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            activityContainer.innerHTML = html;
-        }
-
-        function getTimeAgo(date) {
+        // Update Date Display
+        function updateDateDisplay() {
             const now = new Date();
-            const diffInSeconds = Math.floor((now - date) / 1000);
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
             
-            if (diffInSeconds < 60) return 'Baru saja';
-            if (diffInSeconds < 3600) return Math.floor(diffInSeconds / 60) + ' menit lalu';
-            if (diffInSeconds < 86400) return Math.floor(diffInSeconds / 3600) + ' jam lalu';
-            return Math.floor(diffInSeconds / 86400) + ' hari lalu';
+            document.getElementById('currentDate').textContent = 
+                `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+            
+            todayDate = now.toISOString().split('T')[0];
         }
 
-        // ========== MONITORING FUNCTIONS ==========
-        
-        async function loadMonitoringData() {
-            console.log('Loading monitoring data...');
-            
+        // Load Today Stats
+        async function loadTodayStats() {
             try {
-                await loadDashboardData();
-                updateAdminFilter();
-                updateAdminPerformanceCards();
-                updateDataTable(allTicketsData);
-                
-            } catch (error) {
-                console.error('Error loading monitoring data:', error);
-                showAlert('Gagal memuat data monitoring: ' + error.message, 'warning');
-            }
-        }
-
-        function updateAdminFilter() {
-            const filterAdmin = document.getElementById('filterAdmin');
-            const admins = [...new Set(allTicketsData.map(ticket => ticket.createdBy).filter(Boolean))];
-            
-            filterAdmin.innerHTML = '<option value="">Semua Admin</option>';
-            admins.forEach(admin => {
-                filterAdmin.innerHTML += `<option value="${admin}">${admin}</option>`;
-            });
-        }
-
-        function updateAdminPerformanceCards() {
-            const adminStats = {};
-            
-            allTicketsData.forEach(ticket => {
-                const admin = ticket.createdBy || 'Unknown';
-                if (!adminStats[admin]) {
-                    adminStats[admin] = {
-                        name: admin,
-                        totalTickets: 0,
-                        totalVisitors: 0,
-                        totalRevenue: 0,
-                        lastActivity: null
-                    };
-                }
-                
-                adminStats[admin].totalTickets++;
-                adminStats[admin].totalVisitors += ticket.jumlahOrang || 0;
-                adminStats[admin].totalRevenue += ticket.total || 0;
-                
-                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                if (!adminStats[admin].lastActivity || ticketDate > adminStats[admin].lastActivity) {
-                    adminStats[admin].lastActivity = ticketDate;
-                }
-            });
-
-            const container = document.getElementById('adminPerformanceCards');
-            if (Object.keys(adminStats).length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>Belum ada data aktivitas admin</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            Object.values(adminStats).forEach(admin => {
-                const isActive = admin.lastActivity && (new Date() - admin.lastActivity) < 24 * 60 * 60 * 1000;
-                const statusClass = isActive ? 'active' : 'inactive';
-                const statusText = isActive ? 'Aktif' : 'Tidak Aktif';
-                
-                html += `
-                    <div class="admin-card">
-                        <div class="admin-card-header">
-                            <div class="admin-name">
-                                <i class="fas fa-user-circle me-2"></i>${admin.name}
-                            </div>
-                            <div class="admin-status ${statusClass}">${statusText}</div>
-                        </div>
-                        <div class="admin-stats">
-                            <div class="admin-stat">
-                                <div class="admin-stat-number">${admin.totalTickets}</div>
-                                <div class="admin-stat-label">Total Tiket</div>
-                            </div>
-                            <div class="admin-stat">
-                                <div class="admin-stat-number">${admin.totalVisitors}</div>
-                                <div class="admin-stat-label">Pengunjung</div>
-                            </div>
-                            <div class="admin-stat">
-                                <div class="admin-stat-number">Rp ${admin.totalRevenue.toLocaleString('id-ID')}</div>
-                                <div class="admin-stat-label">Pendapatan</div>
-                            </div>
-                        </div>
-                        <div style="margin-top: 1rem; font-size: 0.8rem; color: #666; text-align: center;">
-                            <i class="fas fa-clock me-1"></i>
-                            Terakhir aktif: ${admin.lastActivity ? admin.lastActivity.toLocaleDateString('id-ID') : 'Tidak ada data'}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-        }
-
-        function updateDataTable(data) {
-            const tbody = document.getElementById('dataTableBody');
-            
-            if (data.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
-                            <i class="fas fa-inbox me-2"></i>Tidak ada data tiket
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            let html = '';
-            data.forEach(ticket => {
-                const date = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                const statusBadge = '<span style="background: #d4edda; color: #155724; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Selesai</span>';
-                
-                html += `
-                    <tr>
-                        <td style="font-family: monospace; font-weight: bold;">${ticket.nomorTiket || '-'}</td>
-                        <td>${ticket.createdBy || ticket.petugasLoket || '-'}</td>
-                        <td>${date.toLocaleDateString('id-ID')}</td>
-                        <td>${ticket.jumlahOrang || 0}</td>
-                        <td style="font-size: 0.85rem;">${ticket.jenisKunjungan || '-'}</td>
-                        <td style="font-weight: bold; color: var(--secondary-color);">Rp ${(ticket.total || 0).toLocaleString('id-ID')}</td>
-                        <td>${statusBadge}</td>
-                    </tr>
-                `;
-            });
-            
-            tbody.innerHTML = html;
-        }
-
-        // ========== FILTER FUNCTIONS ==========
-        
-        function applyFilters() {
-            const adminFilter = document.getElementById('filterAdmin').value;
-            const startDate = document.getElementById('filterDateStart').value;
-            const endDate = document.getElementById('filterDateEnd').value;
-            
-            let filteredData = [...allTicketsData];
-            
-            if (adminFilter) {
-                filteredData = filteredData.filter(ticket => ticket.createdBy === adminFilter);
-            }
-            
-            if (startDate) {
-                const start = new Date(startDate);
-                filteredData = filteredData.filter(ticket => {
-                    const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                    return ticketDate >= start;
-                });
-            }
-            
-            if (endDate) {
-                const end = new Date(endDate);
-                end.setHours(23, 59, 59, 999);
-                filteredData = filteredData.filter(ticket => {
-                    const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                    return ticketDate <= end;
-                });
-            }
-            
-            updateDataTable(filteredData);
-            showAlert(`Filter diterapkan. Menampilkan ${filteredData.length} data dari ${allTicketsData.length} total data.`, 'success');
-        }
-
-        function clearFilters() {
-            document.getElementById('filterAdmin').value = '';
-            document.getElementById('filterDateStart').value = '';
-            document.getElementById('filterDateEnd').value = '';
-            updateDataTable(allTicketsData);
-            showAlert('Filter telah direset. Menampilkan semua data.', 'info');
-        }
-
-        function exportData() {
-            const table = document.querySelector('.data-table');
-            let csv = 'No Tiket,Petugas,Tanggal,Pengunjung,Paket,Total,Status\n';
-            
-            const rows = table.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                if (cells.length > 1) {
-                    const rowData = Array.from(cells).map(cell => {
-                        return '"' + cell.textContent.trim().replace(/"/g, '""') + '"';
-                    });
-                    csv += rowData.join(',') + '\n';
-                }
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `pinuslo-data-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            URL.revokeObjectURL(url);
-            
-            showAlert('Data berhasil diexport sebagai CSV!', 'success');
-        }
-
-        // ========== USER MANAGEMENT ==========
-        
-        function loadUsersData() {
-            console.log('Loading users data...');
-            allUsersData = JSON.parse(localStorage.getItem('pinuslo_users') || '[]');
-            updateUsersList();
-        }
-
-        function updateUsersList() {
-            const container = document.getElementById('userList');
-            
-            if (allUsersData.length === 0) {
-                container.innerHTML = `
-                    <div class="loading">
-                        <p>Tidak ada pengguna terdaftar</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            allUsersData.forEach(user => {
-                const roleClass = user.role === 'super-admin' ? 'super-admin' : 'petugas';
-                const roleText = user.role === 'super-admin' ? 'Super Admin' : 'Petugas';
-                
-                html += `
-                    <div class="user-item ${roleClass}">
-                        <div class="user-header">
-                            <div class="user-username">
-                                <i class="fas fa-user-circle me-2"></i>${user.username}
-                            </div>
-                            <div class="user-role ${roleClass}">${roleText}</div>
-                        </div>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
-                            <strong>Nama Lengkap:</strong> ${user.fullName || 'Tidak diset'}<br>
-                            <strong>Status:</strong> ${user.isDefault ? 'User Default' : 'User Custom'}
-                        </div>
-                        <div class="user-actions">
-                            <button class="user-btn edit" onclick="editUser('${user.id}')">
-                                <i class="fas fa-edit me-1"></i>Edit
-                            </button>
-                            ${!user.isDefault ? `
-                                <button class="user-btn delete" onclick="deleteUser('${user.id}')">
-                                    <i class="fas fa-trash me-1"></i>Hapus
-                                </button>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-        }
-
-        function handleUserForm(event) {
-            event.preventDefault();
-            
-            const userData = {
-                username: document.getElementById('userUsername').value,
-                password: document.getElementById('userPassword').value,
-                role: document.getElementById('userRole').value,
-                fullName: document.getElementById('userFullName').value,
-                isDefault: false
-            };
-            
-            const existingUser = allUsersData.find(u => u.username === userData.username && u.id !== editingUserId);
-            if (existingUser) {
-                showAlert('Username sudah digunakan!', 'danger');
-                return;
-            }
-            
-            if (editingUserId) {
-                const userIndex = allUsersData.findIndex(u => u.id === editingUserId);
-                if (userIndex !== -1) {
-                    allUsersData[userIndex] = { ...allUsersData[userIndex], ...userData };
-                    showAlert('User berhasil diupdate!', 'success');
-                }
-            } else {
-                userData.id = Date.now().toString();
-                allUsersData.push(userData);
-                showAlert('User berhasil ditambahkan!', 'success');
-            }
-            
-            localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
-            
-            resetUserForm();
-            updateUsersList();
-        }
-
-        function editUser(userId) {
-            const user = allUsersData.find(u => u.id === userId);
-            if (!user) return;
-            
-            editingUserId = userId;
-            document.getElementById('userUsername').value = user.username;
-            document.getElementById('userPassword').value = user.password;
-            document.getElementById('userRole').value = user.role;
-            document.getElementById('userFullName').value = user.fullName || '';
-            document.getElementById('userSubmitBtn').innerHTML = '<i class="fas fa-save me-1"></i>Update User';
-            
-            document.querySelector('.user-form').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function deleteUser(userId) {
-            const user = allUsersData.find(u => u.id === userId);
-            if (!user || user.isDefault) return;
-            
-            if (confirm(`Apakah Anda yakin ingin menghapus user "${user.username}"?`)) {
-                allUsersData = allUsersData.filter(u => u.id !== userId);
-                localStorage.setItem('pinuslo_users', JSON.stringify(allUsersData));
-                updateUsersList();
-                showAlert('User berhasil dihapus!', 'success');
-            }
-        }
-
-        function resetUserForm() {
-            document.getElementById('userForm').reset();
-            editingUserId = null;
-            document.getElementById('userSubmitBtn').innerHTML = '<i class="fas fa-save me-1"></i>Simpan User';
-        }
-
-        // ========== REPORTS ==========
-        
-        function updateReportDateRange() {
-            const period = document.getElementById('reportPeriod').value;
-            const customRange = document.getElementById('customDateRange');
-            const startInput = document.getElementById('reportStartDate');
-            const endInput = document.getElementById('reportEndDate');
-            
-            if (period === 'custom') {
-                customRange.style.display = 'block';
-            } else {
-                customRange.style.display = 'none';
-                
-                const today = new Date();
-                let startDate, endDate = today;
-                
-                if (period === 'today') {
-                    startDate = today;
-                } else if (period === 'week') {
-                    startDate = new Date();
-                    startDate.setDate(today.getDate() - 7);
-                } else if (period === 'month') {
-                    startDate = new Date();
-                    startDate.setMonth(today.getMonth() - 1);
-                }
-                
-                startInput.valueAsDate = startDate;
-                endInput.valueAsDate = endDate;
-            }
-        }
-
-        function generateReport() {
-            const period = document.getElementById('reportPeriod').value;
-            const startDate = new Date(document.getElementById('reportStartDate').value);
-            const endDate = new Date(document.getElementById('reportEndDate').value);
-            
-            if (!startDate || !endDate) {
-                showAlert('Pilih tanggal mulai dan selesai!', 'danger');
-                return;
-            }
-            
-            endDate.setHours(23, 59, 59, 999);
-            
-            const reportData = allTicketsData.filter(ticket => {
-                const ticketDate = ticket.timestamp?.seconds ? new Date(ticket.timestamp.seconds * 1000) : new Date();
-                return ticketDate >= startDate && ticketDate <= endDate;
-            });
-            
-            generateReportHTML(reportData, startDate, endDate, period);
-            showAlert('Laporan berhasil dibuat!', 'success');
-        }
-
-        function generateReportHTML(data, startDate, endDate, period) {
-            const container = document.getElementById('reportResults');
-            
-            const totalTickets = data.length;
-            const totalVisitors = data.reduce((sum, ticket) => sum + (ticket.jumlahOrang || 0), 0);
-            const totalRevenue = data.reduce((sum, ticket) => sum + (ticket.total || 0), 0);
-            
-            const packageStats = {};
-            data.forEach(ticket => {
-                const packageName = ticket.jenisKunjungan || 'Unknown';
-                if (!packageStats[packageName]) {
-                    packageStats[packageName] = { count: 0, revenue: 0, visitors: 0 };
-                }
-                packageStats[packageName].count++;
-                packageStats[packageName].revenue += ticket.total || 0;
-                packageStats[packageName].visitors += ticket.jumlahOrang || 0;
-            });
-            
-            const adminStats = {};
-            data.forEach(ticket => {
-                const admin = ticket.createdBy || 'Unknown';
-                if (!adminStats[admin]) {
-                    adminStats[admin] = { count: 0, revenue: 0, visitors: 0 };
-                }
-                adminStats[admin].count++;
-                adminStats[admin].revenue += ticket.total || 0;
-                adminStats[admin].visitors += ticket.jumlahOrang || 0;
-            });
-
-            const periodText = period === 'custom' ? 'Custom Range' : 
-                              period === 'today' ? 'Hari Ini' :
-                              period === 'week' ? 'Minggu Ini' : 'Bulan Ini';
-
-            let html = `
-                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-                    <div style="text-align: center; margin-bottom: 2rem; border-bottom: 2px solid #eee; padding-bottom: 1rem;">
-                        <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">
-                            <i class="fas fa-chart-bar me-2"></i>Laporan Hutan Pinus Selow Bissoloro
-                        </h4>
-                        <p style="color: #666; margin-bottom: 0.5rem;">
-                            Periode: ${periodText}<br>
-                            ${startDate.toLocaleDateString('id-ID')} - ${endDate.toLocaleDateString('id-ID')}
-                        </p>
-                    </div>
-
-                    <div class="stats-grid" style="margin-bottom: 2rem;">
-                        <div class="stat-card success">
-                            <div class="stat-number">${totalTickets}</div>
-                            <div class="stat-label">Total Tiket</div>
-                        </div>
-                        <div class="stat-card info">
-                            <div class="stat-number">${totalVisitors}</div>
-                            <div class="stat-label">Total Pengunjung</div>
-                        </div>
-                        <div class="stat-card warning">
-                            <div class="stat-number">Rp ${totalRevenue.toLocaleString('id-ID')}</div>
-                            <div class="stat-label">Total Pendapatan</div>
-                        </div>
-                        <div class="stat-card danger">
-                            <div class="stat-number">${Object.keys(adminStats).length}</div>
-                            <div class="stat-label">Admin Aktif</div>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 2rem;">
-                        <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
-                            <i class="fas fa-box me-2"></i>Statistik Per Paket
-                        </h5>
-                        <div style="overflow-x: auto;">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Paket</th>
-                                        <th>Jumlah</th>
-                                        <th>Pengunjung</th>
-                                        <th>Pendapatan</th>
-                                        <th>Rata-rata</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-            `;
-            
-            Object.entries(packageStats).forEach(([packageName, stats]) => {
-                const avgRevenue = stats.count > 0 ? Math.round(stats.revenue / stats.count) : 0;
-                html += `
-                    <tr>
-                        <td style="font-weight: 600;">${packageName}</td>
-                        <td>${stats.count}</td>
-                        <td>${stats.visitors}</td>
-                        <td style="font-weight: 600; color: var(--secondary-color);">Rp ${stats.revenue.toLocaleString('id-ID')}</td>
-                        <td>Rp ${avgRevenue.toLocaleString('id-ID')}</td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h5 style="color: var(--primary-color); margin-bottom: 1rem;">
-                            <i class="fas fa-users me-2"></i>Performa Admin
-                        </h5>
-                        <div style="overflow-x: auto;">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Admin</th>
-                                        <th>Tiket</th>
-                                        <th>Pengunjung</th>
-                                        <th>Pendapatan</th>
-                                        <th>Kontribusi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-            `;
-            
-            Object.entries(adminStats).forEach(([adminName, stats]) => {
-                const contribution = totalRevenue > 0 ? ((stats.revenue / totalRevenue) * 100).toFixed(1) : 0;
-                html += `
-                    <tr>
-                        <td style="font-weight: 600;">${adminName}</td>
-                        <td>${stats.count}</td>
-                        <td>${stats.visitors}</td>
-                        <td style="font-weight: 600; color: var(--secondary-color);">Rp ${stats.revenue.toLocaleString('id-ID')}</td>
-                        <td>${contribution}%</td>
-                    </tr>
-                `;
-            });
-            
-            html += `
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: center; color: #666; font-size: 0.9rem;">
-                        <i class="fas fa-calendar me-1"></i>
-                        Laporan dibuat pada: ${new Date().toLocaleString('id-ID')}
-                    </div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-        }
-
-        function downloadReport() {
-            const reportContent = document.getElementById('reportResults').innerHTML;
-            if (!reportContent || reportContent.includes('Pilih periode')) {
-                showAlert('Generate report terlebih dahulu!', 'danger');
-                return;
-            }
-            
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                    <head>
-                        <title>Laporan Hutan Pinus Selow Bissoloro</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; margin: 2rem; }
-                            table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
-                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                            th { background-color: #f2f2f2; }
-                            .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
-                            .stat-card { border: 1px solid #ddd; padding: 1rem; text-align: center; }
-                            @media print { body { margin: 1rem; } }
-                        </style>
-                    </head>
-                    <body>
-                        ${reportContent}
-                    </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-            
-            showAlert('Dialog print dibuka. Pilih "Save as PDF" untuk download!', 'info');
-        }
-
-        // ========== REGULAR ADMIN FUNCTIONS ==========
-        
-        function initializeRegularAdmin() {
-            console.log('Initializing Regular Admin for:', currentUser.username);
-            
-            document.getElementById('visitDate').valueAsDate = new Date();
-            document.getElementById('regularFilterDate').valueAsDate = new Date();
-            
-            document.getElementById('visitorCount').addEventListener('input', calculateTotal);
-            
-            loadMyTicketsData();
-            updateRegularStats();
-        }
-
-        async function loadMyTicketsData() {
-            try {
-                const querySnapshot = await db.collection('registrasi')
-                    .where('createdBy', '==', currentUser.username)
-                    .orderBy('timestamp', 'desc')
+                const querySnapshot = await db.collection('gate_scans')
+                    .where('date', '==', todayDate)
                     .get();
                 
-                myTicketsData = [];
+                scanCount = querySnapshot.size;
+                let totalVisitors = 0;
+
                 querySnapshot.forEach((doc) => {
-                    myTicketsData.push({ id: doc.id, ...doc.data() });
+                    totalVisitors += doc.data().visitorCount || 1;
                 });
-                
-                console.log('Loaded tickets for', currentUser.username, ':', myTicketsData.length);
-                updateRegularStats();
-                
+
+                document.getElementById('todayCount').textContent = scanCount;
+                document.getElementById('totalVisitors').textContent = totalVisitors;
+
             } catch (error) {
-                console.error('Error loading my tickets data:', error);
-                const localData = localStorage.getItem('myTickets_' + currentUser.username);
-                if (localData) {
-                    myTicketsData = JSON.parse(localData);
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Start QR Scanner
+        async function startScanner() {
+            if (isScanning) return;
+
+            const scanSection = document.getElementById('scanSection');
+            const scannerContainer = document.getElementById('scannerContainer');
+
+            try {
+                html5QrCode = new Html5Qrcode("reader");
+                
+                scanSection.style.display = 'none';
+                scannerContainer.classList.add('active');
+
+                await html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: { width: 250, height: 250 } },
+                    onScanSuccess,
+                    () => {} // ignore failures
+                );
+
+                isScanning = true;
+
+            } catch (err) {
+                console.error('Error starting scanner:', err);
+                showToast('Gagal akses kamera!', true);
+                stopScanner();
+            }
+        }
+
+        // Stop Scanner
+        async function stopScanner() {
+            const scanSection = document.getElementById('scanSection');
+            const scannerContainer = document.getElementById('scannerContainer');
+
+            if (html5QrCode && isScanning) {
+                try {
+                    await html5QrCode.stop();
+                } catch (err) {
+                    console.error('Error stopping:', err);
                 }
             }
+
+            isScanning = false;
+            scannerContainer.classList.remove('active');
+            scanSection.style.display = 'block';
         }
 
-        function calculateTotal() {
-            const visitType = document.getElementById('visitType');
-            const visitorCount = parseInt(document.getElementById('visitorCount').value) || 0;
-            const totalPaymentField = document.getElementById('totalPayment');
-            
-            if (visitType.value && visitorCount > 0) {
-                const price = parseInt(visitType.selectedOptions[0].dataset.price) || 0;
-                const total = price * visitorCount;
-                totalPaymentField.value = 'Rp ' + total.toLocaleString('id-ID');
-            } else {
-                totalPaymentField.value = '';
+        // On Scan Success
+        async function onScanSuccess(decodedText) {
+            // Prevent duplicate scans (within 3 seconds)
+            const now = Date.now();
+            if (decodedText === lastScannedCode && (now - lastScanTime) < 3000) {
+                return;
             }
+
+            lastScannedCode = decodedText;
+            lastScanTime = now;
+
+            await stopScanner();
+            await recordEntry(decodedText);
         }
 
-        function generateTicketNumber() {
-            const today = new Date();
-            const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
-            const timeStr = today.toTimeString().slice(0, 8).replace(/:/g, '');
-            return `PINUS-${dateStr}-${timeStr}-${String(ticketCounter++).padStart(3, '0')}`;
-        }
-
-        function calculateTotalAmount() {
-            const visitType = document.getElementById('visitType').value;
-            const visitorCount = parseInt(document.getElementById('visitorCount').value) || 0;
-            const price = packagePrices[visitType] || 0;
-            return price * visitorCount;
-        }
-
-        async function handleRegistration(event) {
-            event.preventDefault();
+        // Record Entry to Firebase
+        async function recordEntry(qrData, visitorCount = 1) {
+            const now = new Date();
             
-            const formData = {
-                nomorTiket: generateTicketNumber(),
-                namaVisitor: document.getElementById('visitorName').value,
-                noTelepon: document.getElementById('visitorPhone').value,
-                jumlahOrang: parseInt(document.getElementById('visitorCount').value),
-                jenisKunjungan: document.getElementById('visitType').value,
-                tanggalKunjungan: document.getElementById('visitDate').value,
-                catatan: document.getElementById('visitorNotes').value,
-                petugasLoket: currentUser.fullName,
-                createdBy: currentUser.username,
+            const entryData = {
+                date: todayDate,
+                qrCode: qrData,
+                visitorCount: visitorCount,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                total: calculateTotalAmount()
+                time: now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                dayName: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][now.getDay()],
+                hour: now.getHours(),
+                minute: now.getMinutes()
             };
 
             try {
-                await db.collection('registrasi').add(formData);
-                
-                formData.timestamp = new Date();
-                myTicketsData.unshift(formData);
-                
-                localStorage.setItem('myTickets_' + currentUser.username, JSON.stringify(myTicketsData));
-                
-                showAlert('Registrasi berhasil! Nomor tiket: ' + formData.nomorTiket, 'success');
-                
-                resetRegistrationForm();
-                updateRegularStats();
-                
-                if (confirm('Apakah Anda ingin mencetak tiket sekarang?')) {
-                    openTicketModal(formData);
-                }
-                
+                await db.collection('gate_scans').add(entryData);
+
+                // Update counters
+                scanCount++;
+                document.getElementById('todayCount').textContent = scanCount;
+                document.getElementById('todayCount').classList.add('pulse');
+                setTimeout(() => document.getElementById('todayCount').classList.remove('pulse'), 300);
+
+                const totalEl = document.getElementById('totalVisitors');
+                totalEl.textContent = parseInt(totalEl.textContent) + visitorCount;
+                totalEl.classList.add('pulse');
+                setTimeout(() => totalEl.classList.remove('pulse'), 300);
+
+                // Update last scan
+                document.getElementById('lastScanTime').textContent = entryData.time;
+                document.getElementById('lastScanStatus').textContent = 'Sukses';
+                document.getElementById('lastScanStatus').style.background = '#28a745';
+
+                // Show success
+                showSuccessOverlay(visitorCount);
+
             } catch (error) {
-                console.error('Error saving ticket:', error);
-                showAlert('Gagal menyimpan data: ' + error.message, 'danger');
+                console.error('Error:', error);
+                showToast('Gagal menyimpan!', true);
             }
         }
 
-        function resetRegistrationForm() {
-            document.getElementById('registrationForm').reset();
-            document.getElementById('visitDate').valueAsDate = new Date();
-            document.getElementById('totalPayment').value = '';
-        }
+        // Show Success Overlay
+        function showSuccessOverlay(count) {
+            const overlay = document.getElementById('successOverlay');
+            document.getElementById('successDetail').textContent = `${count} Pengunjung Tercatat`;
+            overlay.classList.add('active');
 
-        function printTicket(ticketData) {
-            openTicketModal(ticketData);
-        }
-
-        function printLastTicket() {
-            if (myTicketsData.length > 0) {
-                const lastTicket = myTicketsData[0];
-                openTicketModal(lastTicket);
-            } else {
-                showAlert('Belum ada tiket yang dibuat', 'warning');
-            }
-        }
-
-        function showTodayStats() {
-            const today = new Date().toDateString();
-            const todayTickets = myTicketsData.filter(ticket => {
-                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                return ticketDate.toDateString() === today;
-            });
-            
-            const todayTotal = todayTickets.length;
-            const todayVisitors = todayTickets.reduce((sum, ticket) => sum + ticket.jumlahOrang, 0);
-            const todayRevenue = todayTickets.reduce((sum, ticket) => sum + ticket.total, 0);
-            
-            alert(`Statistik Hari Ini:\n\nTotal Tiket: ${todayTotal}\nTotal Pengunjung: ${todayVisitors}\nTotal Pendapatan: Rp ${todayRevenue.toLocaleString('id-ID')}`);
-        }
-
-        function loadRegularHistory() {
-            const historyList = document.getElementById('regularHistoryList');
-            
-            if (myTicketsData.length === 0) {
-                historyList.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>Belum ada riwayat registrasi</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            myTicketsData.forEach(ticket => {
-                const date = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                html += `
-                    <div class="ticket-item">
-                        <div class="ticket-header">
-                            <div class="ticket-number">${ticket.nomorTiket}</div>
-                            <div class="ticket-status">Selesai</div>
-                        </div>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
-                            <strong>${ticket.namaVisitor}</strong> • ${ticket.jumlahOrang} orang<br>
-                            ${ticket.jenisKunjungan} • Rp ${ticket.total.toLocaleString('id-ID')}<br>
-                            <small>${date.toLocaleDateString('id-ID')} ${date.toLocaleTimeString('id-ID')}</small>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            historyList.innerHTML = html;
-        }
-
-        function updateRegularStats() {
-            const today = new Date().toDateString();
-            const todayTickets = myTicketsData.filter(ticket => {
-                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                return ticketDate.toDateString() === today;
-            });
-            
-            const todayTotal = todayTickets.length;
-            const todayVisitors = todayTickets.reduce((sum, ticket) => sum + ticket.jumlahOrang, 0);
-            const todayRevenue = todayTickets.reduce((sum, ticket) => sum + ticket.total, 0);
-            
-            const currentMonth = new Date().getMonth();
-            const currentYear = new Date().getFullYear();
-            const monthTickets = myTicketsData.filter(ticket => {
-                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                return ticketDate.getMonth() === currentMonth && ticketDate.getFullYear() === currentYear;
-            });
-            
-            const monthTotal = monthTickets.length;
-            
-            if (document.getElementById('myTodayTickets')) {
-                document.getElementById('myTodayTickets').textContent = todayTotal;
-                document.getElementById('myTodayVisitors').textContent = todayVisitors;
-                document.getElementById('myTodayRevenue').textContent = 'Rp ' + todayRevenue.toLocaleString('id-ID');
-                document.getElementById('myMonthTickets').textContent = monthTotal;
-            }
-        }
-
-        function refreshRegularHistory() {
-            loadMyTicketsData().then(() => {
-                loadRegularHistory();
-                showAlert('Riwayat berhasil diperbarui', 'success');
-            });
-        }
-
-        function filterRegularHistory() {
-            const filterDate = document.getElementById('regularFilterDate').value;
-            if (!filterDate) {
-                loadRegularHistory();
-                return;
-            }
-            
-            const selectedDate = new Date(filterDate).toDateString();
-            const filteredTickets = myTicketsData.filter(ticket => {
-                const ticketDate = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                return ticketDate.toDateString() === selectedDate;
-            });
-            
-            const historyList = document.getElementById('regularHistoryList');
-            
-            if (filteredTickets.length === 0) {
-                historyList.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #666;">
-                        <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                        <p>Tidak ada data untuk tanggal ${new Date(filterDate).toLocaleDateString('id-ID')}</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-            filteredTickets.forEach(ticket => {
-                const date = ticket.timestamp instanceof Date ? ticket.timestamp : new Date(ticket.timestamp?.seconds * 1000);
-                html += `
-                    <div class="ticket-item">
-                        <div class="ticket-header">
-                            <div class="ticket-number">${ticket.nomorTiket}</div>
-                            <div class="ticket-status">Selesai</div>
-                        </div>
-                        <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
-                            <strong>${ticket.namaVisitor}</strong> • ${ticket.jumlahOrang} orang<br>
-                            ${ticket.jenisKunjungan} • Rp ${ticket.total.toLocaleString('id-ID')}<br>
-                            <small>${date.toLocaleDateString('id-ID')} ${date.toLocaleTimeString('id-ID')}</small>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            historyList.innerHTML = html;
-            showAlert(`Menampilkan ${filteredTickets.length} data untuk tanggal ${new Date(filterDate).toLocaleDateString('id-ID')}`, 'info');
-        }
-
-        // ========== UTILITIES ==========
-        
-        function showAlert(message, type = 'success') {
-            document.querySelectorAll('.alert').forEach(el => {
-                if (!el.closest('#loginAlert')) el.remove();
-            });
-            
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.style.cssText = `
-                position: fixed;
-                top: 80px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 1050;
-                min-width: 300px;
-                max-width: 90%;
-                border-radius: 12px;
-                border: none;
-                animation: slideDown 0.5s ease-out;
-                padding: 1rem 1.5rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            `;
-            
-            let iconClass = 'check-circle';
-            let bgColor = '#d4edda';
-            let textColor = '#155724';
-            let borderColor = '#c3e6cb';
-            
-            if (type === 'danger') {
-                iconClass = 'exclamation-triangle';
-                bgColor = '#f8d7da';
-                textColor = '#721c24';
-                borderColor = '#f5c6cb';
-            } else if (type === 'warning') {
-                iconClass = 'exclamation-circle';
-                bgColor = '#fff3cd';
-                textColor = '#856404';
-                borderColor = '#ffeaa7';
-            } else if (type === 'info') {
-                iconClass = 'info-circle';
-                bgColor = '#d1ecf1';
-                textColor = '#0c5460';
-                borderColor = '#bee5eb';
-            }
-            
-            alertDiv.style.backgroundColor = bgColor;
-            alertDiv.style.color = textColor;
-            alertDiv.style.border = `1px solid ${borderColor}`;
-            
-            alertDiv.innerHTML = `
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                    <span><i class="fas fa-${iconClass} me-2"></i>${message}</span>
-                    <button type="button" style="background: none; border: none; color: ${textColor}; cursor: pointer; padding: 0; margin-left: 1rem;" onclick="this.parentElement.parentElement.remove()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `;
-            
-            document.body.appendChild(alertDiv);
-            
             setTimeout(() => {
-                if (alertDiv.parentNode) alertDiv.remove();
-            }, 6000);
+                overlay.classList.remove('active');
+            }, 1500);
         }
 
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        // Manual Entry
+        function manualEntry() {
+            const count = prompt('Masukkan jumlah pengunjung:');
+            if (count && !isNaN(count) && parseInt(count) > 0) {
+                recordEntry('MANUAL-' + Date.now(), parseInt(count));
             }
-        `;
-        document.head.appendChild(style);
-
-        // ========== INITIALIZATION ==========
-        
-        function checkAuth() {
-            // Auto login sebagai super admin (tanpa autentikasi)
-            currentUser = {
-                username: 'admin',
-                nama: 'Administrator',
-                role: 'super-admin'
-            };
-            console.log('Auto login as:', currentUser.username);
-            showSuperAdminApp();
         }
 
-        window.addEventListener('load', function() {
-            console.log('Wisata Hutan Pinus Selow Bissoloro - Complete Admin System loaded');
-            checkAuth();
+        // Show History
+        async function showHistory() {
+            document.getElementById('historyModal').classList.add('active');
+            const listEl = document.getElementById('historyList');
             
-            const today = new Date();
-            if (document.getElementById('reportStartDate')) {
-                document.getElementById('reportStartDate').valueAsDate = today;
-                document.getElementById('reportEndDate').valueAsDate = today;
+            listEl.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Memuat...</p></div>';
+
+            try {
+                const querySnapshot = await db.collection('gate_scans')
+                    .where('date', '==', todayDate)
+                    .get();
+
+                if (querySnapshot.empty) {
+                    listEl.innerHTML = '<div class="empty-state"><i class="fas fa-qrcode"></i><p>Belum ada scan hari ini</p></div>';
+                    return;
+                }
+
+                let entries = [];
+                querySnapshot.forEach((doc) => entries.push(doc.data()));
+                entries.sort((a, b) => (b.time || '').localeCompare(a.time || ''));
+
+                let html = '';
+                entries.forEach((data) => {
+                    const isManual = data.qrCode?.startsWith('MANUAL-');
+                    html += `
+                        <div class="history-item">
+                            <div class="history-info">
+                                <div class="history-icon">
+                                    <i class="fas fa-${isManual ? 'keyboard' : 'qrcode'}"></i>
+                                </div>
+                                <div>
+                                    <div class="history-time">${data.time || '-'}</div>
+                                    <div class="history-qr">${isManual ? 'Manual Entry' : (data.qrCode?.substring(0, 25) + '...')}</div>
+                                </div>
+                            </div>
+                            <div class="history-badge">${data.visitorCount || 1} org</div>
+                        </div>
+                    `;
+                });
+
+                listEl.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error:', error);
+                listEl.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation"></i><p>Gagal memuat</p></div>';
             }
-        });
+        }
 
-        window.addEventListener('error', function(e) {
-            console.error('Global error:', e.error);
-            showAlert('Terjadi kesalahan sistem. Silakan refresh halaman.', 'danger');
-        });
+        // Close History
+        function closeHistory() {
+            document.getElementById('historyModal').classList.remove('active');
+        }
 
-        console.log('Complete Admin System JavaScript loaded successfully');
-        console.log('Available users:', systemUsers.map(u => u.username + ' (' + u.role + ')'));
+        // Refresh
+        function refreshData() {
+            loadTodayStats();
+            showToast('Data diperbarui!');
+        }
+
+        // Toast
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Close modal on outside click
+        document.getElementById('historyModal').addEventListener('click', function(e) {
+            if (e.target === this) closeHistory();
+        });
     </script>
 </body>
 </html>
