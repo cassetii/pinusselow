@@ -506,6 +506,66 @@
             transform: scale(0.95);
         }
 
+        /* ========== DIGIT COUNTER ========== */
+        .digit-counter {
+            text-align: right;
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .digit-counter.complete {
+            color: var(--sage);
+        }
+
+        .digit-counter.incomplete {
+            color: var(--gold-dark);
+        }
+
+        /* ========== MANUAL TYPE SELECTOR ========== */
+        .manual-type-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            background: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .type-btn.harian {
+            color: var(--blue);
+        }
+
+        .type-btn.nginap {
+            color: var(--purple);
+        }
+
+        .type-btn.harian.active {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            color: var(--white);
+            border-color: var(--blue);
+        }
+
+        .type-btn.nginap.active {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+            color: var(--white);
+            border-color: var(--purple);
+        }
+
         /* ========== LAST SCAN ========== */
         .last-scan {
             border-radius: 16px;
@@ -1112,15 +1172,29 @@
                     <div class="card-icon"><i class="fas fa-keyboard"></i></div>
                     <div>
                         <div class="card-title">Input Manual / Quick Add</div>
-                        <div class="card-subtitle">Pilih jenis kunjungan atau ketik kode</div>
+                        <div class="card-subtitle">Masukkan 15 digit angka atau pilih tombol cepat</div>
                     </div>
                 </div>
+                
+                <!-- Type Selector for Manual Input -->
+                <div class="manual-type-selector">
+                    <button class="type-btn harian active" id="typeBtnHarian" onclick="setManualType('harian')">
+                        <i class="fas fa-sun"></i> Harian
+                    </button>
+                    <button class="type-btn nginap" id="typeBtnNginap" onclick="setManualType('nginap')">
+                        <i class="fas fa-moon"></i> Nginap
+                    </button>
+                </div>
                 <div class="input-group">
-                    <input type="text" class="input-field" id="manualInput" placeholder="Ketik kode tiket..."
+                    <input type="text" class="input-field" id="manualInput" placeholder="Masukkan 15 digit angka..."
+                        maxlength="15" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); updateDigitCounter()"
                         onkeypress="if(event.key==='Enter') submitManual()">
                     <button class="input-btn" onclick="submitManual()">
                         <i class="fas fa-plus"></i>
                     </button>
+                </div>
+                <div class="digit-counter" id="digitCounter">
+                    <span id="digitCount">0</span>/15 digit
                 </div>
                 <div class="quick-grid">
                     <button class="quick-btn harian" onclick="quickAdd('MASUK')">
@@ -1331,6 +1405,7 @@
         let lastSeenTime = 0;
         let qrExitCheckInterval = null;
         let isProcessing = false;
+        let manualVisitType = 'harian'; // Default type for manual input
 
         // ========== INIT ==========
         document.addEventListener('DOMContentLoaded', () => {
@@ -1638,18 +1713,60 @@
         }
 
         // ========== MANUAL INPUT ==========
+        function setManualType(type) {
+            manualVisitType = type;
+            
+            // Update button states
+            document.getElementById('typeBtnHarian').classList.remove('active');
+            document.getElementById('typeBtnNginap').classList.remove('active');
+            
+            if (type === 'harian') {
+                document.getElementById('typeBtnHarian').classList.add('active');
+            } else {
+                document.getElementById('typeBtnNginap').classList.add('active');
+            }
+        }
+
+        function updateDigitCounter() {
+            const input = document.getElementById('manualInput');
+            const counter = document.getElementById('digitCounter');
+            const countSpan = document.getElementById('digitCount');
+            const length = input.value.length;
+            
+            countSpan.textContent = length;
+            
+            if (length === 15) {
+                counter.className = 'digit-counter complete';
+            } else if (length > 0) {
+                counter.className = 'digit-counter incomplete';
+            } else {
+                counter.className = 'digit-counter';
+            }
+        }
+
         function submitManual() {
             const input = document.getElementById('manualInput');
             const code = input.value.trim();
+            
+            // Validasi: harus ada input
             if (!code) {
                 showToast('Masukkan kode tiket!', 'error');
                 return;
             }
-            const visitType = detectVisitType(code);
-            saveScan(code, visitType).then(time => {
-                showPopup(visitType, code, time);
+            
+            // Validasi: harus 15 digit angka
+            if (!/^\d{15}$/.test(code)) {
+                showToast('Kode harus 15 digit angka!', 'error');
+                input.focus();
+                return;
+            }
+            
+            // Gunakan type yang dipilih dari selector
+            saveScan(code, manualVisitType).then(time => {
+                showPopup(manualVisitType, code, time);
             });
             input.value = '';
+            updateDigitCounter(); // Reset counter
         }
 
         function quickAdd(code) {
