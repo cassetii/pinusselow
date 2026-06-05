@@ -1062,6 +1062,62 @@
             font-size: 0.6rem;
             color: var(--gray-500);
         }
+
+        /* ========== AIR / WATER ========== */
+        .water-hero {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .water-hero .water-liters {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        .water-hero .water-unit { font-size: 1rem; font-weight: 600; opacity: 0.9; }
+        .water-hero .water-caption { font-size: 0.8rem; opacity: 0.9; margin-top: 0.25rem; }
+        .water-toren {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            margin-top: 0.75rem;
+            font-weight: 700;
+        }
+        .water-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.9rem;
+        }
+        .water-row:last-child { border-bottom: none; }
+        .water-row .wr-label { color: var(--gray-500); display: flex; align-items: center; gap: 0.5rem; }
+        .water-row .wr-value { font-weight: 700; color: var(--gray-800); }
+        .water-status {
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+        .water-status.ok { background: var(--cream); color: var(--forest-dark); }
+        .water-status.kurang { background: #FDECEA; color: var(--danger); }
+        .water-param th, .water-param td {
+            text-align: left;
+            padding: 0.45rem 0.5rem;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .water-param th { color: var(--gray-500); font-weight: 600; }
+        .water-param td:last-child, .water-param th:last-child { text-align: right; }
     </style>
 </head>
 <body>
@@ -1096,7 +1152,7 @@
             <!-- HTTPS Warning -->
             <div class="https-warning" id="httpsWarning">
                 <strong><i class="fas fa-exclamation-triangle"></i> Kamera Tidak Tersedia</strong>
-                Gunakan HTTPS atau input manual di bawah.
+                Buka halaman ini lewat HTTPS agar kamera bisa dipakai.
             </div>
 
             <!-- Stats -->
@@ -1143,36 +1199,6 @@
                 <button class="stop-btn" id="stopBtn" onclick="stopScanner()">
                     <i class="fas fa-stop-circle"></i> STOP SCANNER
                 </button>
-            </div>
-
-            <!-- Manual Input -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon"><i class="fas fa-keyboard"></i></div>
-                    <div>
-                        <div class="card-title">Input Manual</div>
-                        <div class="card-subtitle">Masukkan 15 digit angka, lalu pilih jenis kunjungan</div>
-                    </div>
-                </div>
-                <div class="input-group-single">
-                    <input type="text" class="input-field" id="manualInput" placeholder="Masukkan 15 digit angka..."
-                        maxlength="15" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, ''); updateDigitCounter()">
-                </div>
-                <div class="digit-counter" id="digitCounter">
-                    <span id="digitCount">0</span>/15 digit
-                </div>
-                <div class="quick-grid">
-                    <button class="quick-btn harian" onclick="quickAdd('MASUK')">
-                        <i class="fas fa-sun"></i>
-                        <strong>SIMPAN HARIAN</strong>
-                        <span>Kunjungan Harian</span>
-                    </button>
-                    <button class="quick-btn nginap" onclick="quickAdd('NGINAP')">
-                        <i class="fas fa-moon"></i>
-                        <strong>SIMPAN NGINAP</strong>
-                        <span>Kunjungan Menginap</span>
-                    </button>
-                </div>
             </div>
 
             <!-- Last Scan -->
@@ -1311,6 +1337,90 @@
         </div>
     </div>
 
+    <!-- ========== TAB: AIR ========== -->
+    <div class="tab-content" id="tabAir">
+        <div class="container">
+            <!-- Periode -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);"><i class="fas fa-droplet"></i></div>
+                    <div>
+                        <div class="card-title">Estimasi Kebutuhan Air Bersih</div>
+                        <div class="card-subtitle">Dihitung dari jumlah pengunjung ter-scan</div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">Tanggal Mulai</label>
+                            <input type="date" class="filter-input" id="airStart">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Tanggal Akhir</label>
+                            <input type="date" class="filter-input" id="airEnd">
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group" style="flex:1;">
+                            <label class="filter-label">Toren Terpasang (1 m³) — opsional</label>
+                            <input type="number" min="0" class="filter-input" id="airToren" placeholder="Kosongkan jika tidak tahu" oninput="renderAirResult()">
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="filter-btn primary" onclick="loadAirData()">
+                            <i class="fas fa-calculator"></i> Hitung
+                        </button>
+                        <button class="filter-btn secondary" onclick="resetAirFilter()">
+                            <i class="fas fa-redo"></i> Hari Ini
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parameter Air (bisa diedit) -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-sliders"></i></div>
+                    <div>
+                        <div class="card-title">Parameter Air</div>
+                        <div class="card-subtitle">Atur kebutuhan air per orang & ukuran toren</div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label class="filter-label">Air / orang Nginap (L)</label>
+                            <input type="number" min="1" class="filter-input" id="airParamNginap" value="50" oninput="onAirParamChange()">
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label">Air / orang Harian (L)</label>
+                            <input type="number" min="1" class="filter-input" id="airParamHarian" value="5" oninput="onAirParamChange()">
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-group" style="flex:1;">
+                            <label class="filter-label">Kapasitas 1 Toren (L)</label>
+                            <input type="number" min="1" class="filter-input" id="airParamToren" value="1000" oninput="onAirParamChange()">
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="filter-btn secondary" onclick="resetAirParams()">
+                            <i class="fas fa-rotate-left"></i> Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hasil -->
+            <div id="airResult">
+                <div class="empty-state">
+                    <i class="fas fa-droplet"></i>
+                    <p>Tekan "Hitung" untuk melihat estimasi kebutuhan air.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
         <button class="nav-item active" onclick="switchTab('scan')">
@@ -1320,6 +1430,10 @@
         <button class="nav-item" onclick="switchTab('report')">
             <i class="fas fa-chart-pie"></i>
             <span>Report</span>
+        </button>
+        <button class="nav-item" onclick="switchTab('air')">
+            <i class="fas fa-droplet"></i>
+            <span>Air</span>
         </button>
     </div>
 
@@ -1355,6 +1469,49 @@
         const COLLECTION_HARIAN = 'kunjungan_harian';
         const COLLECTION_NGINAP = 'kunjungan_nginap';
 
+        // ========== PARAMETER AIR (liter/orang) — default, bisa diedit di UI ==========
+        const DEFAULT_AIR_HARIAN = 5;    // pengunjung harian: hanya BAK
+        const DEFAULT_AIR_NGINAP = 50;   // pengunjung nginap: mandi+BAK+BAB+masak (dibulatkan dari 55)
+        const DEFAULT_TOREN_LITER = 1000;// kapasitas 1 toren ukuran 1 m³
+        const AIR_PARAM_KEY = 'pinuslo_air_params';
+        let airData = { harian: 0, nginap: 0, start: '', end: '' };
+
+        // Baca parameter dari input (fallback ke default kalau kosong/invalid)
+        function getAirParams() {
+            const num = (id, def) => {
+                const v = parseFloat((document.getElementById(id) || {}).value);
+                return (!isNaN(v) && v > 0) ? v : def;
+            };
+            return {
+                nginap: num('airParamNginap', DEFAULT_AIR_NGINAP),
+                harian: num('airParamHarian', DEFAULT_AIR_HARIAN),
+                toren: num('airParamToren', DEFAULT_TOREN_LITER)
+            };
+        }
+
+        function loadAirParams() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(AIR_PARAM_KEY) || '{}');
+                if (saved.nginap) document.getElementById('airParamNginap').value = saved.nginap;
+                if (saved.harian) document.getElementById('airParamHarian').value = saved.harian;
+                if (saved.toren)  document.getElementById('airParamToren').value  = saved.toren;
+            } catch (e) { /* abaikan */ }
+        }
+
+        function onAirParamChange() {
+            const p = getAirParams();
+            try { localStorage.setItem(AIR_PARAM_KEY, JSON.stringify(p)); } catch (e) {}
+            renderAirResult();
+        }
+
+        function resetAirParams() {
+            document.getElementById('airParamNginap').value = DEFAULT_AIR_NGINAP;
+            document.getElementById('airParamHarian').value = DEFAULT_AIR_HARIAN;
+            document.getElementById('airParamToren').value = DEFAULT_TOREN_LITER;
+            onAirParamChange();
+            showToast('Parameter dikembalikan ke default', 'success');
+        }
+
         // ========== VARIABLES ==========
         let html5QrCode = null;
         let isScanning = false;
@@ -1377,6 +1534,8 @@
             loadTodayStats();
             checkHTTPS();
             setDefaultFilterDates();
+            setAirDefaultDates();
+            loadAirParams();
         });
 
         function checkHTTPS() {
@@ -1404,6 +1563,132 @@
             document.getElementById('filterEnd').value = today.toISOString().split('T')[0];
         }
 
+        // ========== AIR: DEFAULT TANGGAL (HARI INI) ==========
+        function setAirDefaultDates() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('airStart').value = today;
+            document.getElementById('airEnd').value = today;
+        }
+
+        function resetAirFilter() {
+            setAirDefaultDates();
+            loadAirData();
+        }
+
+        // ========== AIR: HITUNG KEBUTUHAN ==========
+        async function loadAirData() {
+            const resultEl = document.getElementById('airResult');
+            resultEl.innerHTML = '<div class="loading"><div class="spinner"></div><p>Menghitung...</p></div>';
+
+            const start = document.getElementById('airStart').value;
+            const end = document.getElementById('airEnd').value;
+
+            try {
+                const counts = {};
+                for (const [key, collName] of [['harian', COLLECTION_HARIAN], ['nginap', COLLECTION_NGINAP]]) {
+                    let query = db.collection(collName);
+                    if (start) query = query.where('date', '>=', start);
+                    if (end) query = query.where('date', '<=', end);
+                    const snap = await query.get();
+                    counts[key] = snap.size;
+                }
+                airData = { harian: counts.harian, nginap: counts.nginap, start, end };
+                renderAirResult();
+            } catch (e) {
+                console.error('Error hitung air:', e);
+                resultEl.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-triangle"></i><p>Gagal menghitung data</p></div>';
+            }
+        }
+
+        function fmt(n) { return n.toLocaleString('id-ID'); }
+
+        function renderAirResult() {
+            const resultEl = document.getElementById('airResult');
+            const { harian, nginap, start, end } = airData;
+            const P = getAirParams();
+
+            const literHarian = harian * P.harian;
+            const literNginap = nginap * P.nginap;
+            const totalLiter = literHarian + literNginap;
+            const torenButuh = Math.ceil(totalLiter / P.toren);
+
+            const periodeLabel = (start && end)
+                ? (start === end ? start : `${start} s/d ${end}`)
+                : 'Semua data';
+
+            // Status cukup/kurang (opsional, jika kapasitas terpasang diisi)
+            const torenInput = document.getElementById('airToren').value;
+            let statusHtml = '';
+            if (torenInput !== '' && !isNaN(parseInt(torenInput))) {
+                const torenAda = parseInt(torenInput);
+                const literAda = torenAda * P.toren;
+                const selisih = literAda - totalLiter;
+                if (selisih >= 0) {
+                    statusHtml = `<div class="water-status ok"><i class="fas fa-circle-check"></i> Cukup — kapasitas ${torenAda} toren (${fmt(literAda)} L), sisa ${fmt(selisih)} L</div>`;
+                } else {
+                    statusHtml = `<div class="water-status kurang"><i class="fas fa-triangle-exclamation"></i> Kurang ${fmt(Math.abs(selisih))} L — perlu tambah ${Math.ceil(Math.abs(selisih) / P.toren)} toren lagi</div>`;
+                }
+            }
+
+            resultEl.innerHTML = `
+                <div class="water-hero">
+                    <div class="water-liters">${fmt(totalLiter)} <span class="water-unit">liter</span></div>
+                    <div class="water-caption">Total kebutuhan air bersih • ${periodeLabel}</div>
+                    <div class="water-toren"><i class="fas fa-database"></i> ${fmt(torenButuh)} toren (${fmt(P.toren)} L)</div>
+                </div>
+
+                ${statusHtml}
+
+                <div class="card">
+                    <div class="water-row">
+                        <span class="wr-label"><i class="fas fa-sun" style="color:var(--gold-dark)"></i> Pengunjung Harian</span>
+                        <span class="wr-value">${fmt(harian)} orang</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label" style="padding-left:1.5rem;">Air harian (${fmt(harian)} × ${fmt(P.harian)} L)</span>
+                        <span class="wr-value">${fmt(literHarian)} L</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label"><i class="fas fa-moon" style="color:var(--purple)"></i> Pengunjung Nginap</span>
+                        <span class="wr-value">${fmt(nginap)} orang</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label" style="padding-left:1.5rem;">Air nginap (${fmt(nginap)} × ${fmt(P.nginap)} L)</span>
+                        <span class="wr-value">${fmt(literNginap)} L</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label"><b>Total Kebutuhan</b></span>
+                        <span class="wr-value" style="color:var(--blue)">${fmt(totalLiter)} L</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-circle-info"></i></div>
+                        <div>
+                            <div class="card-title">Parameter Dipakai</div>
+                            <div class="card-subtitle">Nilai aktif (bisa diubah di atas)</div>
+                        </div>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label"><i class="fas fa-moon" style="color:var(--purple)"></i> Air / orang Nginap</span>
+                        <span class="wr-value">${fmt(P.nginap)} L</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label"><i class="fas fa-sun" style="color:var(--gold-dark)"></i> Air / orang Harian</span>
+                        <span class="wr-value">${fmt(P.harian)} L</span>
+                    </div>
+                    <div class="water-row">
+                        <span class="wr-label"><i class="fas fa-database"></i> Kapasitas 1 Toren</span>
+                        <span class="wr-value">${fmt(P.toren)} L</span>
+                    </div>
+                    <div style="font-size:0.72rem; color:var(--gray-500); margin-top:0.6rem; line-height:1.4;">
+                        Acuan default: Nginap 55→50 L/orang (Mandi 12 + BAK 15 + BAB 18 + Masak/Cuci 10), Harian 5 L/orang (BAK).
+                    </div>
+                </div>
+            `;
+        }
+
         // ========== DETECT VISIT TYPE ==========
         function detectVisitType(code) {
             const upperCode = code.toUpperCase();
@@ -1428,6 +1713,9 @@
 
             if (tab === 'report') {
                 loadReportData();
+            }
+            if (tab === 'air') {
+                loadAirData();
             }
         }
 
@@ -1674,51 +1962,6 @@
             showToast('✓ Scan berhasil!', 'success');
             
             return time;
-        }
-
-        // ========== MANUAL INPUT ==========
-        function updateDigitCounter() {
-            const input = document.getElementById('manualInput');
-            const counter = document.getElementById('digitCounter');
-            const countSpan = document.getElementById('digitCount');
-            const length = input.value.length;
-            
-            countSpan.textContent = length;
-            
-            if (length === 15) {
-                counter.className = 'digit-counter complete';
-            } else if (length > 0) {
-                counter.className = 'digit-counter incomplete';
-            } else {
-                counter.className = 'digit-counter';
-            }
-        }
-
-        function quickAdd(type) {
-            const input = document.getElementById('manualInput');
-            const code = input.value.trim();
-            
-            // Validasi: harus ada input
-            if (!code) {
-                showToast('Masukkan 15 digit angka dulu!', 'error');
-                input.focus();
-                return;
-            }
-            
-            // Validasi: harus 15 digit angka
-            if (!/^\d{15}$/.test(code)) {
-                showToast('Kode harus 15 digit angka!', 'error');
-                input.focus();
-                return;
-            }
-            
-            // Simpan dengan type yang dipilih dari tombol
-            const visitType = type === 'NGINAP' ? 'nginap' : 'harian';
-            saveScan(code, visitType).then(time => {
-                showPopup(visitType, code, time);
-            });
-            input.value = '';
-            updateDigitCounter(); // Reset counter
         }
 
         // ========== REPORT TAB ==========
