@@ -1152,7 +1152,7 @@
             <!-- HTTPS Warning -->
             <div class="https-warning" id="httpsWarning">
                 <strong><i class="fas fa-exclamation-triangle"></i> Kamera Tidak Tersedia</strong>
-                Buka halaman ini lewat HTTPS agar kamera bisa dipakai.
+                Buka lewat HTTPS untuk kamera, atau pakai Input Manual Tamu di bawah.
             </div>
 
             <!-- Stats -->
@@ -1199,6 +1199,37 @@
                 <button class="stop-btn" id="stopBtn" onclick="stopScanner()">
                     <i class="fas fa-stop-circle"></i> STOP SCANNER
                 </button>
+            </div>
+
+            <!-- Input Manual Tamu -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-user-plus"></i></div>
+                    <div>
+                        <div class="card-title">Input Manual Tamu</div>
+                        <div class="card-subtitle">Catat tamu tanpa scan — isi jumlah lalu pilih jenis</div>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-row">
+                        <div class="filter-group" style="flex:1;">
+                            <label class="filter-label">Jumlah Tamu</label>
+                            <input type="number" min="1" value="1" class="filter-input" id="manualCount" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="quick-grid">
+                        <button class="quick-btn harian" onclick="addManualGuests('harian')">
+                            <i class="fas fa-sun"></i>
+                            <strong>TAMBAH HARIAN</strong>
+                            <span>Kunjungan Harian</span>
+                        </button>
+                        <button class="quick-btn nginap" onclick="addManualGuests('nginap')">
+                            <i class="fas fa-moon"></i>
+                            <strong>TAMBAH NGINAP</strong>
+                            <span>Kunjungan Menginap</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- Last Scan -->
@@ -1960,8 +1991,72 @@
             document.getElementById('lastTime').textContent = time;
 
             showToast('✓ Scan berhasil!', 'success');
-            
+
             return time;
+        }
+
+        // ========== INPUT MANUAL TAMU (jumlah + jenis) ==========
+        async function addManualGuests(visitType) {
+            const countEl = document.getElementById('manualCount');
+            const count = parseInt(countEl.value);
+
+            if (!count || count < 1) {
+                showToast('Isi jumlah tamu minimal 1!', 'error');
+                countEl.focus();
+                return;
+            }
+
+            const typeLabel = visitType === 'nginap' ? 'Nginap' : 'Harian';
+
+            try {
+                const now = new Date();
+                const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+                const time = now.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+                const collectionName = getCollectionName(visitType);
+                const batchTs = Date.now();
+
+                // Buat `count` catatan kunjungan sekaligus (1 dokumen per tamu)
+                const writes = [];
+                for (let i = 0; i < count; i++) {
+                    writes.push(db.collection(collectionName).add({
+                        date: todayDate,
+                        code: `MANUAL-${typeLabel.toUpperCase()}-${batchTs}-${i + 1}`,
+                        time: time,
+                        day: days[now.getDay()],
+                        hour: now.getHours(),
+                        minute: now.getMinutes(),
+                        type: visitType,
+                        source: 'manual',
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    }));
+                }
+                await Promise.all(writes);
+
+                // Update counter UI sekali (+count)
+                const counterId = visitType === 'harian' ? 'harianTodayCount' : 'nginapTodayCount';
+                const totalId = visitType === 'harian' ? 'harianTotalCount' : 'nginapTotalCount';
+                const cEl = document.getElementById(counterId);
+                const tEl = document.getElementById(totalId);
+                cEl.textContent = parseInt(cEl.textContent) + count;
+                tEl.textContent = parseInt(tEl.textContent) + count;
+                cEl.classList.add('animate');
+                setTimeout(() => cEl.classList.remove('animate'), 400);
+
+                // Update last scan info
+                const lastScanEl = document.getElementById('lastScan');
+                lastScanEl.className = 'last-scan show ' + visitType;
+                document.getElementById('lastScanType').textContent = `Manual: ${count} ${typeLabel}`;
+                document.getElementById('lastCode').textContent = `${count} tamu`;
+                document.getElementById('lastTime').textContent = time;
+
+                if (navigator.vibrate) navigator.vibrate(200);
+                showToast(`✓ ${count} tamu ${typeLabel} ditambahkan!`, 'success');
+                countEl.value = 1;
+
+            } catch (e) {
+                console.error('Gagal tambah manual:', e);
+                showToast('Gagal menyimpan!', 'error');
+            }
         }
 
         // ========== REPORT TAB ==========
